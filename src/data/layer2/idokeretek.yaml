@@ -1,20 +1,21 @@
 # ==============================================================================
 # PARLAMENTI FELSZÓLALÁSI IDŐKERETEK
 # ==============================================================================
-# Forrás: 10/2014. (II.24.) OGY határozat (Házszabály) hatályos változata
-# Hivatkozások: §-szám az adott Házszabály-rendelkezésre
-#
-# FIGYELEM: Ez a Sprint 1 skeleton tartalma.
-# A teljes kurálás Sprint 2-ben történik, jogász ellenőrzéssel.
+# Forrás: Házszabály (egységes szerkezet, 2026.01.31. lezárás)
 # ==============================================================================
 
 napirend_elotti:
   nev: "Napirend előtti felszólalás"
   leiras: >
-    Az ülés napirendjének megállapítása előtt, legfeljebb öt percben a
+    Az ülés napirendjének megállapítása előtt, legfeljebb 5 percben a
     képviselő az Országgyűlést érintő bármely ügyben felszólalhat.
   altalanos_idokeret_perc: 5
   szereplok:
+    kepviselo:
+      idokeret_perc: 5
+    frakciovezeto:
+      idokeret_perc: 5
+      megjegyzes: "Frakciónként egy napirend előtti felszólalás ülésnaponként."
     miniszterelnok:
       idokeret_perc: 5
       valasz_lehet_e: true
@@ -22,34 +23,92 @@ napirend_elotti:
     miniszter:
       idokeret_perc: 5
       valasz_lehet_e: true
-    frakciovezeto:
-      idokeret_perc: 5
-      valasz_lehet_e: false
-      megjegyzes: "Frakciónként egy napirend előtti felszólalás ülésnaponként."
-    kepviselo:
-      idokeret_perc: 5
-      valasz_lehet_e: false
   viszonvalasz:
     lehet_e: true
     idokeret_perc: 1
-    megjegyzes: "A napirend előtti felszólalásra adott válaszra a felszólaló 1 percben viszonválaszt mondhat."
-  jogforras: "Házszabály — pontos §-szám Sprint 2-ben ellenőrizve"
-  sprint1_figyelmezetes: >
-    EZ EGY KEZDŐ TARTALOM. A pontos időkeretek és §-hivatkozások
-    Sprint 2-ben kerülnek végleges ellenőrzésre.
+  jogforras: "Házszabály 18. §"
+
+napirend_kivuli:
+  nev: "Napirenden kívüli felszólalás (rendkívüli ügy)"
+  leiras: >
+    A köztársasági elnök, a Kormány tagja és a miniszterelnök politikai igazgatója
+    országos jelentőségű, halaszthatatlan és RENDKÍVÜLI ügyben, valamint a
+    miniszterelnök az Európai Tanács ülését követően az ülés kimeneteléről
+    történő tájékoztatás céljából az ülésnap kezdetekor napirenden kívül felszólalhat.
+  szereplok:
+    koztarsasagi_elnok:
+      idokeret_perc: "nincs korlát"
+      megjegyzes: "Rendkívüli ügyben."
+    kormany_tagja:
+      idokeret_perc: "nincs korlát"
+      megjegyzes: "Országos jelentőségű, halaszthatatlan és rendkívüli ügyben."
+    miniszterelnok:
+      idokeret_perc: "nincs korlát"
+      megjegyzes: "Rendkívüli ügyben + ET ülés utáni tájékoztatás."
+  kivetel: >
+    Ez NEM napirend előtti felszólalás! Külön kategória, amire a képviselők
+    nem jogosultak — csak a fenti személyek.
+  jogforras: "Házszabály 18. §"
+
+tanacskozasi_jogu_felszolalas:
+  nev: "Tanácskozási joggal rendelkező személy felszólalása"
+  leiras: >
+    A köztársasági elnök, Kormány tagja, Alkotmánybíróság elnöke, Kúria elnöke,
+    legfőbb ügyész, alapvető jogok biztosa, ÁSZ elnöke — BÁRMIKOR felszólalhatnak
+    az Országgyűlés ülésén, nincs időkorlát.
+  szereplok:
+    miniszterelnok:
+      idokeret_perc: "korlátlan"
+      megjegyzes: "Bármikor felszólalhat, időkeret-korlátozás nélkül."
+    miniszter:
+      idokeret_perc: "korlátlan"
+      megjegyzes: "Kormány tagjaként bármikor felszólalhat."
+    koztarsasagi_elnok:
+      idokeret_perc: "korlátlan"
+    alkotmanybirosag_elnoke:
+      idokeret_perc: "korlátlan"
+    kuria_elnoke:
+      idokeret_perc: "korlátlan"
+    legfoobb_ugyesz:
+      idokeret_perc: "korlátlan"
+    alapveto_jogok_biztosa:
+      idokeret_perc: "korlátlan"
+    asz_elnok:
+      idokeret_perc: "korlátlan"
+  kivetel: >
+    Ez a legfontosabb KIVÉTEL az időkeretekből! A Kormány tagjai (beleértve a
+    miniszterelnököt) tanácskozási joggal rendelkeznek, ami azt jelenti, hogy
+    bármely napirendi pontnál, bármikor felszólalhatnak, és az ő felszólalásuk
+    NEM számít bele a frakciók időkeretébe.
+  jogforras: "Ogytv. 39. § (Házszabály egységes szerkezet)"
+
+eloterjeszt_felszolalasa:
+  nev: "Előterjesztő felszólalása (nyitó- és zárszó)"
+  leiras: >
+    Az előterjesztő nyitóbeszéde, reagálása a vitában, és a zárszó NEM
+    számít bele az időkeretbe.
+  szereplok:
+    eloterjeszt:
+      idokeret_perc: "nincs korlát"
+      megjegyzes: "Nyitóbeszéd, reagálás, zárszó — időkorlát nélkül."
+    kormany_eloterjeszt:
+      idokeret_perc: "nincs korlát"
+      megjegyzes: "Kormány-előterjesztés esetén a miniszter vagy ME politikai igazgatója."
+  kivetel: >
+    Az előterjesztő felszólalásai (nyitóbeszéd, reakció, zárszó) az általános
+    vitában NEM számítanak bele egyik frakció időkeretébe sem.
+  jogforras: "Házszabály 37. § (2) b) és 40. §"
 
 napirend_utani:
   nev: "Napirend utáni felszólalás"
   altalanos_idokeret_perc: 5
-  jogforras: "Házszabály — Sprint 2-ben ellenőrzendő"
-  status: TODO_SPRINT2
+  jogforras: "Házszabály"
 
 interpellacio:
   nev: "Interpelláció"
   leiras: >
-    A képviselő interpellációban kérdést intézhet a Kormányhoz vagy
-    annak tagjához az illető szervezet feladatkörébe tartozó bármely
-    ügyben.
+    A képviselő interpellációban kérdést intézhet a Kormányhoz vagy annak
+    tagjához. A válasz elfogadásáról az Országgyűlés szavaz.
   szereplok:
     kepviselo_elso_felszolalas:
       idokeret_perc: 3
@@ -58,9 +117,12 @@ interpellacio:
     kepviselo_viszonvalasz:
       idokeret_perc: 1
       leiras: "A képviselő nyilatkozik, hogy elfogadja-e a választ."
+  kivetel: >
+    Ha a miniszterelnök válaszol az interpellációra (mert az egész Kormány
+    működését érintő kérdésről van szó), ugyanúgy 5 perc az időkerete.
+    A miniszterelnök politikai igazgatója is válaszolhat helyette.
   szavazas_elfogadasrol: true
-  jogforras: "Házszabály + 2012. XXXVI. tv. — Sprint 2-ben pontosítandó"
-  status: TODO_SPRINT2_PONTOS_SZAMOK
+  jogforras: "Házszabály 42-43. §, Ogytv. 122. §"
 
 azonnali_kerdes:
   nev: "Azonnali kérdések órája"
@@ -71,8 +133,7 @@ azonnali_kerdes:
       idokeret_perc: 2
     viszonvalasz:
       idokeret_perc: 1
-  jogforras: "Házszabály — Sprint 2"
-  status: TODO_SPRINT2_PONTOS_SZAMOK
+  jogforras: "Házszabály"
 
 kerdes:
   nev: "Kérdés"
@@ -82,30 +143,55 @@ kerdes:
     valasz:
       idokeret_perc: 2
   viszonvalasz_lehet_e: false
-  jogforras: "Házszabály — Sprint 2"
-  status: TODO_SPRINT2_PONTOS_SZAMOK
+  jogforras: "Házszabály"
 
 vezerszonoklat:
   nev: "Vezérszónoklat (frakciószónoki felszólalás)"
   leiras: >
     Az általános vitában frakciónként egy vezérszónok szólalhat fel
-    megnövelt időkerettel.
-  status: TODO_SPRINT2_KULON_SZABALYOZAS
+    megnövelt időkerettel. A frakciók időkerete arányos a létszámukkal.
+  kivetel: >
+    Az időkeret-rendszerben a tanácskozási joggal rendelkező személyek
+    (Kormány tagjai!) felszólalása NEM számít bele a frakciók időkeretébe.
+    Tehát ha a miniszterelnök felszólal a vitában, az nem csökkenti a
+    kormánypárti frakciók idejét.
+  jogforras: "Házszabály 37. §"
 
-vita:
-  nev: "Általános / részletes vita"
-  status: TODO_SPRINT2_IDOKERET_RENDSZER
+vita_idokeretes:
+  nev: "Időkeretes általános vita"
+  leiras: >
+    Az Országgyűlés a Házbizottság javaslatára bármely törvényjavaslat
+    általános vitájának időkeretben történő tárgyalásáról határozhat.
+  szereplok:
+    kormanypari_kepviselok:
+      idokeret_perc: "arányos (Házbizottság határozza meg)"
+      megjegyzes: "Kormánypárti és ellenzéki együttesen azonos idő."
+    ellenzeki_kepviselok:
+      idokeret_perc: "arányos"
+      megjegyzes: "Az ellenzéki frakciók egymás között a létszámuk arányában osztják."
+  kivetel: >
+    A következő felszólalások NEM számítanak bele az időkeretbe:
+    1) Az előterjesztő nyitóbeszéde, reagálása, zárszava
+    2) A Kormány álláspontjának ismertetése (ha nem az a Kormány az előterjesztő)
+    3) Tanácskozási joggal rendelkező személyek felszólalásai
+    4) Ügyrendi és személyes felszólalások
+    A miniszterelnök tehát korlátlanul szólalhat fel az időkeretes vitában is!
+  jogforras: "Házszabály 37-38. §, 40. §"
 
 szemelyes_nyilatkozat:
   nev: "Személyes nyilatkozat (személyes érintettség)"
   idokeret_perc: 2
   mikor: "A napirendi pont tárgyalásának végén, vagy az ülés végén."
-  jogforras: "Házszabály — Sprint 2"
-  status: TODO_SPRINT2
+  kivetel: >
+    Még az időkeretes vitában is engedélyezhető az ülést vezető elnök
+    döntése alapján — NEM számít bele az időkeretbe.
+  jogforras: "Házszabály 20. §"
 
 ugyrendi_felszolalas:
   nev: "Ügyrendi felszólalás"
   idokeret_perc: 2
   leiras: "Az ülésvezetés rendjével kapcsolatos közlésre."
-  jogforras: "Házszabály — Sprint 2"
-  status: TODO_SPRINT2
+  kivetel: >
+    Az ügyrendi felszólalás NEM számít bele az időkeretbe. Bármely
+    képviselő kérheti az ülésvezetéssel kapcsolatos kérdésben.
+  jogforras: "Házszabály"

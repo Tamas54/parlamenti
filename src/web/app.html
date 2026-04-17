@@ -259,6 +259,11 @@ fetch('/api/idokeretek').then(function(r){return r.json();}).then(function(data)
       var vv = v.viszonvalasz;
       h += '<p style="margin-top:.3rem"><span class="pill pill-muted">Viszonv&#225;lasz: ' + (vv.idokeret_perc||'?') + ' perc</span></p>';
     }
+    if (v.kivetel) {
+      h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(232,184,75,.06);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:.82rem">';
+      h += '<strong style="color:var(--gold)">Kiv&#233;tel / fontos:</strong> ' + esc(v.kivetel);
+      h += '</div>';
+    }
     if (v.jogforras) h += ref(v.jogforras);
     h += '</div><div class="related"></div></div></div>';
   }
@@ -278,7 +283,11 @@ fetch('/api/szavazas').then(function(r){return r.json();}).then(function(data){
     h += '<div class="card-detail"><div class="card-body">';
     h += '<p><strong>Sz&#252;ks&#233;ges t&#246;bbs&#233;g:</strong> ' + esc(v.szukseges_tobbseg||'?') + '</p>';
     if (v.mod) h += '<p><strong>Szavaz&#225;si m&#243;d:</strong> ' + esc(v.mod.replace(/_/g,' ')) + '</p>';
-    if (v.kulonleges) h += '<p style="color:var(--gold);margin-top:.3rem">' + esc(v.kulonleges) + '</p>';
+    if (v.kulonleges) {
+      h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(232,184,75,.06);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:.82rem">';
+      h += '<strong style="color:var(--gold)">Fontos:</strong> ' + esc(v.kulonleges);
+      h += '</div>';
+    }
     if (v.pelda_tamak) {
       h += '<p style="margin-top:.3rem;color:var(--muted)"><strong>P&#233;ld&#225;k:</strong> ' + esc(v.pelda_tamak.join(', ')) + '</p>';
     }
