@@ -15,6 +15,9 @@ CLAUDE.md
 # Chroma DB (generated)
 src/data/chroma/
 
+# Raw source files (PDFs, HTMLs — too large for git)
+src/data/raw/
+
 # Env
 .env
 .env.local

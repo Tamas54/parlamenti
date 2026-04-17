@@ -1,76 +1,154 @@
 """
-RAG Engine
-==========
-ChromaDB + sentence-transformers alapú szemantikus keresés.
+RAG Engine — Lightweight in-memory search
+==========================================
+TF-IDF alapú szemantikus keresés a teljes jogszabályi korpuszon.
+Nincs szükség ChromaDB-re vagy GPU-ra — pure Python, gyors startup.
 
-Lazy init: a modell és a DB csak első használatkor töltődik be.
+Korpuszok:
+  - hazszabaly: Házszabály (egységes szerkezet, 10/2014 OGY hat. + Ogytv.)
+  - alaptorveny: Magyarország Alaptörvénye
+  - ogy_torveny: 2012. évi XXXVI. törvény (Ogytv.)
+  - altalanos: (Sprint 3 — összehasonlító parlamenti jog)
 """
 
+import json
 import logging
-import os
+import math
+import re
+from collections import Counter
 from pathlib import Path
-from typing import Optional
 
 log = logging.getLogger("parlamentaris-mcp.rag")
 
-CHROMA_DIR = Path(__file__).resolve().parent.parent / "data" / "chroma"
 CHUNKS_DIR = Path(__file__).resolve().parent.parent / "data" / "layer1_chunks"
 
-# Jó magyar támogatás, kompakt modell
-EMBED_MODEL = os.getenv(
-    "EMBED_MODEL",
-    "paraphrase-multilingual-MiniLM-L12-v2",
-)
+# Hungarian stop words (frequent words that don't help search)
+STOP_WORDS = {
+    "a", "az", "és", "is", "van", "volt", "nem", "hogy", "egy", "ez",
+    "az", "meg", "de", "ha", "mint", "vagy", "sem", "még", "már",
+    "csak", "fel", "ki", "le", "be", "el", "rá", "ide", "oda",
+    "amely", "amelyet", "amelynek", "amit", "aki", "akit", "akinek",
+    "illetve", "valamint", "továbbá", "illetőleg", "szerinti", "szerint",
+    "alapján", "értelmében", "vonatkozó", "vonatkozóan", "esetében",
+    "tekintetében", "keretében", "érdekében", "célból", "szemben",
+}
+
+
+def _tokenize(text: str) -> list[str]:
+    """Simple Hungarian tokenizer: lowercase, split on non-alpha, filter stops."""
+    tokens = re.findall(r'[a-záéíóöőúüű]+', text.lower())
+    return [t for t in tokens if len(t) > 2 and t not in STOP_WORDS]
+
+
+class TFIDFIndex:
+    """Lightweight TF-IDF index for Hungarian legal text search."""
+
+    def __init__(self):
+        self.docs: list[dict] = []       # original chunk dicts
+        self.tokens: list[list[str]] = [] # tokenized docs
+        self.idf: dict[str, float] = {}   # inverse document frequency
+        self._built = False
+
+    def add_docs(self, chunks: list[dict], text_key: str = "szoveg"):
+        for chunk in chunks:
+            self.docs.append(chunk)
+            self.tokens.append(_tokenize(chunk.get(text_key, "")))
+
+    def build(self):
+        """Compute IDF scores."""
+        n = len(self.docs)
+        if n == 0:
+            return
+        df = Counter()
+        for toks in self.tokens:
+            for term in set(toks):
+                df[term] += 1
+        self.idf = {
+            term: math.log((n + 1) / (count + 1)) + 1
+            for term, count in df.items()
+        }
+        self._built = True
+        log.info("TF-IDF index built: %d docs, %d terms", n, len(self.idf))
+
+    def search(self, query: str, top_k: int = 5) -> list[dict]:
+        """Search using TF-IDF cosine-ish scoring."""
+        if not self._built:
+            return []
+        q_tokens = _tokenize(query)
+        if not q_tokens:
+            return []
+
+        q_tf = Counter(q_tokens)
+        q_vec = {t: q_tf[t] * self.idf.get(t, 1.0) for t in q_tokens}
+        q_norm = math.sqrt(sum(v * v for v in q_vec.values())) or 1.0
+
+        scores = []
+        for i, doc_tokens in enumerate(self.tokens):
+            if not doc_tokens:
+                continue
+            d_tf = Counter(doc_tokens)
+            dot = 0.0
+            for t, q_w in q_vec.items():
+                if t in d_tf:
+                    d_w = d_tf[t] * self.idf.get(t, 1.0)
+                    dot += q_w * d_w
+            if dot > 0:
+                d_norm = math.sqrt(
+                    sum((d_tf[t] * self.idf.get(t, 1.0)) ** 2 for t in d_tf)
+                ) or 1.0
+                score = dot / (q_norm * d_norm)
+                scores.append((score, i))
+
+        scores.sort(reverse=True)
+        results = []
+        for score, idx in scores[:top_k]:
+            doc = self.docs[idx]
+            results.append({
+                "szoveg": doc.get("szoveg", ""),
+                "hivatkozas": doc.get("hivatkozas", ""),
+                "cim": doc.get("cim", doc.get("cikk", "")),
+                "forras": doc.get("forras", ""),
+                "relevancia": round(score, 4),
+            })
+        return results
 
 
 class RAGEngine:
-    """Vektoros kereső a teljes jogszabályi korpuszon."""
+    """Keresőmotor a teljes jogszabályi korpuszra."""
+
+    COLLECTION_MAP = {
+        "hazszabaly": "hazszabaly_chunks.json",
+        "alaptorveny": "alaptorveny_chunks.json",
+        "ogy_torveny": "ogytv_chunks.json",
+    }
 
     def __init__(self):
-        self._client = None
-        self._embedder = None
-        self._collections = {}
+        self._indices: dict[str, TFIDFIndex] = {}
         self._ready = False
-        self._init_if_needed()
+        self._init()
 
-    def _init_if_needed(self):
-        if self._ready:
-            return
-        try:
-            import chromadb
-            from chromadb.config import Settings
-            from sentence_transformers import SentenceTransformer
+    def _init(self):
+        loaded = 0
+        for name, filename in self.COLLECTION_MAP.items():
+            path = CHUNKS_DIR / filename
+            if not path.exists():
+                log.warning("Chunk file not found: %s", path)
+                continue
+            with open(path, "r", encoding="utf-8") as f:
+                chunks = json.load(f)
+            idx = TFIDFIndex()
+            idx.add_docs(chunks)
+            idx.build()
+            self._indices[name] = idx
+            loaded += len(chunks)
+            log.info("Loaded %s: %d chunks", name, len(chunks))
 
-            log.info("ChromaDB kliens indítása (%s)…", CHROMA_DIR)
-            CHROMA_DIR.mkdir(parents=True, exist_ok=True)
-            self._client = chromadb.PersistentClient(
-                path=str(CHROMA_DIR),
-                settings=Settings(anonymized_telemetry=False),
-            )
-
-            log.info("Embedding modell betöltése: %s", EMBED_MODEL)
-            self._embedder = SentenceTransformer(EMBED_MODEL)
-
+        if loaded > 0:
             self._ready = True
-            log.info("RAG engine kész.")
-        except Exception as e:  # pragma: no cover
-            log.warning(
-                "RAG engine nem tudott elindulni (%s). "
-                "Valószínűleg még nincsenek adatok. "
-                "Sprint 3-ban kap tartalmat.",
-                e,
-            )
-
-    def _get_collection(self, name: str):
-        if not self._ready:
-            return None
-        if name not in self._collections:
-            try:
-                self._collections[name] = self._client.get_collection(name)
-            except Exception:
-                log.warning("Collection '%s' nem létezik (még).", name)
-                return None
-        return self._collections[name]
+            log.info("RAG engine ready: %d total chunks across %d collections",
+                     loaded, len(self._indices))
+        else:
+            log.warning("RAG engine: no chunks loaded.")
 
     def search(
         self,
@@ -78,41 +156,25 @@ class RAGEngine:
         collection: str,
         top_k: int = 5,
     ) -> list[dict]:
-        """Szemantikus keresés egy konkrét korpuszban."""
         if not self._ready:
             return [{
-                "hiba": (
-                    "RAG engine még nem áll készen. "
-                    "A korpusz feltöltése Sprint 3-ban történik."
-                ),
-                "status": "skeleton",
+                "hiba": "RAG engine nem áll készen — nincsenek betöltve a szövegek.",
+                "status": "no_data",
             }]
 
-        col = self._get_collection(collection)
-        if col is None:
+        idx = self._indices.get(collection)
+        if idx is None:
             return [{
-                "hiba": f"A '{collection}' korpusz még nincs feltöltve.",
-                "status": "empty",
+                "hiba": f"A '{collection}' korpusz nem létezik.",
+                "elerheto": list(self._indices.keys()),
+                "status": "not_found",
             }]
 
-        q_vec = self._embedder.encode([query]).tolist()
-        res = col.query(
-            query_embeddings=q_vec,
-            n_results=top_k,
-            include=["documents", "metadatas", "distances"],
-        )
-
-        out = []
-        docs = res.get("documents", [[]])[0]
-        metas = res.get("metadatas", [[]])[0]
-        dists = res.get("distances", [[]])[0]
-
-        for doc, meta, dist in zip(docs, metas, dists):
-            out.append({
-                "szoveg": doc,
-                "hivatkozas": (meta or {}).get("hivatkozas"),
-                "cim": (meta or {}).get("cim"),
-                "forras": (meta or {}).get("forras"),
-                "relevancia": round(1.0 - dist, 4),
-            })
-        return out
+        results = idx.search(query, top_k=top_k)
+        if not results:
+            return [{
+                "hiba": "Nincs találat a keresési kifejezésre.",
+                "tipp": "Próbálj másképp fogalmazni, vagy használd a search_all tool-t.",
+                "status": "no_results",
+            }]
+        return results
