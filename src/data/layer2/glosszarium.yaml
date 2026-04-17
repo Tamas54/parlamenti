@@ -1,13 +1,169 @@
 # ==============================================================================
-# PARLAMENTI GLOSSZÁRIUM
+# PARLAMENTI GLOSSZÁRIUM — bővített
 # ==============================================================================
 # Parlamenti szakszavak kezdőbarát magyarázata.
-# Minden bejegyzés: rövid_magyarazat, reszletes, pelda, aliasok, jogforras
+# Forrás: Házszabály, Ogytv. (2012. évi XXXVI. tv.), Alaptörvény
 # ==============================================================================
+
+# --- TISZTSÉGVISELŐK ---
+
+hazelnok:
+  rovid_magyarazat: >
+    Az Országgyűlés elnöke. Biztosítja az Országgyűlés jogainak gyakorlását,
+    gondoskodik a tekintélyének megóvásáról, a rend fenntartásáról és a munka
+    megszervezéséről.
+  reszletes: >
+    A házelnök képviseli az Országgyűlést más állami szervekkel és nemzetközi
+    kapcsolatokban. Összehívja az ülésszakokat, megnyitja és vezeti az üléseket.
+    Elnököl a Házbizottságban. Titkos szavazással választják meg.
+    Protokolláris rangsorban a köztársasági elnök után a második személy.
+  aliasok: ["Országgyűlés elnöke", "házelnök"]
+  jogforras: "Ogytv. 2. §"
+
+alelnok:
+  rovid_magyarazat: >
+    A házelnököt helyettesítő tisztségviselő. Az alelnökök számát a frakciók
+    arányos képviselete határozza meg.
+  reszletes: >
+    Az alelnök a házelnök által meghatározott rendben helyettesíti a házelnököt
+    az ülés vezetésében és egyéb feladatokban. Ha a házelnök megbízatása megszűnik,
+    az általa kijelölt alelnök látja el a feladatait az új házelnök megválasztásáig.
+  aliasok: ["Országgyűlés alelnöke"]
+  jogforras: "Ogytv. 3. §"
+
+haznagy:
+  rovid_magyarazat: >
+    A házelnök javaslata alapján megválasztott tisztségviselő, aki a házelnök
+    egyes feladat- és hatásköreit gyakorolja.
+  reszletes: >
+    A háznagy az Országgyűlés Hivatalának operatív irányításában vesz részt,
+    a házelnök által átadott feladat- és hatáskörökben jár el.
+  aliasok: ["Országgyűlés háznagya"]
+  jogforras: "Ogytv. 4. §"
+
+jegyzo:
+  rovid_magyarazat: >
+    Az Országgyűlés jegyzői a szavazások lebonyolításában, a jegyzőkönyvek
+    hitelesítésében és az ülések zavartalan lefolytatásában működnek közre.
+  reszletes: >
+    A jegyzők feladata: a szavazás lebonyolítása (különösen titkos szavazás),
+    a jegyzőkönyv hitelesítése, a felszólalásra jelentkezők nyilvántartása,
+    az elnök munkájának segítése.
+  aliasok: ["Országgyűlés jegyzője"]
+  jogforras: "Ogytv. 5. §"
+
+korelnok:
+  rovid_magyarazat: >
+    Az alakuló ülést vezető legidősebb jelenlévő képviselő, ameddig
+    meg nem választják a rendes házelnököt.
+  reszletes: >
+    Az alkotmányos folytonosság biztosítéka: az új ciklus első ülésének
+    levezetéséhez nem kell megvárni, hogy legyen megválasztott házelnök.
+    A korelnök mellett a két legfiatalabb képviselő látja el a jegyzői
+    feladatokat (korjegyzők).
+  aliasok: ["kor-elnök", "korjegyző"]
+  jogforras: "Alaptörvény + Házszabály"
+
+# --- TESTÜLETEK ---
+
+hazbizottsag:
+  rovid_magyarazat: >
+    A házelnök, alelnökök és a frakcióvezetők testülete. Az Országgyűlés
+    döntés-előkészítő testülete.
+  reszletes: >
+    NEM állandó bizottság — ez a parlamenti ügymenet motorja. Javaslatot tesz
+    a napirendre, koordinálja az ülések menetét. A frakcióvezetők szavazati
+    joggal rendelkeznek. A Házbizottság napirendjére vonatkozó javaslatot
+    bármely tagja tehet.
+  aliasok: ["Házbizottság"]
+  jogforras: "Ogytv. 11-13. §"
+
+allando_bizottsag:
+  rovid_magyarazat: >
+    Az Országgyűlés által létrehozott állandó testület, amely kezdeményező,
+    javaslattevő, véleményező, törvényben előírt ellenőrzési, beszámoló-
+    elfogadási és döntési feladatokat lát el.
+  reszletes: >
+    Az állandó bizottságok létrehozásáról az Országgyűlés megalakulása után
+    dönt. Tagjai a képviselők, a frakciók arányának megfelelően. A bizottság
+    elnökét, alelnökét és tagjait az Országgyűlés választja meg.
+    Kötelező bizottságok: Törvényalkotási, Nemzetbiztonsági, Mentelmi,
+    Összeférhetetlenségi stb.
+  aliasok: ["bizottság", "állandó bizottság", "országgyűlési bizottság"]
+  jogforras: "Ogytv. 14-21. §"
+
+vizsgalobizottsag:
+  rovid_magyarazat: >
+    Az Országgyűlés által konkrét ügy kivizsgálására létrehozott bizottság,
+    amely a hatalommegosztás elvével összhangban vizsgálati tevékenységet végez.
+  reszletes: >
+    A vizsgálóbizottság létrehozását a képviselők legalább egyötöde kezdeményezheti.
+    A vizsgálóbizottság irattal, adattal rendelkező személyt közreműködésre
+    kötelezhet. Tevékenységéről jelentést készít, amelyet az Országgyűlés tárgyal.
+  aliasok: ["vizsgálóbizottság"]
+  jogforras: "Ogytv. 24-27. §"
+
+eseti_bizottsag:
+  rovid_magyarazat: >
+    Meghatározott ügyek meghatározott ideig történő intézésére létrehozott bizottság.
+  reszletes: >
+    Az Országgyűlés az eseti bizottságot létrehozó határozatban jelöli meg az ügyeket
+    és az időtartamot. Az eseti bizottságra az állandó bizottságra vonatkozó szabályokat
+    kell alkalmazni.
+  aliasok: ["eseti bizottság"]
+  jogforras: "Ogytv. 23. §"
+
+torvenyhozasi_bizottsag:
+  rovid_magyarazat: >
+    Különleges állandó bizottság, amely a zárószavazás előtti módosító javaslatokkal
+    foglalkozik, és a törvényalkotási eljárás koherenciáját biztosítja.
+  reszletes: >
+    A törvényalkotási bizottság a részletes vita után javaslatot tehet a törvényjavaslat
+    szövegének belső koherenciájának biztosítására, és zárószavazás előtti módosító
+    javaslatot nyújthat be.
+  aliasok: ["Törvényalkotási bizottság"]
+  jogforras: "Házszabály"
+
+# --- FRAKCIÓK ---
+
+frakcio:
+  rovid_magyarazat: >
+    A képviselőcsoport (párt parlamenti szervezete). Parlamenti jogok
+    nagy része a frakción keresztül gyakorolható.
+  reszletes: >
+    A frakció rengeteg parlamenti jogosítvány birtokosa: napirend előtti
+    felszólalás, vezérszónoklat, időkeret-részesedés, bizottsági hely.
+    A frakció megalakulásához a pártlista mandátummal rendelkező képviselők
+    legalább meghatározott számú tagja szükséges. A függetlenek ezen jogok
+    nagy részéből ki vannak zárva.
+  aliasok: ["képviselőcsoport", "frakció"]
+  jogforras: "Ogytv. 1-3. § (III. fejezet)"
+
+fuggetlen_kepviselo:
+  rovid_magyarazat: >
+    Az a képviselő, aki nem tagja egyetlen frakciónak sem.
+  reszletes: >
+    Lehet azért független, mert bejutáskor is függetlenként indult,
+    vagy mert pártja nem ért el frakcióalakításhoz elég mandátumot,
+    vagy mert kilépett/kizárták a frakcióból. Korlátozott felszólalási
+    lehetőségek jellemzik.
+  jogforras: "Ogytv."
+
+frakciovezeto:
+  rovid_magyarazat: >
+    A képviselőcsoport tagjai által megválasztott vezető. A Házbizottságban
+    szavazati joggal rendelkezik.
+  reszletes: >
+    A frakcióvezető képviseli a frakciót a Házbizottságban, koordinálja a
+    frakció parlamenti tevékenységét. Akadályoztatása esetén megbízottja jár el.
+  aliasok: ["képviselőcsoport vezetője"]
+  jogforras: "Ogytv. 1-3. §"
+
+# --- FELSZÓLALÁSI FORMÁK ---
 
 napirend_elotti:
   rovid_magyarazat: >
-    Az ülés napirendjének megállapítása előtt elmondható 5 perces felszólalás.
+    Az ülés napirendjének megállapítása előtt elmondható felszólalás.
     NEM kérdés, hanem közlés — nem várható rá kötelező válasz,
     de a kormány oldaláról gyakori a reakció.
   reszletes: >
@@ -18,25 +174,34 @@ napirend_elotti:
   pelda: >
     "Tisztelt Ház! A kormány a minap bejelentette..." — ezzel indul
     egy tipikus napirend előtti felszólalás.
-  aliasok: ["napirend előtti", "napirend előtti felszólalás", "np. elő"]
-  jogforras: "Házszabály — Sprint 2 pontosítja"
+  aliasok: ["napirend előtti", "napirend előtti felszólalás"]
+  jogforras: "Házszabály"
+
+napirend_utani:
+  rovid_magyarazat: >
+    Az ülésnap napirendjének lezárása után elmondható felszólalás.
+  reszletes: >
+    A napirend utáni felszólalás időkerete és szabályai hasonlóak
+    a napirend előttihez. Az ülésnap végén hangzik el.
+  aliasok: ["napirend utáni felszólalás"]
+  jogforras: "Házszabály"
 
 vezerszonoklat:
   rovid_magyarazat: >
-    Az általános vitában a frakciók által delegált "vezérszónok"
-    felszólalása, megnövelt időkerettel (a sima felszólaláshoz képest).
+    Az általános vitában a frakciók által delegált vezérszónok
+    felszólalása, megnövelt időkerettel.
   reszletes: >
     Minden parlamenti frakció egy-egy vezérszónokot jelöl ki egy adott
     törvényjavaslat általános vitájához. A vezérszónok a frakció
     hivatalos álláspontját fejti ki. Az időkeret frakcióarányosan
     oszlik meg, a vezérszónok időkerete a legnagyobb egyéni időkeret
     a vita során.
-  aliasok: ["vezér szónok", "frakciószónok"]
-  jogforras: "Házszabály — Sprint 2"
+  aliasok: ["vezér szónok", "frakciószónok", "vezérszónoki felszólalás"]
+  jogforras: "Házszabály"
 
 interpellacio:
   rovid_magyarazat: >
-    Képviselői eszköz a kormány ELLENŐRZÉSÉRE. A képviselő kérdést tesz
+    Képviselői eszköz a Kormány ELLENŐRZÉSÉRE. A képviselő kérdést tesz
     fel, a miniszter válaszol, majd a képviselő nyilatkozik, hogy
     elfogadja-e a választ. Elutasítás esetén a Ház szavaz.
   reszletes: >
@@ -45,102 +210,28 @@ interpellacio:
     sem, a miniszter formális kudarcot szenved. A gyakorlatban a
     kormánytöbbség általában elfogadja a válaszokat.
   aliasok: ["interpell", "interpellál"]
-  jogforras: "Alaptörvény 7. cikk (2) + Házszabály"
+  jogforras: "Alaptörvény 7. cikk (2) + Házszabály 42. §"
 
 kerdes:
   rovid_magyarazat: >
     Enyhébb ellenőrzési eszköz, mint az interpelláció. A képviselő
-    választ kér a minisztertől, de a válasz elfogadásáról NINCS
-    szavazás.
+    választ kér a minisztertől, de a válasz elfogadásáról NINCS szavazás.
   reszletes: >
     A kérdés célja a tájékoztatás. Szóbeli és írásbeli változata is
     létezik. A szóbeli kérdéseknek külön órájuk van az ülésnapon.
+  aliasok: ["szóbeli kérdés", "írásbeli kérdés"]
   jogforras: "Házszabály"
 
 azonnali_kerdes:
   rovid_magyarazat: >
-    "Azonnali kérdések órája" — a képviselő a miniszterhez közvetlenül,
-    minimális előzetes jelzéssel intézhet kérdést. Szigorú időkerettel,
-    gyors replika-szerkezetben.
+    Az azonnali kérdések órájában elhangzó kérdés — a képviselő
+    minimális előzetes jelzéssel intézhet kérdést a miniszterhez.
   reszletes: >
-    Az ülésnap meghatározott részében (jellemzően a hét elején), rövid
-    kérdés-válasz-viszonválasz struktúrában. A cél a kormánytagok
-    felkészültségének tesztelése is.
-  aliasok: ["azonnali"]
+    Az ülésnap meghatározott részében, rövid kérdés-válasz-viszonválasz
+    struktúrában. A cél a kormánytagok felkészültségének tesztelése is.
+    Szigorú időkeretek: 2 perc kérdés, 2 perc válasz, 1 perc viszonválasz.
+  aliasok: ["azonnali kérdés", "azonnali kérdések órája"]
   jogforras: "Házszabály"
-
-korelnok:
-  rovid_magyarazat: >
-    Az alakuló ülést vezető legidősebb jelenlévő képviselő, ameddig
-    meg nem választják a rendes Házelnököt.
-  reszletes: >
-    Az alkotmányos folytonosság biztosítéka: az új ciklus első
-    ülésének levezetéséhez nem kell megvárni, hogy legyen megválasztott
-    Házelnök. A korelnök mellett a két legfiatalabb képviselő látja el
-    a jegyzői feladatokat (korjegyzők).
-  aliasok: ["kor-elnök"]
-  jogforras: "Alaptörvény + Házszabály"
-
-hazbizottsag:
-  rovid_magyarazat: >
-    A Házelnök, alelnökök és a frakcióvezetők testülete. Operatív döntéseket
-    hoz az ülések napirendjéről, lefolyásáról.
-  reszletes: >
-    NEM egy "állandó bizottság" a Házszabály értelmében — ez a
-    parlamenti ügymenet motorja. Itt dől el, milyen napirendi javaslatok
-    kerülnek a plenáris ülés elé, itt osztják fel az időkereteket,
-    itt egyeztetnek ellenzék és kormánytöbbség.
-  jogforras: "Házszabály"
-
-frakcio:
-  rovid_magyarazat: >
-    A képviselőcsoport (párt parlamenti szervezete). Minimális
-    létszám kell hozzá.
-  reszletes: >
-    A frakció rengeteg parlamenti jogosítvány birtokosa: napirend
-    előtti felszólalás, vezérszónoklat, időkeret-részesedés, bizottsági
-    hely stb. A függetlenek ezen jogok nagy részéből ki vannak zárva.
-  aliasok: ["képviselőcsoport"]
-  jogforras: "2012. évi XXXVI. tv."
-  status: TODO_SPRINT2_LETSZAM_PONTOSAN
-
-fuggetlen_kepviselo:
-  rovid_magyarazat: >
-    Az a képviselő, aki nem tagja egyetlen frakciónak sem.
-  reszletes: >
-    Lehet azért független, mert már bejutáskor is függetlenként indult,
-    vagy mert pártja nem ért el frakcióalakításhoz elég mandátumot,
-    vagy mert kilépett/kizárták a frakcióból. Korlátozott felszólalási
-    lehetőségek jellemzik.
-
-sarkalatos:
-  rovid_magyarazat: >
-    Sarkalatos törvény = kétharmados törvény. A jelenlévő képviselők
-    2/3-a kell az elfogadásához.
-  reszletes: >
-    Az Alaptörvény nevesíti, mely témákhoz kell sarkalatos (2/3-os)
-    törvény. Pl.: választójog, nemzetiségek, egyházak, bíróságok,
-    ügyészség, Alkotmánybíróság.
-  aliasok: ["kétharmados"]
-  jogforras: "Alaptörvény T) cikk (4)"
-
-bizalmatlansag:
-  rovid_magyarazat: >
-    A Kormány megbuktatásának parlamenti eszköze. Magyarországon
-    KONSTRUKTÍV: egyben új miniszterelnök-jelöltet is meg kell nevezni.
-  reszletes: >
-    Az eredeti (destruktív) bizalmatlanság csak leváltaná a kormányt.
-    A konstruktív verzió csak akkor sikeres, ha van új MP-jelölt, akit
-    a többség támogat. Ez politikailag stabilizáló hatású: nem lehet
-    megbuktatni a kormányt, ha nincs alternatív többség.
-  aliasok: ["bizalmatlansági", "konstruktív bizalmatlanság"]
-  jogforras: "Alaptörvény 21. cikk"
-
-konstruktiv_bizalmatlansag:
-  rovid_magyarazat: >
-    Lásd: "bizalmatlansag". A magyar rendszerben minden bizalmatlansági
-    indítvány konstruktív, más alakja nem létezik.
-  aliasok: ["konstruktív bizalmatlanság"]
 
 szemelyes_nyilatkozat:
   rovid_magyarazat: >
@@ -149,10 +240,281 @@ szemelyes_nyilatkozat:
   reszletes: >
     2 perces időkeretben. A témához érdemben NEM lehet hozzászólni,
     csak a személyes érintettséget kell tisztázni.
+  aliasok: ["személyes nyilatkozat", "személyes érintettség"]
   jogforras: "Házszabály"
 
 ugyrendi_felszolalas:
   rovid_magyarazat: >
     Az ülésvezetéssel, az eljárás rendjével kapcsolatos közlés.
     Nem tartalmi vita — csak a Házszabály értelmezése.
+  aliasok: ["ügyrendi felszólalás", "ügyrendi"]
   jogforras: "Házszabály"
+
+# --- TÖRVÉNYHOZÁS ---
+
+torvenyjavaslat:
+  rovid_magyarazat: >
+    Az Országgyűlés elé terjesztett jogszabálytervezet, amelyből
+    elfogadás után törvény lesz.
+  reszletes: >
+    Törvényjavaslatot nyújthat be: a Kormány, bármely képviselő,
+    országgyűlési bizottság, a köztársasági elnök. A képviselő által
+    benyújtott javaslat az Országgyűlés elé kerülés előtt bizottsági
+    támogatást igényel. A Kormány benyújtott javaslatai automatikusan
+    napirendre kerülnek.
+  aliasok: ["törvényjavaslat", "T/ szám"]
+  jogforras: "Ogytv. + Házszabály"
+
+altalanos_vita:
+  rovid_magyarazat: >
+    A törvényjavaslat tárgyalásának első szakasza, ahol a javaslat
+    egészéről, elveiről, szabályozási koncepciójáról folyik a vita.
+  reszletes: >
+    Az általános vita során a vezérszónokok, majd az egyes képviselők
+    fejtik ki álláspontjukat. Az általános vita lezárása után lehet
+    módosító indítványokat benyújtani. Ha az Országgyűlés az általános
+    vitát lezárja, a javaslat részletes vitára bocsátható.
+  aliasok: ["általános vita"]
+  jogforras: "Házszabály 31-45. §"
+
+reszletes_vita:
+  rovid_magyarazat: >
+    A törvényjavaslat tárgyalásának második szakasza, ahol a konkrét
+    rendelkezéseket és módosító indítványokat vitatják meg.
+  reszletes: >
+    A részletes vita során a kijelölt bizottság vagy a plenáris ülés
+    tárgyalja a módosító javaslatokat. A bizottság ajánlást tesz
+    a módosítók támogatásáról vagy elutasításáról.
+  aliasok: ["részletes vita"]
+  jogforras: "Házszabály"
+
+modosito_inditvany:
+  rovid_magyarazat: >
+    A törvényjavaslathoz benyújtott módosítási javaslat. Az általános
+    vita lezárása után nyújtható be.
+  reszletes: >
+    Módosító indítványt bármely képviselő vagy bizottság benyújthat.
+    A benyújtási határidő: az általános vita lezárását követő harmadik
+    munkanap. Kapcsolódó módosító indítvány is benyújtható a módosító
+    indítványokhoz.
+  aliasok: ["módosító", "módosító indítvány", "módosító javaslat"]
+  jogforras: "Házszabály"
+
+zaroszavazas:
+  rovid_magyarazat: >
+    A törvényjavaslat végső elfogadásáról döntő szavazás.
+  reszletes: >
+    A zárószavazás előtt a törvényalkotási bizottság még tehet
+    zárószavazás előtti módosító javaslatot a koherencia érdekében.
+    A zárószavazáson az Országgyűlés a törvényjavaslat egészéről szavaz.
+  aliasok: ["zárószavazás", "végszavazás"]
+  jogforras: "Házszabály"
+
+kivetel_eljaras:
+  rovid_magyarazat: >
+    Gyorsított törvényhozási eljárás, ahol a szokásos tárgyalási
+    határidőket lerövidítik.
+  reszletes: >
+    A kivételes eljárásban történő tárgyalásról az Országgyűlés vita nélkül
+    határoz. Kivételes eljárásban a törvényjavaslat tárgyalása a benyújtás
+    utáni ülésnapon megkezdhető.
+  aliasok: ["kivételes eljárás", "sürgős tárgyalás"]
+  jogforras: "Házszabály"
+
+onallo_inditvany:
+  rovid_magyarazat: >
+    A képviselők által benyújtható, az Országgyűlés döntését igénylő
+    javaslat (nem törvényjavaslat, hanem pl. határozati javaslat,
+    politikai nyilatkozat).
+  reszletes: >
+    Önálló indítvány típusai: határozati javaslat, politikai nyilatkozat-tervezet,
+    jelentés, törvényjavaslat. A benyújtó a szervezeti és eljárási jogok
+    keretében terjeszti be.
+  aliasok: ["önálló indítvány", "határozati javaslat"]
+  jogforras: "Házszabály 27. §"
+
+# --- SZAVAZÁS, TÖBBSÉGEK ---
+
+sarkalatos:
+  rovid_magyarazat: >
+    Sarkalatos törvény = kétharmados törvény. A jelenlévő képviselők
+    2/3-a kell az elfogadásához.
+  reszletes: >
+    Az Alaptörvény nevesíti, mely témákhoz kell sarkalatos törvény.
+    Pl.: választójog, nemzetiségek, egyházak, bíróságok, ügyészség,
+    Alkotmánybíróság. A sarkalatos törvény elfogadásához és módosításához
+    a jelenlévő képviselők kétharmadának szavazata szükséges.
+  aliasok: ["kétharmados", "sarkalatos törvény", "2/3-os"]
+  jogforras: "Alaptörvény T) cikk (4)"
+
+minositett_tobbseg:
+  rovid_magyarazat: >
+    A jelenlévő képviselők több mint felénél vagy kétharmadánál
+    nagyobb arányú szavazati támogatás.
+  reszletes: >
+    Minősített többség szükséges: sarkalatos törvényekhez (2/3 jelenlévő),
+    Alaptörvény módosításhoz (2/3 összes képviselő), Házszabály módosításhoz
+    (2/3 jelenlévő). Az egyszerű többségnél (50%+1 jelenlévő) magasabb
+    küszöb védi az alkotmányos intézményeket.
+  aliasok: ["minősített többség", "kétharmados többség"]
+  jogforras: "Alaptörvény S) és T) cikk"
+
+hatarozatkepesseg:
+  rovid_magyarazat: >
+    Az Országgyűlés határozatképes, ha a képviselők több mint fele jelen van.
+  reszletes: >
+    A határozatképességet az ülés megnyitásakor és minden szavazás előtt
+    ellenőrizni kell. Ha az Országgyűlés nem határozatképes, az ülést
+    el kell napolni vagy be kell rekeszteni.
+  aliasok: ["határozatképesség", "kvórum"]
+  jogforras: "Alaptörvény + Házszabály"
+
+titkos_szavazas:
+  rovid_magyarazat: >
+    Borítékos vagy elektronikus szavazás, ahol a szavazatok nem
+    azonosíthatóak. A Házszabály meghatározott esetekre írja elő.
+  reszletes: >
+    Titkos szavazás szükséges: házelnök megválasztása, köztársasági elnök
+    megválasztása, alkotmánybíró megválasztása. A titkos szavazás
+    lebonyolításáért a jegyzők felelnek.
+  aliasok: ["titkos szavazás"]
+  jogforras: "Házszabály"
+
+# --- ELLENŐRZÉS, FELELŐSSÉG ---
+
+bizalmatlansag:
+  rovid_magyarazat: >
+    A Kormány megbuktatásának parlamenti eszköze. Magyarországon
+    KONSTRUKTÍV: egyben új miniszterelnök-jelöltet is meg kell nevezni.
+  reszletes: >
+    A konstruktív bizalmatlansági indítvány csak akkor sikeres, ha van
+    új miniszterelnök-jelölt, akit a többség támogat. Az összes képviselő
+    több mint felének szavazata szükséges. Ez politikailag stabilizáló
+    hatású: nem lehet megbuktatni a kormányt, ha nincs alternatív többség.
+  aliasok: ["bizalmatlansági indítvány", "konstruktív bizalmatlanság"]
+  jogforras: "Alaptörvény 21. cikk"
+
+konstruktiv_bizalmatlansag:
+  rovid_magyarazat: >
+    Lásd: bizalmatlansag. A magyar rendszerben minden bizalmatlansági
+    indítvány konstruktív, más alakja nem létezik.
+  aliasok: ["konstruktív bizalmatlanság"]
+
+bizalmi_szavazas:
+  rovid_magyarazat: >
+    A miniszterelnök maga kérheti, hogy az Országgyűlés szavazzon
+    a Kormány iránti bizalomról.
+  reszletes: >
+    Ha a bizalmi szavazáson az Országgyűlés nem fejezi ki a bizalmát,
+    a miniszterelnök köteles lemondani. A bizalmi kérdést a miniszterelnök
+    összekötheti egy törvényjavaslat elfogadásával is.
+  aliasok: ["bizalmi szavazás"]
+  jogforras: "Alaptörvény 21. cikk"
+
+# --- AZ ÜLÉS RENDJE ---
+
+napirend:
+  rovid_magyarazat: >
+    Az ülés(ek) tárgyalási programja, amelyet a Házbizottság javaslatára
+    az Országgyűlés szavazással állapít meg.
+  reszletes: >
+    A napirendet a házelnök terjeszti az Országgyűlés elé a Házbizottság
+    javaslatára. A napirend tartalmazza a tárgyalandó törvényjavaslatokat,
+    határozati javaslatokat, interpellációkat, kérdéseket, beszámolókat.
+    A napirend módosítására a Házbizottság és az Országgyűlés jogosult.
+  aliasok: ["napirend", "napirendjavaslat"]
+  jogforras: "Házszabály"
+
+ulesszak:
+  rovid_magyarazat: >
+    Az Országgyűlés évente két rendes ülésszakban ülésezik:
+    tavaszi (február–június) és őszi (szeptember–december).
+  reszletes: >
+    A rendes ülésszakot a házelnök hívja össze. Rendkívüli ülésszak
+    összehívását a köztársasági elnök, a Kormány vagy a képviselők
+    egyötöde kérheti.
+  aliasok: ["ülésszak", "tavaszi ülésszak", "őszi ülésszak"]
+  jogforras: "Alaptörvény 5. cikk"
+
+rendkivuli_ulesszak:
+  rovid_magyarazat: >
+    A rendes ülésszakon kívül összehívott ülésszak vagy ülés,
+    sürgős ügy tárgyalására.
+  reszletes: >
+    Összehívást kérhet: a köztársasági elnök, a Kormány, vagy a képviselők
+    egyötöde írásban. A kérelemben meg kell jelölni az indokot, a javasolt
+    időpontot és napirendet.
+  aliasok: ["rendkívüli ülésszak", "rendkívüli ülés"]
+  jogforras: "Ogytv. + Alaptörvény 5. cikk"
+
+# --- EGYÉB FONTOS FOGALMAK ---
+
+nemzetisegi_szoszolo:
+  rovid_magyarazat: >
+    A Magyarországon élő nemzetiségek parlamenti képviselője, aki
+    tanácskozási joggal vesz részt az Országgyűlés munkájában.
+  reszletes: >
+    A nemzetiségi szószóló szavazati jog nélkül vesz részt a munkában,
+    de felszólalhat a nemzetiségeket érintő ügyekben. A nemzetiségeket
+    képviselő bizottság munkájában részt vesz.
+  aliasok: ["nemzetiségi szószóló", "szószóló"]
+  jogforras: "Ogytv."
+
+mentelmi_jog:
+  rovid_magyarazat: >
+    A képviselő sérthetetlensége: büntetőeljárás vagy szabálysértési
+    eljárás csak az Országgyűlés hozzájárulásával indítható.
+  reszletes: >
+    A mentelmi jog két eleme: a felelőtlenség (a képviselő megbízatása
+    során tett nyilatkozatáért, szavazatáért nem vonható felelősségre)
+    és a sérthetetlenség (büntetőeljáráshoz parlamenti hozzájárulás kell).
+    A mentelmi jog felfüggesztéséről a Mentelmi bizottság javaslatára
+    az Országgyűlés dönt.
+  aliasok: ["mentelmi jog", "mentelmi ügy", "sérthetetlenség"]
+  jogforras: "Alaptörvény 4. cikk + Ogytv."
+
+osszeферhetetlenseg:
+  rovid_magyarazat: >
+    A képviselő nem tölthet be bizonyos más tisztségeket, és nem
+    folytathat bizonyos tevékenységeket a megbízatása mellett.
+  reszletes: >
+    Az összeférhetetlenség szabályai biztosítják, hogy a képviselő
+    függetlenül tudja ellátni a feladatát. Ha összeférhetetlenségi
+    helyzet áll fenn, azt a képviselőnek meg kell szüntetnie, különben
+    megbízatása megszűnik.
+  aliasok: ["összeférhetetlenség"]
+  jogforras: "Ogytv. + Alaptörvény"
+
+kulonleges_jogrend:
+  rovid_magyarazat: >
+    Rendkívüli helyzetek (háború, szükségállapot, veszélyhelyzet) kezelésére
+    szolgáló alkotmányos keret, amelyben az Országgyűlés jogkörei módosulnak.
+  reszletes: >
+    Különleges jogrend esetén az Alaptörvény lehetővé teszi egyes alapjogok
+    felfüggesztését vagy korlátozását. A hadiállapot és a szükségállapot
+    kihirdetéséhez az összes képviselő kétharmadának szavazata szükséges.
+  aliasok: ["különleges jogrend", "szükségállapot", "hadiállapot", "veszélyhelyzet"]
+  jogforras: "Alaptörvény 48-54. cikk"
+
+tanacskozasi_jog:
+  rovid_magyarazat: >
+    Felszólalási jog szavazati jog nélkül. A köztársasági elnök, a Kormány tagjai,
+    az Alkotmánybíróság elnöke és mások tanácskozási joggal vehetnek részt az üléseken.
+  reszletes: >
+    A tanácskozási joggal rendelkező személyek bármikor felszólalhatnak az Országgyűlés
+    ülésén, de szavazati joguk nincs. Ez biztosítja a hatalmi ágak közötti párbeszédet.
+  aliasok: ["tanácskozási jog"]
+  jogforras: "Ogytv."
+
+feloszlatas:
+  rovid_magyarazat: >
+    Az Országgyűlés feloszlatásának joga a köztársasági elnököt illeti meg,
+    meghatározott feltételek mellett.
+  reszletes: >
+    A köztársasági elnök feloszlathatja az Országgyűlést, ha az alakuló ülésétől
+    számított negyven napon belül nem választja meg a miniszterelnököt,
+    vagy ha nem fogadja el a következő évi központi költségvetést március 31-éig.
+    Feloszlatás előtt ki kell kérni a házelnök, a miniszterelnök és a frakciók
+    vezetőinek véleményét.
+  aliasok: ["feloszlatás", "Országgyűlés feloszlatása"]
+  jogforras: "Alaptörvény 3. cikk"

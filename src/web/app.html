@@ -31,7 +31,8 @@ header p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
 .card-detail{display:none;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--border)}
 .card.open .card-detail{display:block}
 .card-body{font-size:.85rem;color:var(--text)}.card-body p{margin-bottom:.4rem}
-.card-ref{display:inline-block;margin-top:.3rem;font-size:.75rem;color:var(--blue);background:rgba(94,173,242,.08);padding:.15rem .5rem;border-radius:4px}
+.card-ref{display:inline-block;margin-top:.3rem;font-size:.75rem;color:var(--blue);background:rgba(94,173,242,.08);padding:.15rem .5rem;border-radius:4px;cursor:pointer;transition:background .15s}
+.card-ref:hover{background:rgba(94,173,242,.2);text-decoration:underline}
 .pill{display:inline-block;padding:.2rem .6rem;border-radius:20px;font-size:.78rem;font-weight:700;margin:.15rem .15rem .15rem 0}
 .pill-gold{background:rgba(232,184,75,.15);color:var(--gold)}
 .pill-green{background:rgba(74,222,128,.12);color:var(--green)}
@@ -40,13 +41,18 @@ header p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
 .pill-muted{background:rgba(139,143,160,.1);color:var(--muted)}
 .result{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem;margin-bottom:.5rem}
 .result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}
-.result-ref{font-size:.78rem;color:var(--blue);font-weight:600}
+.result-ref{font-size:.78rem;color:var(--blue);font-weight:600;cursor:pointer}
+.result-ref:hover{text-decoration:underline}
 .result-score{font-size:.7rem;color:var(--muted);background:var(--surface2);padding:.1rem .4rem;border-radius:3px}
 .result-text{font-size:.82rem;color:var(--text);white-space:pre-wrap;max-height:200px;overflow-y:auto}
 .related{margin-top:.6rem}
 .related-title{font-size:.75rem;color:var(--accent-light);font-weight:600;margin-bottom:.3rem}
-.related-item{font-size:.8rem;color:var(--text);padding:.3rem .5rem;background:var(--surface2);border-radius:4px;margin-bottom:.3rem;white-space:pre-wrap;max-height:120px;overflow-y:auto}
+.related-item{font-size:.8rem;color:var(--text);padding:.4rem .6rem;background:var(--surface2);border-radius:4px;margin-bottom:.3rem;cursor:pointer;transition:border-color .15s;border:1px solid transparent}
+.related-item:hover{border-color:var(--blue)}
 .related-ref{font-size:.72rem;color:var(--blue);font-weight:600}
+.related-full{display:none;white-space:pre-wrap;margin-top:.3rem;max-height:300px;overflow-y:auto;font-size:.8rem;color:var(--text)}
+.related-item.expanded .related-full{display:block}
+.related-item .preview-text{color:var(--muted);font-size:.78rem}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 @media(max-width:640px){.grid-2{grid-template-columns:1fr}}
 .steps-list{counter-reset:step;padding:0;list-style:none;margin-top:.5rem}
@@ -145,15 +151,43 @@ function toggle(el) {
         .then(function(r){return r.json();})
         .then(function(data){
           if (!data.length || data[0].hiba) { rel.innerHTML = ''; return; }
-          var h = '<div class="related-title">Kapcsol&#243;d&#243; h&#225;zszab&#225;lyi rendelkez&#233;sek:</div>';
+          var h = '<div class="related-title">Kapcsol&#243;d&#243; hat&#225;lyos sz&#246;veg (kattints a kinyit&#225;shoz):</div>';
           for (var i = 0; i < data.length; i++) {
-            h += '<div class="related-item"><span class="related-ref">' + esc(data[i].hivatkozas||'') + '</span><br>' + esc((data[i].szoveg||'').substring(0,300)) + '</div>';
+            var txt = data[i].szoveg || '';
+            var preview = txt.substring(0,120).replace(/\n/g,' ');
+            h += '<div class="related-item" onclick="toggleRelated(this,event)">';
+            h += '<span class="related-ref">' + esc(data[i].hivatkozas||'') + '</span>';
+            h += ' <span class="preview-text">' + esc(preview) + '...</span>';
+            h += '<div class="related-full">' + esc(txt) + '</div>';
+            h += '</div>';
           }
           rel.innerHTML = h;
         })
         .catch(function(){ rel.innerHTML = ''; });
     }
   }
+}
+
+function goToSource(query, corpus, evt) {
+  if (evt) evt.stopPropagation();
+  corpus = corpus || 'hazszabaly';
+  // switch to search tab
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('.panel');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+  tabs[0].classList.add('active');
+  document.getElementById('panel-search').classList.add('active');
+  // set query and corpus
+  document.getElementById('q').value = query;
+  document.getElementById('corpus').value = corpus;
+  window.scrollTo(0, 0);
+  doSearch();
+}
+
+function toggleRelated(el, evt) {
+  if (evt) evt.stopPropagation();
+  el.classList.toggle('expanded');
 }
 
 function doSearch() {
@@ -169,7 +203,8 @@ function doSearch() {
       var h = '';
       for (var i = 0; i < data.length; i++) {
         var d = data[i];
-        h += '<div class="result"><div class="result-header"><span class="result-ref">' + esc(d.hivatkozas||'') + '</span><span class="result-score">' + Math.round((d.relevancia||0)*100) + '%</span></div><div class="result-text">' + esc(d.szoveg||'') + '</div></div>';
+        var corpus2 = document.getElementById('corpus').value;
+        h += '<div class="result"><div class="result-header"><span class="result-ref" onclick="goToSource(\'' + esc(d.hivatkozas||'').replace(/'/g,'') + '\',\'' + corpus2 + '\',event)">' + esc(d.hivatkozas||'') + '</span><span class="result-score">' + Math.round((d.relevancia||0)*100) + '%</span></div><div class="result-text">' + esc(d.szoveg||'') + '</div></div>';
       }
       box.innerHTML = h;
     })
@@ -190,7 +225,7 @@ fetch('/api/fogalmak').then(function(r){return r.json();}).then(function(data){
     if (v.rovid_magyarazat) h += '<p>' + esc(v.rovid_magyarazat) + '</p>';
     if (v.reszletes) h += '<p style="margin-top:.4rem">' + esc(v.reszletes) + '</p>';
     if (v.pelda) h += '<p style="color:var(--accent-light);font-style:italic;margin-top:.3rem">' + esc(v.pelda) + '</p>';
-    if (v.jogforras) h += '<span class="card-ref">' + esc(v.jogforras) + '</span>';
+    if (v.jogforras) h += ref(v.jogforras);
     h += '</div><div class="related"></div></div></div>';
   }
   box.innerHTML = h + '</div>';
@@ -224,7 +259,7 @@ fetch('/api/idokeretek').then(function(r){return r.json();}).then(function(data)
       var vv = v.viszonvalasz;
       h += '<p style="margin-top:.3rem"><span class="pill pill-muted">Viszonv&#225;lasz: ' + (vv.idokeret_perc||'?') + ' perc</span></p>';
     }
-    if (v.jogforras) h += '<span class="card-ref">' + esc(v.jogforras) + '</span>';
+    if (v.jogforras) h += ref(v.jogforras);
     h += '</div><div class="related"></div></div></div>';
   }
   box.innerHTML = h;
@@ -247,7 +282,7 @@ fetch('/api/szavazas').then(function(r){return r.json();}).then(function(data){
     if (v.pelda_tamak) {
       h += '<p style="margin-top:.3rem;color:var(--muted)"><strong>P&#233;ld&#225;k:</strong> ' + esc(v.pelda_tamak.join(', ')) + '</p>';
     }
-    if (v.jogforras) h += '<span class="card-ref">' + esc(v.jogforras) + '</span>';
+    if (v.jogforras) h += ref(v.jogforras);
     h += '</div><div class="related"></div></div></div>';
   }
   box.innerHTML = h + '</div>';
@@ -275,7 +310,7 @@ fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
         var l = v.lepesek[j];
         h += '<li><span class="step-title">' + esc(l.cim||'') + '</span>';
         if (l.leiras) h += '<br><span style="color:var(--muted);font-size:.8rem">' + esc(l.leiras) + '</span>';
-        if (l.jogforras) h += '<br><span class="card-ref">' + esc(l.jogforras) + '</span>';
+        if (l.jogforras) h += '<br>' + ref(l.jogforras);
         h += '</li>';
       }
       h += '</ol>';
@@ -286,7 +321,7 @@ fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
       }
       h += '</ol>';
     }
-    if (v.jogforras) h += '<span class="card-ref">' + esc(v.jogforras) + '</span>';
+    if (v.jogforras) h += ref(v.jogforras);
     h += '</div><div class="related"></div></div></div>';
   }
   box.innerHTML = h;
@@ -297,6 +332,16 @@ function esc(s) {
   var d = document.createElement('div');
   d.textContent = String(s);
   return d.innerHTML;
+}
+
+function ref(jogforras) {
+  if (!jogforras) return '';
+  // Detect corpus from reference text
+  var corpus = 'hazszabaly';
+  var jf = jogforras.toLowerCase();
+  if (jf.indexOf('alapt') >= 0) corpus = 'alaptorveny';
+  else if (jf.indexOf('ogytv') >= 0 || jf.indexOf('xxxvi') >= 0 || jf.indexOf('2012') >= 0) corpus = 'ogy_torveny';
+  return '<span class="card-ref" onclick="goToSource(\'' + esc(jogforras).replace(/'/g,'\\&#39;') + '\',\'' + corpus + '\',event)">' + esc(jogforras) + ' &#8594;</span>';
 }
 </script>
 </body>
