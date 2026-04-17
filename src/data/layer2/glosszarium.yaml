@@ -1,0 +1,158 @@
+# ==============================================================================
+# PARLAMENTI GLOSSZÁRIUM
+# ==============================================================================
+# Parlamenti szakszavak kezdőbarát magyarázata.
+# Minden bejegyzés: rövid_magyarazat, reszletes, pelda, aliasok, jogforras
+# ==============================================================================
+
+napirend_elotti:
+  rovid_magyarazat: >
+    Az ülés napirendjének megállapítása előtt elmondható 5 perces felszólalás.
+    NEM kérdés, hanem közlés — nem várható rá kötelező válasz,
+    de a kormány oldaláról gyakori a reakció.
+  reszletes: >
+    A képviselő bármely, az Országgyűlést érintő ügyben elmondhatja
+    álláspontját. Gyakorlatilag napi politikai kommentár műfaj,
+    a frakciók ezen keresztül szólalnak fel közvetlenül az ülés
+    elején. Minden frakció kap lehetőséget ülésnaponként.
+  pelda: >
+    "Tisztelt Ház! A kormány a minap bejelentette..." — ezzel indul
+    egy tipikus napirend előtti felszólalás.
+  aliasok: ["napirend előtti", "napirend előtti felszólalás", "np. elő"]
+  jogforras: "Házszabály — Sprint 2 pontosítja"
+
+vezerszonoklat:
+  rovid_magyarazat: >
+    Az általános vitában a frakciók által delegált "vezérszónok"
+    felszólalása, megnövelt időkerettel (a sima felszólaláshoz képest).
+  reszletes: >
+    Minden parlamenti frakció egy-egy vezérszónokot jelöl ki egy adott
+    törvényjavaslat általános vitájához. A vezérszónok a frakció
+    hivatalos álláspontját fejti ki. Az időkeret frakcióarányosan
+    oszlik meg, a vezérszónok időkerete a legnagyobb egyéni időkeret
+    a vita során.
+  aliasok: ["vezér szónok", "frakciószónok"]
+  jogforras: "Házszabály — Sprint 2"
+
+interpellacio:
+  rovid_magyarazat: >
+    Képviselői eszköz a kormány ELLENŐRZÉSÉRE. A képviselő kérdést tesz
+    fel, a miniszter válaszol, majd a képviselő nyilatkozik, hogy
+    elfogadja-e a választ. Elutasítás esetén a Ház szavaz.
+  reszletes: >
+    A kérdéstől különbözik: itt a válasz elfogadásáról VITA és SZAVAZÁS
+    lehet. Ha a képviselő nem fogadja el a választ és az Országgyűlés
+    sem, a miniszter formális kudarcot szenved. A gyakorlatban a
+    kormánytöbbség általában elfogadja a válaszokat.
+  aliasok: ["interpell", "interpellál"]
+  jogforras: "Alaptörvény 7. cikk (2) + Házszabály"
+
+kerdes:
+  rovid_magyarazat: >
+    Enyhébb ellenőrzési eszköz, mint az interpelláció. A képviselő
+    választ kér a minisztertől, de a válasz elfogadásáról NINCS
+    szavazás.
+  reszletes: >
+    A kérdés célja a tájékoztatás. Szóbeli és írásbeli változata is
+    létezik. A szóbeli kérdéseknek külön órájuk van az ülésnapon.
+  jogforras: "Házszabály"
+
+azonnali_kerdes:
+  rovid_magyarazat: >
+    "Azonnali kérdések órája" — a képviselő a miniszterhez közvetlenül,
+    minimális előzetes jelzéssel intézhet kérdést. Szigorú időkerettel,
+    gyors replika-szerkezetben.
+  reszletes: >
+    Az ülésnap meghatározott részében (jellemzően a hét elején), rövid
+    kérdés-válasz-viszonválasz struktúrában. A cél a kormánytagok
+    felkészültségének tesztelése is.
+  aliasok: ["azonnali"]
+  jogforras: "Házszabály"
+
+korelnok:
+  rovid_magyarazat: >
+    Az alakuló ülést vezető legidősebb jelenlévő képviselő, ameddig
+    meg nem választják a rendes Házelnököt.
+  reszletes: >
+    Az alkotmányos folytonosság biztosítéka: az új ciklus első
+    ülésének levezetéséhez nem kell megvárni, hogy legyen megválasztott
+    Házelnök. A korelnök mellett a két legfiatalabb képviselő látja el
+    a jegyzői feladatokat (korjegyzők).
+  aliasok: ["kor-elnök"]
+  jogforras: "Alaptörvény + Házszabály"
+
+hazbizottsag:
+  rovid_magyarazat: >
+    A Házelnök, alelnökök és a frakcióvezetők testülete. Operatív döntéseket
+    hoz az ülések napirendjéről, lefolyásáról.
+  reszletes: >
+    NEM egy "állandó bizottság" a Házszabály értelmében — ez a
+    parlamenti ügymenet motorja. Itt dől el, milyen napirendi javaslatok
+    kerülnek a plenáris ülés elé, itt osztják fel az időkereteket,
+    itt egyeztetnek ellenzék és kormánytöbbség.
+  jogforras: "Házszabály"
+
+frakcio:
+  rovid_magyarazat: >
+    A képviselőcsoport (párt parlamenti szervezete). Minimális
+    létszám kell hozzá.
+  reszletes: >
+    A frakció rengeteg parlamenti jogosítvány birtokosa: napirend
+    előtti felszólalás, vezérszónoklat, időkeret-részesedés, bizottsági
+    hely stb. A függetlenek ezen jogok nagy részéből ki vannak zárva.
+  aliasok: ["képviselőcsoport"]
+  jogforras: "2012. évi XXXVI. tv."
+  status: TODO_SPRINT2_LETSZAM_PONTOSAN
+
+fuggetlen_kepviselo:
+  rovid_magyarazat: >
+    Az a képviselő, aki nem tagja egyetlen frakciónak sem.
+  reszletes: >
+    Lehet azért független, mert már bejutáskor is függetlenként indult,
+    vagy mert pártja nem ért el frakcióalakításhoz elég mandátumot,
+    vagy mert kilépett/kizárták a frakcióból. Korlátozott felszólalási
+    lehetőségek jellemzik.
+
+sarkalatos:
+  rovid_magyarazat: >
+    Sarkalatos törvény = kétharmados törvény. A jelenlévő képviselők
+    2/3-a kell az elfogadásához.
+  reszletes: >
+    Az Alaptörvény nevesíti, mely témákhoz kell sarkalatos (2/3-os)
+    törvény. Pl.: választójog, nemzetiségek, egyházak, bíróságok,
+    ügyészség, Alkotmánybíróság.
+  aliasok: ["kétharmados"]
+  jogforras: "Alaptörvény T) cikk (4)"
+
+bizalmatlansag:
+  rovid_magyarazat: >
+    A Kormány megbuktatásának parlamenti eszköze. Magyarországon
+    KONSTRUKTÍV: egyben új miniszterelnök-jelöltet is meg kell nevezni.
+  reszletes: >
+    Az eredeti (destruktív) bizalmatlanság csak leváltaná a kormányt.
+    A konstruktív verzió csak akkor sikeres, ha van új MP-jelölt, akit
+    a többség támogat. Ez politikailag stabilizáló hatású: nem lehet
+    megbuktatni a kormányt, ha nincs alternatív többség.
+  aliasok: ["bizalmatlansági", "konstruktív bizalmatlanság"]
+  jogforras: "Alaptörvény 21. cikk"
+
+konstruktiv_bizalmatlansag:
+  rovid_magyarazat: >
+    Lásd: "bizalmatlansag". A magyar rendszerben minden bizalmatlansági
+    indítvány konstruktív, más alakja nem létezik.
+  aliasok: ["konstruktív bizalmatlanság"]
+
+szemelyes_nyilatkozat:
+  rovid_magyarazat: >
+    Ha egy képviselőt személyében érintő kijelentés hangzott el,
+    reagálhat rá — de NEM vitára, csak rövid tisztázásra.
+  reszletes: >
+    2 perces időkeretben. A témához érdemben NEM lehet hozzászólni,
+    csak a személyes érintettséget kell tisztázni.
+  jogforras: "Házszabály"
+
+ugyrendi_felszolalas:
+  rovid_magyarazat: >
+    Az ülésvezetéssel, az eljárás rendjével kapcsolatos közlés.
+    Nem tartalmi vita — csak a Házszabály értelmezése.
+  jogforras: "Házszabály"

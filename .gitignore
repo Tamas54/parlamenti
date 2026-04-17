@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+CLAUDE.md
+
+.DS_Store
+.idea/
+.vscode/
+
+# Chroma DB (generated)
+src/data/chroma/
+
+# Env
+.env
+.env.local

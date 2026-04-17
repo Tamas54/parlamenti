@@ -1,0 +1,69 @@
+# ==============================================================================
+# SZAVAZÁSI SZABÁLYOK
+# ==============================================================================
+# Milyen többség kell? Nyílt vagy titkos? Minősített vagy egyszerű?
+# ==============================================================================
+
+egyszeru_torveny:
+  nev: "Egyszerű többségű törvény"
+  szukseges_tobbseg: "A jelenlévő képviselők több mint fele"
+  minositett_e: false
+  mod: "nyilt_elektronikus"
+  jogforras: "Alaptörvény T) cikk + Házszabály"
+
+sarkalatos_torveny:
+  nev: "Sarkalatos (kétharmados) törvény"
+  szukseges_tobbseg: "A jelenlévő képviselők kétharmada"
+  minositett_e: true
+  mod: "nyilt_elektronikus"
+  jogforras: "Alaptörvény T) cikk (4)"
+  pelda_tamak:
+    - "Választójogi törvény"
+    - "Nemzetiségi törvény"
+    - "Bíróságok szervezete"
+    - "Ügyészségi törvény"
+
+alaptorveny_modositas:
+  nev: "Alaptörvény módosítása"
+  szukseges_tobbseg: "Az összes képviselő kétharmada"
+  minositett_e: true
+  kulonleges: >
+    NEM a jelenlévők, hanem az ÖSSZES országgyűlési képviselő kétharmada.
+    Ez a különbség kritikus.
+  mod: "nyilt_elektronikus"
+  jogforras: "Alaptörvény S) cikk (2)"
+
+hazszabaly_modositas:
+  nev: "Házszabály módosítása"
+  szukseges_tobbseg: "A jelenlévő képviselők kétharmada"
+  minositett_e: true
+  status: TODO_SPRINT2
+
+koztarsasagi_elnok_valasztas:
+  nev: "Köztársasági elnök megválasztása"
+  szukseges_tobbseg: >
+    Első és második fordulóban az összes képviselő kétharmada,
+    harmadik fordulóban a jelenlévők többsége.
+  mod: "titkos"
+  jogforras: "Alaptörvény 11. cikk"
+
+bizalmatlansag:
+  nev: "Bizalmatlansági indítvány (konstruktív)"
+  szukseges_tobbseg: "Az összes képviselő több mint fele"
+  kulonleges: >
+    Konstruktív bizalmatlansági indítvány: új miniszterelnök-jelöltet
+    is meg kell nevezni. Az elfogadás a régi miniszterelnök megbízatásának
+    megszűnését és egyben az új megválasztását jelenti.
+  jogforras: "Alaptörvény 21. cikk"
+
+haborus_helyzet:
+  nev: "Hadiállapot kinyilvánítása / különleges jogrend"
+  szukseges_tobbseg: "Az összes képviselő kétharmada"
+  jogforras: "Alaptörvény 48. cikk + 49. cikk"
+  status: TODO_SPRINT2_RESZLETES
+
+alkotmanybiro_valasztas:
+  nev: "Alkotmánybíró megválasztása"
+  szukseges_tobbseg: "Az összes képviselő kétharmada"
+  mod: "titkos"
+  jogforras: "Alaptörvény 24. cikk (8)"

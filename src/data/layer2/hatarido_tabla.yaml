@@ -1,0 +1,38 @@
+# ==============================================================================
+# PARLAMENTI HATÁRIDŐK
+# ==============================================================================
+# Benyújtási, válaszadási, kézbesítési határidők.
+# Sprint 2-ben részletesen kurálandó.
+# ==============================================================================
+
+modosito_inditvany:
+  nev: "Módosító indítvány benyújtása"
+  hatarido: "Az általános vita lezárását követő harmadik munkanap 16 óráig"
+  szamitasi_mod: "munkanap"
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2
+
+kapcsolodo_modosito:
+  nev: "Kapcsolódó módosító indítvány"
+  status: TODO_SPRINT2
+
+kerdes_valasz:
+  nev: "Írásbeli kérdésre adott válasz"
+  hatarido_nap: 15
+  szamitasi_mod: "nap"
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2
+
+interpellacio_valasz:
+  nev: "Interpellációra adott válasz"
+  hatarido_nap: 30
+  szamitasi_mod: "nap"
+  status: TODO_SPRINT2
+
+napirend_kezbesites:
+  nev: "Napirend kézbesítése"
+  status: TODO_SPRINT2
+
+bizottsagi_allaspont:
+  nev: "Bizottsági állásfoglalás benyújtása"
+  status: TODO_SPRINT2

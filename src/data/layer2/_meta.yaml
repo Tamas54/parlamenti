@@ -1,0 +1,33 @@
+# ==============================================================================
+# META INFORMÁCIÓK
+# ==============================================================================
+
+adatforrasok:
+  hazszabaly:
+    nev: "Az Országgyűlésről szóló Házszabály"
+    jogszabaly: "10/2014. (II. 24.) OGY határozat"
+    url: "https://njt.hu/jogszabaly/2014-10-9-30"
+    letoltes_idopontja: "TODO_SPRINT3"
+    status: "SKELETON_PLACEHOLDER"
+  alaptorveny:
+    nev: "Magyarország Alaptörvénye"
+    kihirdetes: "2011. április 25."
+    url: "https://njt.hu/jogszabaly/A1100425.ATV"
+    status: "SKELETON_PLACEHOLDER"
+  ogy_torveny:
+    nev: "Az Országgyűlésről szóló törvény"
+    jogszabaly: "2012. évi XXXVI. törvény"
+    url: "https://njt.hu/jogszabaly/2012-36-00-00"
+    status: "SKELETON_PLACEHOLDER"
+
+altalanos_reteg:
+  leiras: >
+    Az általános parlamenti jogi réteg (Layer 0) absztraktabb, időtállóbb
+    tudást tartalmaz: parlamentarizmus alapelvei, összehasonlító parlamenti
+    jog, bevett eljárási gyakorlat, jogtudományi magyarázatok.
+  forrasok_tervezett:
+    - "Kukorelli István: Alkotmánytan"
+    - "Petrétei József: Az alkotmányos demokrácia alapintézményei"
+    - "Smuk Péter: Magyar alkotmányjog - Parlamenti jog"
+    - "Inter-Parliamentary Union dokumentumai"
+  status: "SPRINT2_TARTALMI_KIEGESZITES"

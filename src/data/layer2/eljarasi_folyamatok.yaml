@@ -1,0 +1,128 @@
+# ==============================================================================
+# ELJÁRÁSI FOLYAMATOK
+# ==============================================================================
+# A parlamenti folyamatok lépésről lépésre leírva.
+# Sprint 1 skeleton: alakuló ülés + általános ülés példa.
+# ==============================================================================
+
+alakulo_ules:
+  nev: "Az Országgyűlés alakuló ülése"
+  leiras_rovid: >
+    Az új ciklus első ülése, ahol a képviselők esküt tesznek, megválasztják
+    az Országgyűlés tisztségviselőit, és megalakulnak a frakciók.
+  leiras_hosszu: >
+    Az alakuló ülést a köztársasági elnök hívja össze. A levezető elnök
+    (korelnök) és a jegyzők a korelnökség alapján alakulnak meg
+    (legidősebb és legfiatalabb képviselők). A fő napirendi pontok:
+    megbízólevelek vizsgálata, eskütétel, tisztségviselő-választás,
+    frakcióalakulások bejelentése.
+  lepesek:
+    - cim: "Korelnökség megalakulása"
+      sorszam: 1
+      leiras: >
+        A legidősebb jelenlévő képviselő a korelnök, a két legfiatalabb
+        a jegyző. Ők vezetik az ülést a Házelnök megválasztásáig.
+      jogforras: "Alaptörvény 5. cikk + Házszabály — Sprint 2"
+    - cim: "Megbízólevelek és mentelmi nyilatkozatok"
+      sorszam: 2
+      leiras: >
+        Az Országos Választási Bizottság jelentése alapján a megbízólevelek
+        átadása, majd a képviselők vagyonnyilatkozat-tételi kötelezettségéről
+        szóló tájékoztatás.
+    - cim: "Képviselői eskütétel"
+      sorszam: 3
+      leiras: >
+        Minden képviselő esküt tesz az Alaptörvényre. Aki nem tesz esküt,
+        nem gyakorolhatja képviselői jogait.
+      jogforras: "Alaptörvény 4. cikk (4)"
+    - cim: "Házelnök és alelnökök megválasztása"
+      sorszam: 4
+      leiras: >
+        Titkos szavazással választják a Házelnököt, majd az alelnököket.
+        Az alelnökök száma a frakcióarányok alapján oszlik meg.
+    - cim: "Jegyzők megválasztása"
+      sorszam: 5
+    - cim: "Frakcióalakulások bejelentése"
+      sorszam: 6
+      leiras: >
+        A pártlista-alapon bejutott pártok frakciót alakíthatnak, a függetlenek
+        is csatlakozhatnak. A frakció megalakulásához legalább 5 képviselő kell
+        (jelenlegi szabályozás — Sprint 2-ben pontosítandó).
+    - cim: "Bizottságok megalakítása"
+      sorszam: 7
+      leiras: >
+        A Házszabályban kötelezően előírt állandó bizottságok megválasztása
+        (pl. Mentelmi, Alkotmányügyi, Gazdasági, Költségvetési stb.).
+  jogforras: "Alaptörvény 4-5. cikk + Házszabály I. Fejezet — Sprint 2-ben pontos §"
+  status: TODO_SPRINT2_RESZLETES_PONTOSITAS
+
+altalanos_ules:
+  nev: "Általános ülésnap menete"
+  leiras_rovid: >
+    Egy átlagos ülésnap menete a napirend megállapításától a bezárásig.
+  lepesek:
+    - cim: "Határozatképesség megállapítása"
+      sorszam: 1
+      leiras: "Jelenléti ív alapján."
+    - cim: "Napirend előtti felszólalások"
+      sorszam: 2
+      leiras: "Frakciónként 1-1 felszólalás, 5-5 perc + kormányválasz."
+      link_idokeret: "napirend_elotti"
+    - cim: "Napirend megállapítása"
+      sorszam: 3
+      leiras: "A Házbizottság javaslata alapján szavazással."
+    - cim: "Azonnali kérdések órája"
+      sorszam: 4
+      leiras: "Szerdán/csütörtökön, a Házszabály szerinti ütemben."
+      link_idokeret: "azonnali_kerdes"
+    - cim: "Napirendi pontok tárgyalása"
+      sorszam: 5
+      leiras: >
+        Törvényjavaslatok, határozati javaslatok, beszámolók általános
+        és részletes vitája, szavazás.
+    - cim: "Interpellációk"
+      sorszam: 6
+      leiras: "Külön napon, de az ülésnap keretében."
+      link_idokeret: "interpellacio"
+    - cim: "Kérdések"
+      sorszam: 7
+      link_idokeret: "kerdes"
+    - cim: "Napirend utáni felszólalások"
+      sorszam: 8
+      link_idokeret: "napirend_utani"
+    - cim: "Ülés bezárása"
+      sorszam: 9
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2
+
+torvenyalkotasi_eljaras:
+  nev: "A törvényalkotási eljárás"
+  leiras_rovid: >
+    Egy törvényjavaslat útja a benyújtástól a kihirdetésig.
+  status: TODO_SPRINT2_RESZLETES
+  lepesek_cimei:
+    - "Benyújtás (képviselő/Kormány/bizottság/köztársasági elnök)"
+    - "Házelnöki intézkedés (bizottsági kijelölés)"
+    - "Kijelölt bizottság általános vitára alkalmasságot állapít meg"
+    - "Általános vita a plenáris ülésen"
+    - "Részletes vita (bizottságban vagy plenáris)"
+    - "Módosító indítványok benyújtása"
+    - "Kijelölt bizottság részletes vita utáni jelentése"
+    - "Zárószavazás"
+    - "Köztársasági elnöki aláírás / vétó"
+    - "Kihirdetés a Magyar Közlönyben"
+
+kivetel_targyalas:
+  nev: "Kivételes eljárás"
+  status: TODO_SPRINT2
+
+sarkalatos_torveny:
+  nev: "Sarkalatos törvény (2/3-os) elfogadása"
+  kulonleges_szabaly: >
+    A jelenlévő képviselők kétharmadának szavazata szükséges.
+  jogforras: "Alaptörvény T) cikk (4) bekezdés"
+  status: TODO_SPRINT2
+
+bizalmi_szavazas:
+  nev: "Bizalmi / bizalmatlansági indítvány"
+  status: TODO_SPRINT2_KONSTRUKTIV_BIZALMATLANSAG

@@ -1,0 +1,16 @@
+# ===========================================================================
+# Parlamentaris Kompendium MCP — Python függőségek
+# ===========================================================================
+
+# Core MCP
+fastmcp>=2.0.0
+
+# Data
+pyyaml>=6.0.1
+
+# RAG (Sprint 3-ban aktiválódik — akkor uncomment-eld)
+# chromadb>=0.5.0
+# sentence-transformers>=3.0.0
+
+# HTTP server (FastMCP streamable-http transport alá)
+uvicorn>=0.30.0

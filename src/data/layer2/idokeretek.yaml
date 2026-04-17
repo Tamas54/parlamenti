@@ -1,0 +1,111 @@
+# ==============================================================================
+# PARLAMENTI FELSZÓLALÁSI IDŐKERETEK
+# ==============================================================================
+# Forrás: 10/2014. (II.24.) OGY határozat (Házszabály) hatályos változata
+# Hivatkozások: §-szám az adott Házszabály-rendelkezésre
+#
+# FIGYELEM: Ez a Sprint 1 skeleton tartalma.
+# A teljes kurálás Sprint 2-ben történik, jogász ellenőrzéssel.
+# ==============================================================================
+
+napirend_elotti:
+  nev: "Napirend előtti felszólalás"
+  leiras: >
+    Az ülés napirendjének megállapítása előtt, legfeljebb öt percben a
+    képviselő az Országgyűlést érintő bármely ügyben felszólalhat.
+  altalanos_idokeret_perc: 5
+  szereplok:
+    miniszterelnok:
+      idokeret_perc: 5
+      valasz_lehet_e: true
+      megjegyzes: "A miniszterelnök vagy az általa megjelölt miniszter válaszolhat."
+    miniszter:
+      idokeret_perc: 5
+      valasz_lehet_e: true
+    frakciovezeto:
+      idokeret_perc: 5
+      valasz_lehet_e: false
+      megjegyzes: "Frakciónként egy napirend előtti felszólalás ülésnaponként."
+    kepviselo:
+      idokeret_perc: 5
+      valasz_lehet_e: false
+  viszonvalasz:
+    lehet_e: true
+    idokeret_perc: 1
+    megjegyzes: "A napirend előtti felszólalásra adott válaszra a felszólaló 1 percben viszonválaszt mondhat."
+  jogforras: "Házszabály — pontos §-szám Sprint 2-ben ellenőrizve"
+  sprint1_figyelmezetes: >
+    EZ EGY KEZDŐ TARTALOM. A pontos időkeretek és §-hivatkozások
+    Sprint 2-ben kerülnek végleges ellenőrzésre.
+
+napirend_utani:
+  nev: "Napirend utáni felszólalás"
+  altalanos_idokeret_perc: 5
+  jogforras: "Házszabály — Sprint 2-ben ellenőrzendő"
+  status: TODO_SPRINT2
+
+interpellacio:
+  nev: "Interpelláció"
+  leiras: >
+    A képviselő interpellációban kérdést intézhet a Kormányhoz vagy
+    annak tagjához az illető szervezet feladatkörébe tartozó bármely
+    ügyben.
+  szereplok:
+    kepviselo_elso_felszolalas:
+      idokeret_perc: 3
+    miniszter_valasza:
+      idokeret_perc: 5
+    kepviselo_viszonvalasz:
+      idokeret_perc: 1
+      leiras: "A képviselő nyilatkozik, hogy elfogadja-e a választ."
+  szavazas_elfogadasrol: true
+  jogforras: "Házszabály + 2012. XXXVI. tv. — Sprint 2-ben pontosítandó"
+  status: TODO_SPRINT2_PONTOS_SZAMOK
+
+azonnali_kerdes:
+  nev: "Azonnali kérdések órája"
+  szereplok:
+    kerdes:
+      idokeret_perc: 2
+    valasz:
+      idokeret_perc: 2
+    viszonvalasz:
+      idokeret_perc: 1
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2_PONTOS_SZAMOK
+
+kerdes:
+  nev: "Kérdés"
+  szereplok:
+    kerdes:
+      idokeret_perc: 2
+    valasz:
+      idokeret_perc: 2
+  viszonvalasz_lehet_e: false
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2_PONTOS_SZAMOK
+
+vezerszonoklat:
+  nev: "Vezérszónoklat (frakciószónoki felszólalás)"
+  leiras: >
+    Az általános vitában frakciónként egy vezérszónok szólalhat fel
+    megnövelt időkerettel.
+  status: TODO_SPRINT2_KULON_SZABALYOZAS
+
+vita:
+  nev: "Általános / részletes vita"
+  status: TODO_SPRINT2_IDOKERET_RENDSZER
+
+szemelyes_nyilatkozat:
+  nev: "Személyes nyilatkozat (személyes érintettség)"
+  idokeret_perc: 2
+  mikor: "A napirendi pont tárgyalásának végén, vagy az ülés végén."
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2
+
+ugyrendi_felszolalas:
+  nev: "Ügyrendi felszólalás"
+  idokeret_perc: 2
+  leiras: "Az ülésvezetés rendjével kapcsolatos közlésre."
+  jogforras: "Házszabály — Sprint 2"
+  status: TODO_SPRINT2
