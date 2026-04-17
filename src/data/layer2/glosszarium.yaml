@@ -473,7 +473,7 @@ mentelmi_jog:
   aliasok: ["mentelmi jog", "mentelmi ügy", "sérthetetlenség"]
   jogforras: "Alaptörvény 4. cikk + Ogytv."
 
-osszeферhetetlenseg:
+osszeferhetetlenseg:
   rovid_magyarazat: >
     A képviselő nem tölthet be bizonyos más tisztségeket, és nem
     folytathat bizonyos tevékenységeket a megbízatása mellett.
