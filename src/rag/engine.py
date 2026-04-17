@@ -15,6 +15,7 @@ import json
 import logging
 import math
 import re
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -24,19 +25,29 @@ CHUNKS_DIR = Path(__file__).resolve().parent.parent / "data" / "layer1_chunks"
 
 # Hungarian stop words (frequent words that don't help search)
 STOP_WORDS = {
-    "a", "az", "és", "is", "van", "volt", "nem", "hogy", "egy", "ez",
-    "az", "meg", "de", "ha", "mint", "vagy", "sem", "még", "már",
-    "csak", "fel", "ki", "le", "be", "el", "rá", "ide", "oda",
+    "a", "az", "es", "is", "van", "volt", "nem", "hogy", "egy", "ez",
+    "meg", "de", "ha", "mint", "vagy", "sem", "meg", "mar",
+    "csak", "fel", "ki", "le", "be", "el", "ra", "ide", "oda",
     "amely", "amelyet", "amelynek", "amit", "aki", "akit", "akinek",
-    "illetve", "valamint", "továbbá", "illetőleg", "szerinti", "szerint",
-    "alapján", "értelmében", "vonatkozó", "vonatkozóan", "esetében",
-    "tekintetében", "keretében", "érdekében", "célból", "szemben",
+    "illetve", "valamint", "tovabba", "illetoleg", "szerinti", "szerint",
+    "alapjan", "ertelmeben", "vonatkozo", "vonatkozoan", "eseteben",
+    "tekinteteben", "kereteben", "erdekeben", "celbol", "szemben",
 }
 
 
+def _strip_accents(text: str) -> str:
+    """Remove Hungarian accents for accent-insensitive matching."""
+    # Handle Hungarian double-acute (ő, ű) specially
+    text = text.replace('ő', 'o').replace('Ő', 'O')
+    text = text.replace('ű', 'u').replace('Ű', 'U')
+    nfkd = unicodedata.normalize('NFKD', text)
+    return ''.join(c for c in nfkd if not unicodedata.combining(c))
+
+
 def _tokenize(text: str) -> list[str]:
-    """Simple Hungarian tokenizer: lowercase, split on non-alpha, filter stops."""
-    tokens = re.findall(r'[a-záéíóöőúüű]+', text.lower())
+    """Hungarian tokenizer: lowercase, strip accents, split on non-alpha."""
+    text = _strip_accents(text.lower())
+    tokens = re.findall(r'[a-z]+', text)
     return [t for t in tokens if len(t) > 2 and t not in STOP_WORDS]
 
 
