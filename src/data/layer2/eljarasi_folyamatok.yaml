@@ -46,8 +46,7 @@ alakulo_ules:
       sorszam: 6
       leiras: >
         A pártlista-alapon bejutott pártok frakciót alakíthatnak, a függetlenek
-        is csatlakozhatnak. A frakció megalakulásához legalább 5 képviselő kell
-        (jelenlegi szabályozás — Sprint 2-ben pontosítandó).
+        is csatlakozhatnak. Az Országgyűlés 199 képviselőből áll (2014 óta).
     - cim: "Bizottságok megalakítása"
       sorszam: 7
       leiras: >
@@ -126,3 +125,289 @@ sarkalatos_torveny:
 bizalmi_szavazas:
   nev: "Bizalmi / bizalmatlansági indítvány"
   status: TODO_SPRINT2_KONSTRUKTIV_BIZALMATLANSAG
+
+zart_ules:
+  nev: "Zárt ülés — bizottsági és plenáris"
+  leiras_rovid: >
+    A bizottságok ülései és az Országgyűlés plenáris ülése főszabály szerint
+    nyilvános, de meghatározott esetekben zárt üléssé nyilvánítható.
+  lepesek:
+    - cim: "Bizottsági zárt ülés (főszabály)"
+      sorszam: 1
+      leiras: >
+        A bizottsági ülések nyilvánosak. Zárt ülést a bizottság elnöke
+        rendelhet el, vagy a bizottság tagjai kérhetik. Zárt ülést KÖTELEZŐ
+        tartani, ha minősített adat vagy nemzetbiztonsági érdek védelme
+        megköveteli.
+    - cim: "Nemzetbiztonsági bizottság"
+      sorszam: 2
+      leiras: >
+        A Nemzetbiztonsági bizottság speciális helyzetben van: üléseinek
+        JELENTŐS RÉSZE zárt, mert a tárgyalt anyagok jellemzően minősített
+        adatot tartalmaznak. A bizottság tagjai nemzetbiztonsági
+        átvilágításon esnek át. A zárt ülésen elhangzottakról a tagokat
+        titoktartási kötelezettség terheli.
+    - cim: "Honvédelmi és rendészeti bizottság"
+      sorszam: 3
+      leiras: >
+        Hasonlóan a Nemzetbiztonsági bizottsághoz, a Honvédelmi és rendészeti
+        bizottság is gyakran tart zárt ülést — különösen honvédelmi
+        beszerzések, katonai műveletek, rendőrségi akciók tárgyalásakor.
+        Minősített adatok ismertetésekor zárt ülés kötelező.
+    - cim: "Plenáris zárt ülés"
+      sorszam: 4
+      leiras: >
+        Az Országgyűlés nyilvános ülésének egy része is zárt üléssé
+        nyilvánítható, ha az Alaptörvény alapján zárt ülés kezdeményezésére
+        jogosult (köztársasági elnök, Kormány, képviselők egyötöde) ezt
+        javasolja. A zárt ülésről külön jegyzőkönyv készül, amelyet a
+        házelnök minősíthet.
+    - cim: "Zárt ülés szabályai"
+      sorszam: 5
+      leiras: >
+        Zárt ülésen csak az arra jogosultak lehetnek jelen (bizottsági
+        tagok, meghívottak). A hallgatóság nem vehet részt. A zárt ülésen
+        elhangzottakról titoktartási kötelezettség áll fenn. A zárt ülés
+        jegyzőkönyvét a házelnök minősítheti. A nyilvánosság kizárásáról
+        a bizottság vagy az Országgyűlés szavaz.
+  jogforras: "Házszabály 57-58. §, Ogytv."
+
+# ==============================================================================
+# KÉTHETES CIKLUS — A-HÉT / B-HÉT
+# ==============================================================================
+
+kethetes_ciklus:
+  nev: "A kéthetes parlamenti ciklus (A-hét / B-hét)"
+  leiras_rovid: >
+    Az Országgyűlés munkája kéthetes ciklusokban zajlik: az A-hét (ülési hét)
+    a plenáris ülések hete, a B-hét (bizottsági hét) a bizottsági munka,
+    választókerületi jelenlét és felkészülés ideje.
+  leiras_hosszu: >
+    A Házszabály nem nevesíti az A-hét/B-hét rendszert — ez a Házbizottság
+    által kialakított bevett gyakorlat, ami az ülésszak munkatervében ölt
+    testet. A Házbizottság az ülésszak elején meghatározza, melyik héten
+    vannak plenáris ülések és melyiken bizottsági munka. Az arány
+    jellemzően 1:1, de ülésszak végén vagy intenzív törvényhozási
+    időszakban eltolódhat.
+  lepesek:
+    - cim: "A-HÉT (ülési / plenáris hét)"
+      sorszam: 1
+      leiras: >
+        A plenáris ülések hete. Jellemzően hétfőtől (kedd délutántól)
+        csütörtökig tart a plenáris munka. A képviselők Budapesten vannak,
+        a Parlamentben. Ez az „éles" hét.
+    - cim: "B-HÉT (bizottsági / szüneti hét)"
+      sorszam: 2
+      leiras: >
+        Nincs plenáris ülés. Bizottsági ülések, egyeztetések, választókerületi
+        munka, fogadóórák, rendezvények. A képviselők gyakran a választókerületükben
+        tartózkodnak.
+  jogforras: "Házbizottság munkatervje (bevett gyakorlat, nem jogszabályi előírás)"
+
+a_het_reszletes:
+  nev: "A-hét — egy ülési hét napról napra"
+  leiras_rovid: >
+    Egy tipikus A-hét (plenáris ülési hét) menete napokra bontva,
+    a képviselő szemszögéből.
+  lepesek:
+    - cim: "Hétfő délelőtt — frakcióülés, felkészülés"
+      sorszam: 1
+      leiras: >
+        Reggel: utazás Budapestre (vidéki képviselőknél).
+        DÉLELŐTT: frakcióülés — itt egyeztetik a heti stratégiát,
+        a szavazási fegyelmet, a felszólalók személyét, a heti
+        politikai üzeneteket. Az azonnali kérdéseket hétfő 12:00-ig
+        kell benyújtani a Parlex rendszerben!
+    - cim: "Hétfő 13:00 — A NAGY PLENÁRIS kezdete"
+      sorszam: 2
+      leiras: >
+        13:00 — Napirend előtti felszólalások (frakciónként 5-5 perc +
+        kormányválasz). Napirend elfogadása (a Házbizottság javaslatáról
+        szavazás). Döntések: sürgős tárgyalásba vétel, részletes vitára
+        bocsátás, tárgysorozatba vétel, időkeretben történő tárgyalás.
+    - cim: "Hétfő ~14:00 — Interpellációk, azonnali kérdések, kérdések"
+      sorszam: 3
+      leiras: >
+        Interpellációk (frakciónként váltakozva, az elhangzó sor szerint).
+        Azonnali kérdések és válaszok órája (a legélőbb politikai műfaj —
+        rögtönzött kérdések a miniszterekhez, 2-2-1 perces struktúra).
+        Kérdések.
+    - cim: "Hétfő ~16:30 — Szünet, majd határozathozatalok"
+      sorszam: 4
+      leiras: >
+        Rövid szünet (~15 perc), utána: HATÁROZATKÉPESSÉG SZÜKSÉGES!
+        Szavazási blokk: módosító javaslatokról szavazás, zárószavazások,
+        határozathozatalok. Utána: általános és részletes viták folytatása
+        az esti órákig. Napirend utáni felszólalások az ülésnap végén.
+    - cim: "Kedd — viták folytatása"
+      sorszam: 5
+      leiras: >
+        Az ülés jellemzően 8:00-kor kezdődik. Napirend előtti felszólalások.
+        Folytatódnak az előző napi viták: általános viták, részletes viták,
+        vezérszónoklatok az új napirendi pontoknál. Szavazások.
+        Az ülésnap végén napirend utáni felszólalások. Kb. 16:00-ig tart.
+    - cim: "Szerda — ha szükséges, plenáris folytatás"
+      sorszam: 6
+      leiras: >
+        Ha maradt tárgyalandó napirendi pont, szerdán is folytatódhat a
+        plenáris ülés. Zárószavazások. Az Országgyűlés soron következő
+        ülésének összehívása. A Házbizottság ülése szerdán szokott lenni —
+        itt egyeztetik a KÖVETKEZŐ ülési hét napirendjét. Rendkívüli
+        Házbizottság bármikor összehívható.
+    - cim: "Bizottsági ülések az A-héten"
+      sorszam: 7
+      leiras: >
+        FONTOS: az A-héten is vannak bizottsági ülések, nemcsak plenáris!
+        A Törvényalkotási Bizottság (TAB) az A-héten akár többször is
+        ülésezhet (zárószavazás előtti módosító javaslatok, koherencia).
+        Az állandó bizottságok is ülésezhetnek a plenáris ülés előtt
+        vagy szüneteiben. Rendkívüli bizottsági ülés bármikor összehívható.
+    - cim: "Csütörtök–péntek — választókerület"
+      sorszam: 8
+      leiras: >
+        Nincs plenáris ülés (nagyon ritka kivételtől eltekintve).
+        A képviselők a választókerületükben vannak: fogadóóra,
+        rendezvények, önkormányzati ülések, helyi ügyek intézése.
+  kivetel: >
+    Ez SORVEZETŐ — a tényleges menetrend hetente változik a Házbizottság
+    döntése és a napirend függvényében. Intenzív törvényhozási időszakban
+    az ülés szerdán-csütörtökön is folytatódhat. Rendkívüli BIZOTTSÁGI
+    ülés bármikor összehívható. Rendkívüli plenáris ülés összehívásához
+    a köztársasági elnök, a Kormány vagy a képviselők egyötödének írásbeli
+    kérelme szükséges.
+  jogforras: "Házbizottság munkatervje + bevett gyakorlat"
+
+b_het_reszletes:
+  nev: "B-hét — egy bizottsági / szüneti hét napról napra"
+  leiras_rovid: >
+    Egy tipikus B-hét (nem ülési hét) menete — a kevésbé látványos,
+    de fontos parlamenti munka.
+  lepesek:
+    - cim: "Hétfő–kedd — bizottsági ülések"
+      sorszam: 1
+      leiras: >
+        Állandó bizottságok ülései Budapesten. A bizottságok tárgyalják
+        az eléjük utalt törvényjavaslatokat (általános vitára alkalmasság,
+        módosító indítványok véleményezése), meghallgatják a minisztereket,
+        beszámolókat vitatnak meg. A képviselő jellemzően 1-3 bizottságnak
+        tagja, mindegyiknek van ülése.
+    - cim: "Szerda — egyeztetések, szakpolitika"
+      sorszam: 2
+      leiras: >
+        Frakcióközi egyeztetések, szakpolitikai munkacsoportok, háttérmegbeszélések.
+        Informális politikai egyeztetések pártvezetőkkel.
+        Az ellenzéki képviselők sajtótájékoztatói, sajtónyilvános bizottsági ülések.
+    - cim: "Csütörtök–péntek — választókerületi munka"
+      sorszam: 3
+      leiras: >
+        A képviselő a saját választókerületében tartózkodik.
+        Fogadóóra (személyes panaszok, helyi ügyek).
+        Önkormányzati ülések, helyi rendezvények, civil szervezetekkel
+        való találkozók. Pártrendezvények. Sajtómegjelenések.
+    - cim: "Hétvége — közszereplések"
+      sorszam: 4
+      leiras: >
+        Falunap, városi rendezvény, sport, kulturális esemény — a
+        választókerületi jelenlét fontos. Pártrendezvények.
+        Felkészülés a következő A-hét napirendjére (törvényjavaslatok
+        olvasása, frakció-álláspont kialakítása).
+  jogforras: "Bevett gyakorlat"
+
+parlamenti_dokumentumok:
+  nev: "A parlamenti munka dokumentumai (a háttérben)"
+  leiras_rovid: >
+    Az Országgyűlés munkáját a Hivatal Szervezési Főosztálya koordinálja.
+    A képviselők és a frakciók az alábbi belső dokumentumokból tudják,
+    mikor mi történik.
+  lepesek:
+    - cim: "Ülésterv (havi munkaterv)"
+      sorszam: 1
+      leiras: >
+        Az Országgyűlés Hivatala a Házbizottság döntései alapján összeállítja
+        a havi üléstervet. Ez tartalmazza: melyik héten vannak ülésnapok
+        (A-hét), melyik törvényjavaslat milyen tárgyalási fázisban van
+        (ált. vita, részl. vita, szav. mód., zárószav.), és melyik hétre
+        esik. Táblázatos forma, T/ és H/ számokkal. A frakciók ebből
+        tervezik a heti munkájukat.
+    - cim: "Napirend (NR) — a plenáris ülés részletes forgatókönyve"
+      sorszam: 2
+      leiras: >
+        A házelnök javaslatára készül, a Házbizottság egyeztetése után.
+        Tartalmazza napról napra, óráról órára: mikor kezdődik az ülés,
+        mikor vannak szünetek, melyik napirendi pont mikor kerül sorra,
+        ki az előterjesztő, mekkora az időkeret, kik a várható felszólalók,
+        melyik bizottság az előadó. A NR-t legkésőbb 72 órával az ülés
+        előtt közzé kell tenni. Pl.: „Hétfő 13:00 — Interpellációk,
+        15:00 — Azonnali kérdések órája, 16:30 — Szünet, 16:45 —
+        Határozathozatalok, szavazás."
+    - cim: "Elhangzó sor"
+      sorszam: 3
+      leiras: >
+        Az interpellációk és kérdések pontos sorrendje egy adott ülésnapra.
+        Frakciónként váltakozva, a benyújtás dátumával és iktatószámával
+        (I/ vagy K/ szám). Feltünteti a címzett minisztert is. A *-gal
+        jelölt tételek frakción belüli cserék. Példa formátum:
+        „1. VARJU LÁSZLÓ (MSZP) — 'Több ember, kevesebb pályázat?' (I/3380)
+        — nemzeti fejlesztési miniszter"
+    - cim: "Bizottsági ülések heti beosztása"
+      sorszam: 4
+      leiras: >
+        Heti táblázat: melyik bizottság, melyik nap, melyik teremben ülésezik.
+        Tartalmazza a napirendi pontokat, a meghívottakat, az időpontokat.
+        A bizottsági ülések helyszíne a Képviselői Irodaház vagy a Parlament
+        tanácstermei (pl. „Parlament főemelet 58. sz.", „Irodaház V. em. 512.").
+        A bizottság eldöntheti, kér-e kormány-részvételt.
+    - cim: "Bizottsági meghívó / napirend"
+      sorszam: 5
+      leiras: >
+        Konkrét bizottsági ülés meghívója: helyszín, időpont, napirendi pontok,
+        meghallgatásra meghívott személyek neve és beosztása. Albizottságoknál
+        is készül. Példa: „Az Alkotmányügyi bizottság Ellenőrző albizottsága
+        — 2011. június 6-án (hétfő) — az interpellációk elhangzását követően,
+        azonnal! — Parlament főemelet 58. sz. tanácsterem."
+    - cim: "Időkeret-elosztás (időkeretes vitánál)"
+      sorszam: 6
+      leiras: >
+        Ha az általános vita időkeretben zajlik, a Házbizottság meghatározza
+        a teljes időkeretet (pl. 6 óra = 360 perc), és azt elosztja:
+        kormánypárti és ellenzéki fél egyenlő arányban, azon belül a frakciók
+        létszámarányosan. Az Országgyűlés 2014 óta 199 képviselőből áll
+        (korábban 386 volt). A pontos elosztás a mindenkori frakciólétszámoktól
+        függ. A régi rendszerben (386 fős Ház) pl. 6 órás keret =
+        180 perc kormánypárt + 180 perc ellenzék volt.
+  jogforras: "Ogytv. + Házszabály + Országgyűlés Hivatala belső gyakorlata"
+
+kepviseloi_kotelezottsegek:
+  nev: "Képviselői kötelezettségek és jelenlét"
+  leiras_rovid: >
+    A képviselő köteles részt venni az Országgyűlés ülésein és annak
+    a bizottságnak az ülésein, amelynek tagja. Igazolatlan távollét
+    tiszteletdíj-csökkentéssel jár.
+  lepesek:
+    - cim: "Plenáris részvétel"
+      sorszam: 1
+      leiras: >
+        A képviselő joga és KÖTELESSÉGE részt venni az Országgyűlés ülésein.
+        A szavazásokon való jelenlét különösen fontos — a frakciófegyelem
+        ezt szigorúan megköveteli.
+    - cim: "Bizottsági részvétel"
+      sorszam: 2
+      leiras: >
+        A képviselő köteles részt venni annak a bizottságnak az ülésein,
+        amelynek tagja. Ha helyettesítenie kell magát, a frakción belül
+        jelölhet helyettest. Igazolatlan távollét a tiszteletdíj
+        csökkentését vonja maga után (akár 20%-ot).
+    - cim: "Vagyonnyilatkozat"
+      sorszam: 3
+      leiras: >
+        Minden képviselő köteles vagyonnyilatkozatot tenni megbízatása
+        elején, majd évente, és a mandátum megszűnésekor.
+        A vagyonnyilatkozat nyilvános (a családtagé nem).
+    - cim: "Összeférhetetlenség"
+      sorszam: 4
+      leiras: >
+        A képviselő nem tölthet be bizonyos közhivatalokat, nem lehet
+        pl. bíró, ügyész, katona, rendőr. Üzleti összeférhetetlenség
+        is fennállhat. Az összeférhetetlenséget meg kell szüntetni,
+        különben a mandátum megszűnik.
+  jogforras: "Ogytv. 79-98. § + Házszabály 104. §"

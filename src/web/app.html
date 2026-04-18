@@ -80,6 +80,7 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
   <button class="tab" onclick="switchTab('idokeret',this)">Id&#337;keretek</button>
   <button class="tab" onclick="switchTab('szavazas',this)">Szavaz&#225;s</button>
   <button class="tab" onclick="switchTab('eljaras',this)">Elj&#225;r&#225;sok</button>
+  <button class="tab" onclick="switchTab('het',this)">A &#233;s B h&#233;t</button>
   <button class="tab" onclick="switchTab('about',this)">R&#243;lunk</button>
 </div>
 
@@ -108,6 +109,9 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
 
 <!-- ELJARAS -->
 <div id="panel-eljaras" class="panel"><div id="eljaras-list" class="loading"><span class="spinner"></span></div></div>
+
+<!-- A/B HET -->
+<div id="panel-het" class="panel"><div id="het-list" class="loading"><span class="spinner"></span></div></div>
 
 <!-- ABOUT -->
 <div id="panel-about" class="panel">
@@ -297,44 +301,57 @@ fetch('/api/szavazas').then(function(r){return r.json();}).then(function(data){
   box.innerHTML = h + '</div>';
 }).catch(function(){ document.getElementById('szavazas-list').innerHTML = '<div class="empty">Hiba.</div>'; });
 
-/* ELJARASOK */
+/* ELJARASOK — loaded together with A/B HET above */
+
+/* A/B HET */
+var HET_KEYS = ['kethetes_ciklus','a_het_reszletes','b_het_reszletes','parlamenti_dokumentumok','kepviseloi_kotelezottsegek'];
 fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
-  var box = document.getElementById('eljaras-list'); var keys = Object.keys(data); var h = '';
+  // Split: het-related go to het tab, rest stays in eljaras
+  var hetBox = document.getElementById('het-list');
+  var eljBox = document.getElementById('eljaras-list');
+  var hetHtml = ''; var eljHtml = '';
+  var keys = Object.keys(data);
   for (var i = 0; i < keys.length; i++) {
     var k = keys[i], v = data[k];
+    var isHet = HET_KEYS.indexOf(k) >= 0;
     var name = v.nev || k.replace(/_/g,' ');
     var hasSteps = (v.lepesek && v.lepesek.length) || (v.lepesek_cimei && v.lepesek_cimei.length);
-    h += '<div class="card" onclick="toggle(this)" data-search="' + esc(name) + '">';
-    h += '<div class="card-title">' + esc(name);
-    if (!hasSteps) h += ' <span class="pill pill-muted">v&#225;zlat</span>';
-    h += ' <span class="arrow">&#9654;</span></div>';
-    if (v.leiras_rovid) h += '<div class="card-preview">' + esc((v.leiras_rovid+'').substring(0,100)) + '</div>';
-    h += '<div class="card-detail"><div class="card-body">';
-    if (v.leiras_rovid) h += '<p>' + esc(v.leiras_rovid) + '</p>';
-    if (v.leiras_hosszu) h += '<p style="margin-top:.3rem">' + esc(v.leiras_hosszu) + '</p>';
-    if (v.kulonleges_szabaly) h += '<p style="color:var(--gold)">' + esc(v.kulonleges_szabaly) + '</p>';
+    var card = '<div class="card" onclick="toggle(this)" data-search="' + esc(name) + '">';
+    card += '<div class="card-title">' + esc(name);
+    if (!hasSteps) card += ' <span class="pill pill-muted">v&#225;zlat</span>';
+    card += ' <span class="arrow">&#9654;</span></div>';
+    if (v.leiras_rovid) card += '<div class="card-preview">' + esc((v.leiras_rovid+'').substring(0,100)) + '</div>';
+    card += '<div class="card-detail"><div class="card-body">';
+    if (v.leiras_rovid) card += '<p>' + esc(v.leiras_rovid) + '</p>';
+    if (v.leiras_hosszu) card += '<p style="margin-top:.3rem">' + esc(v.leiras_hosszu) + '</p>';
+    if (v.kulonleges_szabaly) card += '<p style="color:var(--gold)">' + esc(v.kulonleges_szabaly) + '</p>';
     if (v.lepesek && v.lepesek.length) {
-      h += '<ol class="steps-list">';
+      card += '<ol class="steps-list">';
       for (var j = 0; j < v.lepesek.length; j++) {
         var l = v.lepesek[j];
-        h += '<li><span class="step-title">' + esc(l.cim||'') + '</span>';
-        if (l.leiras) h += '<br><span style="color:var(--muted);font-size:.8rem">' + esc(l.leiras) + '</span>';
-        if (l.jogforras) h += '<br>' + ref(l.jogforras);
-        h += '</li>';
+        card += '<li><span class="step-title">' + esc(l.cim||'') + '</span>';
+        if (l.leiras) card += '<br><span style="color:var(--muted);font-size:.8rem">' + esc(l.leiras) + '</span>';
+        if (l.jogforras) card += '<br>' + ref(l.jogforras);
+        card += '</li>';
       }
-      h += '</ol>';
+      card += '</ol>';
     } else if (v.lepesek_cimei && v.lepesek_cimei.length) {
-      h += '<ol class="steps-list">';
+      card += '<ol class="steps-list">';
       for (var j = 0; j < v.lepesek_cimei.length; j++) {
-        h += '<li><span class="step-title">' + esc(v.lepesek_cimei[j]) + '</span></li>';
+        card += '<li><span class="step-title">' + esc(v.lepesek_cimei[j]) + '</span></li>';
       }
-      h += '</ol>';
+      card += '</ol>';
     }
-    if (v.jogforras) h += ref(v.jogforras);
-    h += '</div><div class="related"></div></div></div>';
+    if (v.jogforras) card += ref(v.jogforras);
+    card += '</div><div class="related"></div></div></div>';
+    if (isHet) hetHtml += card; else eljHtml += card;
   }
-  box.innerHTML = h;
-}).catch(function(){ document.getElementById('eljaras-list').innerHTML = '<div class="empty">Hiba.</div>'; });
+  hetBox.innerHTML = hetHtml;
+  eljBox.innerHTML = eljHtml;
+}).catch(function(){
+  document.getElementById('het-list').innerHTML = '<div class="empty">Hiba.</div>';
+  document.getElementById('eljaras-list').innerHTML = '<div class="empty">Hiba.</div>';
+});
 
 function esc(s) {
   if (!s) return '';

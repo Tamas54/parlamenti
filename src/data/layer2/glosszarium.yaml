@@ -7,6 +7,90 @@
 
 # --- TISZTSÉGVISELŐK ---
 
+# --- ÜLÉSEZÉSI REND ---
+
+a_het:
+  rovid_magyarazat: >
+    Ülési (plenáris) hét — amikor az Országgyűlés plenáris üléseket tart.
+    Jellemzően keddtől csütörtökig, Budapesten, a Parlament épületében.
+  reszletes: >
+    A kéthetes ciklus „éles" hete. A képviselők Budapesten tartózkodnak,
+    részt vesznek a plenáris vitákon, szavazásokon, interpellációkon.
+    Hétfőn frakcióülés + Házbizottság, keddtől plenáris ülés,
+    szerdán azonnali kérdések órája, csütörtökön szavazási blokk.
+  aliasok: ["ülési hét", "plenáris hét"]
+  jogforras: "Házbizottság munkatervje (bevett gyakorlat)"
+
+b_het:
+  rovid_magyarazat: >
+    Bizottsági (szüneti) hét — nincs plenáris ülés, bizottsági munka
+    és választókerületi jelenlét.
+  reszletes: >
+    Hétfő-kedden bizottsági ülések Budapesten (törvényjavaslatok
+    előkészítése, miniszteri meghallgatások), szerdán egyeztetések,
+    csütörtöktől a képviselő a választókerületében van: fogadóóra,
+    önkormányzati ülések, helyi rendezvények. A „láthatatlanabb"
+    de nélkülözhetetlen fele a munkának.
+  aliasok: ["bizottsági hét", "szüneti hét", "nem ülési hét"]
+  jogforras: "Házbizottság munkatervje (bevett gyakorlat)"
+
+elhangzo_sor:
+  rovid_magyarazat: >
+    Az interpellációk és kérdések pontos sorrendje egy adott ülésnapra.
+    Frakciónként váltakozva, I/ és K/ iktatószámmal.
+  reszletes: >
+    A Hivatal állítja össze a benyújtott interpellációk és kérdések alapján.
+    A frakciók egymást váltva mondják el az interpellációikat és kérdéseiket.
+    A *-gal jelölt tételek frakción belüli cserék (a frakción belül más
+    képviselő mondja el, mint aki benyújtotta). A sor tartalmazza a címzett
+    minisztert is.
+  aliasok: ["elhangzó sor", "interpelláció sorrend"]
+  jogforras: "Házszabály + OGY Hivatal gyakorlat"
+
+ulesterv:
+  rovid_magyarazat: >
+    Az Országgyűlés havi munkatervje: melyik héten melyik törvényjavaslat
+    milyen tárgyalási fázisban van (ált. vita, részl. vita, szav. mód., zárószav.).
+  reszletes: >
+    Az üléstervet az OGY Hivatala Szervezési Főosztálya állítja össze a
+    Házbizottság döntései alapján. Táblázatos forma: a sorok a törvényjavaslatok
+    (T/ számmal), az oszlopok a hetek (pl. június 6-8, 14-15, 20-21).
+    A cellákban a tárgyalási fázis: „ált. vita a lez-ig", „részl. vita",
+    „szav. mód.", „zárószav.", „hat. hozatal".
+  aliasok: ["ülésterv", "havi munkaterv", "havi ülésterv"]
+  jogforras: "OGY Hivatal belső gyakorlat"
+
+napirend_dokumentum:
+  rovid_magyarazat: >
+    A plenáris ülés teljes, részletes forgatókönyve — a házelnök
+    napirendjavaslata. Napról napra, óráról órára tartalmazza a programot.
+  reszletes: >
+    A NR (napirend) dokumentum tartalmazza: az ülés kezdési időpontját,
+    szüneteket, napirend előtti felszólalásokat, döntéseket (sürgős
+    tárgyalásba vétel, részletes vitára bocsátás, tárgysorozatba vétel),
+    majd a napirendi pontokat sorszámozva. Minden napirendi pontnál:
+    a törvényjavaslat címe és száma, az előterjesztő neve, a tárgyalási
+    fázis, a módosító javaslatok számai, a bizottsági ajánlás, a várható
+    felszólalók és időkereteik. Közzététel: legkésőbb 72 órával az ülés előtt.
+  aliasok: ["napirend dokumentum", "NR", "napirendjavaslat"]
+  jogforras: "Házszabály 15. §, 128. §"
+
+kormanyules:
+  rovid_magyarazat: >
+    A Kormány rendszeres ülése, ahol a miniszterek a törvényjavaslatokról,
+    rendeletekről és aktuális ügyekről döntenek. A napirend NEM NYILVÁNOS.
+  reszletes: >
+    A Kormány jellemzően hetente ülésezik (általában szerdán). A napirendet
+    a Miniszterelnökség koordinálja. Három blokkban tárgyalnak: I. Politikai
+    Államtitkári Értekezlet (PÁÉ) javaslatai, II. Törvényjavaslatok és OGY
+    határozati javaslatok, III. Vita nélküli előterjesztések. A Kormány
+    döntései a Parlamentbe kerülő törvényjavaslatok alapjai. A napirend a
+    2011. évi CXII. törvény szerint NEM nyilvános.
+  aliasok: ["kormányülés", "Kormány ülése"]
+  jogforras: "Alaptörvény 18. cikk"
+
+# --- TISZTSÉGVISELŐK ---
+
 hazelnok:
   rovid_magyarazat: >
     Az Országgyűlés elnöke. Biztosítja az Országgyűlés jogainak gyakorlását,
@@ -361,7 +445,8 @@ minositett_tobbseg:
 
 hatarozatkepesseg:
   rovid_magyarazat: >
-    Az Országgyűlés határozatképes, ha a képviselők több mint fele jelen van.
+    Az Országgyűlés határozatképes, ha a 199 képviselő több mint fele
+    (legalább 100 fő) jelen van.
   reszletes: >
     A határozatképességet az ülés megnyitásakor és minden szavazás előtt
     ellenőrizni kell. Ha az Országgyűlés nem határozatképes, az ülést
