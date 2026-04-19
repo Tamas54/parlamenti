@@ -257,7 +257,13 @@ frakcio_berkeret:
     "91_110_fo": 50
     "111_120_fo": 60
     "120_fo_felett": 80
-  plusz_letszam: "A frakció létszámával megegyező számú közép- vagy felsőfokú végzettségű munkatárs (115. § (2) b)."
+  plusz_letszam: >
+    PLUSZ a frakció létszámával megegyező számú közép- vagy felsőfokú
+    végzettségű munkatárs (115. § (2) b)).
+    FONTOS: ezek NEM frakció-tagok, és a MUNKÁLTATÓ NEM a frakció — az OGY
+    HIVATALA foglalkoztatja őket a frakció szakmai munkájának segítésére.
+    A frakciólétszámon FELÜL jönnek. Pl. 30 fős frakciónál az alapsávos
+    20 fő mellé PLUSZ 30 fő, összesen 50 OGY-Hivatali alkalmazott segítő.
   cafeteria: "Külön biztosítva a központi költségvetésből (115. § (6))."
   jutalom: "A bérkeret 10%-a jutalmazásra/egyéb juttatásra, de ebből új foglalkoztatás nem finanszírozható."
 
@@ -269,8 +275,102 @@ frakcios_iroda:
     A frakció önálló irodával rendelkezik (114. § (1)), és OGY Hivatalánál
     foglalkoztatott segítőszemélyzetet kap.
 
+irodafenntartas_dologi_keret:
+  nev: "Frakciós dologi / irodafenntartási keret (114. § (3), T × 80% / fő)"
+  kategoria: "frakcio"
+  havi_ft_per_fo: 1745990
+  szorzo_T: 0.80
+  jogforras: "Ogytv. 114. § (1)–(3)"
+  leiras: >
+    Képviselőcsoportonként képviselőnként (és a független képviselőnek is)
+    T × 80% ellátási keret jár az OGY épületein KÍVÜLI iroda berendezésére,
+    felszerelésére és üzemeltetésére. A 114. § (1) emellett biztosítja:
+    a) természetbeni irodát az Országházban vagy OGY Hivatala épületeiben
+    térítésmentesen, b) jogosultságot irodai berendezésre és felszerelésre,
+    c) az iroda működési költségeinek fedezetét.
+  fontos: "A tárgyi eszközök ebből a keretből is az OGY Hivatala tulajdonát képezik (116. §), a frakció csak birtokolja őket a mandátum alatt."
+
 # ------------------------------------------------------------------------------
-# 4. GAZDÁLKODÁS, ELSZÁMOLÁS
+# 4. PUHA KERETEK — felhasználhatóság
+# ------------------------------------------------------------------------------
+# Olyan jogcímek, amelyek NEM automatikusan aktiválódnak havonta, hanem
+# képviselői döntéstől, lemondástól, keretmaradványtól vagy frakcióvezetői
+# engedélytől függnek. "Mi lenne ha...?" forgatókönyvek jellemzik őket.
+# ------------------------------------------------------------------------------
+
+iroda_atruhazas:
+  nev: "Egyéni iroda-keret átruházása a frakcióra"
+  kategoria: "puha"
+  szorzo_T: 1.0
+  havi_ft_per_fo_max: 2182488
+  jogforras: "Ogytv. 112. § (6)"
+  leiras: >
+    Ha a képviselő írásbeli nyilatkozattal lemond a 111. § (1) szerinti
+    egyéni irodai jogosultságáról, a T × 100% összeg teljes egészében
+    vagy meghatározott részben a 113. § (1) és (1a) frakciókeretbe kerül át.
+    Tipikus eset: budapesti képviselők, akiknek nincs választókerületi
+    irodájuk.
+
+munkatars_rendelkezes_atruhazas:
+  nev: "Munkatárs-keret rendelkezési jogának átruházása"
+  kategoria: "puha"
+  jogforras: "Ogytv. 112. § (4) b) + 118. § (2)"
+  leiras: >
+    A képviselő a T × 3,3 = 7 202 210 Ft/hó munkatárs-keret feletti
+    rendelkezési jogot átruházhatja a frakcióvezetőre. Ilyenkor az érintett
+    munkatársat a frakcióvezető foglalkoztatja.
+  kulonleges: >
+    JOGTECHNIKAI FINOMSÁG: maga a pénz NEM kerül automatikusan a 113. §
+    (1) keretbe — csak a munkáltatói jogkör centralizálódik. A 118. § (2)
+    azonban felhatalmazza az OGY Hivatala főigazgatóját, hogy a dologi
+    és személyi juttatások előirányzata között átcsoportosítson,
+    lényegében kielégítve a frakcióvezetői döntés végrehajtását.
+
+keretmaradvany_automatikus_atszallas:
+  nev: "Egyéni keretmaradvány automatikus átszállása a frakcióra"
+  kategoria: "puha"
+  jogforras: "Ogytv. 112. § (9)"
+  leiras: >
+    Évvégén (december 31.) és a mandátum megszűnésekor a képviselő fel nem
+    használt keretei közül AUTOMATIKUSAN a 113. § (1) és (1a) frakciókeretbe
+    csoportosulnak.
+  elemek:
+    - "109. § (1): üzemanyagkártya-keretmaradvány"
+    - "111. § (1): irodai keret maradványa"
+    - "111. § (4): telefon / elektronikus hírközlési keret maradványa"
+  gyakorlat: >
+    „Éves takarékoskodási bónusz” — az egyéni kereteken meg nem költött
+    pénzt a frakcióvezető gyakorlatilag egy erős plusz forrásként kapja
+    meg januárban. Mandátumvégkor (ciklusfordulón) a teljes fennmaradó
+    keret egyben átszáll.
+
+frakciora_terhelt_egyeni_jogcimek:
+  nev: "Egyéni juttatások, amelyek a frakciókeretre terhelődnek"
+  kategoria: "puha"
+  jogforras: "Ogytv. 104. § (7), 109. § (8), 110. § (3)"
+  leiras: >
+    Három jogcím, ahol a törvény explicit kapcsolatot teremt egy egyéni
+    juttatás és a frakciókeret között: a pénzügyi terhet a frakció viseli.
+  elemek:
+    - "109. § (8): OGY alelnöke és frakcióvezető személygépkocsi-használata (személyi és hivatali célra) → terheli a 113. § (1) és (1a) működési keretet."
+    - "110. § (3): Ha a képviselő lakhatási plafonja (T × 35% = 763 871 Ft) kevés, a frakcióvezető engedélyével magasabb szállodai költség igényelhető → terheli a 113. § (1) és (1a) működési keretet. Legális „plafonfeloldó” diszkrecionális eszköz a frakcióvezető kezében."
+    - "104. § (7): Frakcióvezető-helyettesek tiszteletdíjon felüli különjuttatása max. 20%-ig (csak akik nem részesülnek a 104. § (6) emelt tiszteletdíjban) → terheli a 115. § (4) frakció bérkeretet."
+
+kapcsolodo_finanszirozas:
+  nev: "Kapcsolódó pártfinanszírozási csatornák (más törvények)"
+  kategoria: "puha"
+  jogforras: "2003. évi XLVII. tv., 1989. évi XXXIII. tv."
+  leiras: >
+    Ezek jogilag NEM frakciókeretek, hanem a PÁRT vagy pártalapítvány
+    forrásai — de a frakció közvetett haszonélvezője (szakmai háttér,
+    infrastruktúra, kampányháttér). Szervesen kiegészítik az Ogytv.-s képet.
+  elemek:
+    - "Pártalapítványi támogatás (2003. évi XLVII. tv.): a frakcióhoz kötődő pártalapítvány éves költségvetési támogatást kap, mandátumok után járó képlet-alapú juttatás (pl. Polgári Magyarországért Alapítvány, Táncsics Mihály Alapítvány, Új Köztársaságért Alapítvány). A frakció szakmai, kutatási, oktatási hátterét finanszírozza."
+    - "Állami pártfinanszírozás (1989. évi XXXIII. tv.): a PÁRT (nem a frakció) közvetlen éves állami támogatást kap mandátumszám és érvényes szavazatok alapján. A párt kasszája; a frakció közvetetten élvezi (bér, infrastruktúra, kampány)."
+    - "Pártbevételek: tagdíj és magánszemélyi adomány KIZÁRÓLAG a pártnak — nem a frakciónak. Jogi személyektől NEM fogadható el adomány."
+
+# ------------------------------------------------------------------------------
+# 5. GAZDÁLKODÁS, ELSZÁMOLÁS
 # ------------------------------------------------------------------------------
 
 gazdalkodas:

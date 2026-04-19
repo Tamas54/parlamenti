@@ -379,12 +379,14 @@ fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
 /* KERETEK */
 var KERET_GROUPS = {
   egyeni: ['iroda_keret','munkatarsi_keret','uzemanyag_keret','lakhatas_keret','mobil_keret','ingyenes_szolgaltatasok','nemzetisegi_bizottsagi_keret'],
-  frakcio: ['frakcio_alapkeret','frakcio_fejkvota','kozos_listas_alapkeret','fuggetlen_kepviselo_keret','frakcio_berkeret','frakcios_iroda'],
+  frakcio: ['frakcio_alapkeret','frakcio_fejkvota','kozos_listas_alapkeret','fuggetlen_kepviselo_keret','frakcio_berkeret','frakcios_iroda','irodafenntartas_dologi_keret'],
+  puha: ['iroda_atruhazas','munkatars_rendelkezes_atruhazas','keretmaradvany_automatikus_atszallas','frakciora_terhelt_egyeni_jogcimek','kapcsolodo_finanszirozas'],
   szankcio: ['ajandek_limit','tiszteletdij_csokkentes','mandatumvegi_ellatas','gazdalkodas']
 };
 var KERET_GROUP_LABELS = {
   egyeni: 'Egy&#233;ni k&#233;pvisel&#337;i keretek',
-  frakcio: 'Frakci&#243;s keretek',
+  frakcio: 'Frakci&#243;s keretek (kem&#233;ny, automatikusan j&#225;r&#243;)',
+  puha: 'PUHA KERETEK &#8212; felhaszn&#225;lhat&#243;s&#225;g',
   szankcio: 'Tilalmak, szankci&#243;k, elj&#225;r&#225;s'
 };
 
@@ -544,7 +546,7 @@ fetch('/api/keretek').then(function(r){return r.json();}).then(function(data){
     h += '</div><div class="related"></div></div></div>';
   }
   // Csoportok
-  var groups = ['egyeni','frakcio','szankcio'];
+  var groups = ['egyeni','frakcio','puha','szankcio'];
   for (var gi = 0; gi < groups.length; gi++) {
     var g = groups[gi];
     var keys = KERET_GROUPS[g];

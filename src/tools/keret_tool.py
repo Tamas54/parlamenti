@@ -42,6 +42,15 @@ _FRAKCIO_KULCSOK = [
     "fuggetlen_kepviselo_keret",
     "frakcio_berkeret",
     "frakcios_iroda",
+    "irodafenntartas_dologi_keret",
+]
+
+_PUHA_KULCSOK = [
+    "iroda_atruhazas",
+    "munkatars_rendelkezes_atruhazas",
+    "keretmaradvany_automatikus_atszallas",
+    "frakciora_terhelt_egyeni_jogcimek",
+    "kapcsolodo_finanszirozas",
 ]
 
 _SZANKCIO_KULCSOK = [
@@ -133,6 +142,7 @@ def register_keret_tools(mcp: FastMCP) -> None:
             "alap": _pick(["alap_szamok", "tiszteletdij", "gazdalkodas"]),
             "egyeni_keretek": _pick(_EGYENI_KULCSOK),
             "frakcio_keretek": _pick(_FRAKCIO_KULCSOK),
+            "puha_keretek": _pick(_PUHA_KULCSOK),
             "szankciok_tilalmak": _pick(_SZANKCIO_KULCSOK),
             "figyelmeztetes": _kozelito_figyelmeztetes(data),
         }
@@ -213,9 +223,13 @@ def register_keret_tools(mcp: FastMCP) -> None:
             alapkeret_ft = T * 10
             alapkeret_nev = "Frakció alapkeret (T × 10)"
 
-        # Fejkvóta
+        # Fejkvóta (113. § (1) b)
         fejkvota_per_fo = T // 2
         fejkvota_ossz = fejkvota_per_fo * letszam
+
+        # 114. § (3) dologi / irodafenntartási keret (T × 0,8 / fő)
+        dologi_per_fo = int(T * 0.8)
+        dologi_ossz = dologi_per_fo * letszam
 
         # Segítőlétszám-sávok (115. § (2) a)
         def _sav(l: int) -> int:
@@ -238,8 +252,11 @@ def register_keret_tools(mcp: FastMCP) -> None:
             return 80
 
         alapsav = _sav(letszam)
-        plusz_letszam = letszam  # 115. § (2) b)
-        segitolet = alapsav + plusz_letszam
+        # 115. § (2) b) — PLUSZ az OGY Hivatala által foglalkoztatott,
+        # a frakció létszámával megegyező számú közép- vagy felsőfokú
+        # végzettségű munkatárs. NEM frakció-tag; a MUNKÁLTATÓ az OGYH.
+        plusz_ogyh_fo = letszam
+        segitolet = alapsav + plusz_ogyh_fo
 
         # Bérkeret
         per_fo_berkeret = ksh * 4
@@ -248,7 +265,7 @@ def register_keret_tools(mcp: FastMCP) -> None:
         # Jutalom (bérkeret 10%)
         jutalom = int(berkeret_ossz * 0.10)
 
-        havi_mukodesi_ossz = alapkeret_ft + fejkvota_ossz
+        havi_mukodesi_ossz = alapkeret_ft + fejkvota_ossz + dologi_ossz
 
         return {
             "talalat": True,
@@ -259,18 +276,33 @@ def register_keret_tools(mcp: FastMCP) -> None:
             "alapkeret": {
                 "nev": alapkeret_nev,
                 "havi_ft": alapkeret_ft,
+                "jogforras": "Ogytv. 113. § (1) a)",
             },
             "fejkvota": {
                 "per_fo_havi_ft": fejkvota_per_fo,
                 "ossz_havi_ft": fejkvota_ossz,
-                "jogforras": "Ogytv. 113. §",
+                "jogforras": "Ogytv. 113. § (1) b)",
+            },
+            "dologi_keret_114_3": {
+                "per_fo_havi_ft": dologi_per_fo,
+                "ossz_havi_ft": dologi_ossz,
+                "szorzo_T": 0.8,
+                "jogforras": "Ogytv. 114. § (3)",
+                "leiras": "Irodafenntartási / dologi keret (T × 80% / fő) — OGY-épületeken kívüli iroda berendezésére, felszerelésére és üzemeltetésére.",
             },
             "havi_mukodesi_keret_ft": havi_mukodesi_ossz,
             "segitoszemelyzet": {
                 "alapsav_fo": alapsav,
-                "plusz_letszam_fo": plusz_letszam,
-                "ossz_fo": segitolet,
-                "jogforras": "Ogytv. 115. § (2) a)–b)",
+                "alapsav_jogforras": "Ogytv. 115. § (2) a) — sávos létszám frakcióméret szerint",
+                "plusz_ogy_hivatali_munkatars_fo": plusz_ogyh_fo,
+                "plusz_megjegyzes": (
+                    "PLUSZ a frakció létszámával megegyező számú, OGY HIVATALA "
+                    "által (nem a frakció által!) foglalkoztatott közép- vagy "
+                    "felsőfokú végzettségű munkatárs. NEM frakció-tag — a "
+                    "frakciólétszámon FELÜL jön."
+                ),
+                "plusz_jogforras": "Ogytv. 115. § (2) b)",
+                "ossz_ogyh_alkalmazott_fo": segitolet,
             },
             "berkeret": {
                 "per_fo_havi_ft": per_fo_berkeret,
@@ -278,9 +310,10 @@ def register_keret_tools(mcp: FastMCP) -> None:
                 "keplet": "segítőlétszám × KSH × 4",
                 "jogforras": "Ogytv. 115. § (4)",
             },
-            "jutalom_max_havi_ft": jutalom,
+            "jutalom_havi_ft": jutalom,
             "jutalom_megjegyzes": "Bérkeret 10%-a; új foglalkoztatás ebből NEM finanszírozható (115. § (6)).",
-            "teljes_havi_keret_ft": havi_mukodesi_ossz + berkeret_ossz,
+            "teljes_havi_keret_ft": havi_mukodesi_ossz + berkeret_ossz + jutalom,
+            "teljes_bontas": "alapkeret + fejkvóta + dologi (114. § (3)) + bérkeret + jutalom",
             "jogforras": "Ogytv. 113–115. §",
             "kozelito_figyelmeztetes": _kozelito_figyelmeztetes(data),
         }
