@@ -7,33 +7,40 @@
 <style>
 :root{--bg:#0c0e13;--surface:#14171f;--surface2:#1c2029;--border:#262a36;--text:#e8e8ec;--muted:#8b8fa0;--accent:#7c6cf0;--accent-light:#9d90f5;--gold:#e8b84b;--green:#4ade80;--blue:#5eadf2;--red:#f07070;--radius:10px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;font-size:15.5px}
 .shell{max-width:960px;margin:0 auto;padding:1.5rem 1rem 4rem}
 header{text-align:center;padding:2rem 1rem 1.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border)}
-header h1{font-size:1.6rem;font-weight:700;color:var(--gold)}
-header p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
-.tabs{display:flex;gap:.35rem;border-bottom:2px solid var(--border);margin-bottom:1.5rem;overflow-x:auto}
-.tab{padding:.6rem 1rem;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-bottom:2px solid transparent;white-space:nowrap;margin-bottom:-2px;background:none;transition:color .15s}
-.tab:hover{color:var(--text)}.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.panel{display:none}.panel.active{display:block}
+header h1{font-size:1.8rem;font-weight:700;color:var(--gold);letter-spacing:-.015em;background:linear-gradient(135deg,var(--gold) 0%,#d4a543 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--muted);font-size:.95rem;margin-top:.35rem}
+.tabs-wrap{margin-bottom:1.5rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem .5rem;border-bottom:2px solid var(--border);padding-bottom:.3rem}
+.tab{padding:.6rem 1rem;font-size:.92rem;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid transparent;background:var(--surface);white-space:nowrap;transition:color .18s,border-color .18s,background .18s;font-family:inherit;border-radius:8px}
+.tab:hover{color:var(--text);border-color:var(--border)}
+.tab.active{color:var(--gold);border-color:var(--gold);background:rgba(232,184,75,.1)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{display:none;animation:fadeIn .25s ease-out}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .search-box{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.search-box input{flex:1;min-width:200px;padding:.7rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.9rem;outline:none}
-.search-box input:focus{border-color:var(--accent)}.search-box input::placeholder{color:var(--muted)}
+.search-box input{flex:1;min-width:200px;padding:.75rem 1.05rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.95rem;outline:none;transition:border-color .18s,box-shadow .18s}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,108,240,.15)}
+.search-box input::placeholder{color:var(--muted)}
 .search-box select{padding:.5rem .7rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.82rem}
 .btn{padding:.6rem 1.2rem;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-weight:600;font-size:.85rem;cursor:pointer}
 .btn:hover{background:var(--accent-light)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem;cursor:pointer;transition:border-color .15s}
-.card:hover{border-color:var(--gold)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.65rem;cursor:pointer;transition:border-color .18s,transform .18s,box-shadow .18s}
+.card:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.card.open{box-shadow:0 2px 12px rgba(124,108,240,.08)}
 .card-title{font-weight:700;font-size:.95rem;color:var(--gold);margin-bottom:.3rem;display:flex;justify-content:space-between;align-items:center}
 .card-title .arrow{font-size:.7rem;color:var(--muted);transition:transform .2s}
 .card.open .arrow{transform:rotate(90deg)}
 .card-preview{font-size:.82rem;color:var(--muted);margin-bottom:.3rem}
 .card-detail{display:none;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--border)}
 .card.open .card-detail{display:block}
-.card-body{font-size:.85rem;color:var(--text)}.card-body p{margin-bottom:.4rem}
+.card-body{font-size:.92rem;color:var(--text);line-height:1.6}.card-body p{margin-bottom:.45rem}
 .card-ref{display:inline-block;margin-top:.3rem;font-size:.75rem;color:var(--blue);background:rgba(94,173,242,.08);padding:.15rem .5rem;border-radius:4px;cursor:pointer;transition:background .15s}
 .card-ref:hover{background:rgba(94,173,242,.2);text-decoration:underline}
-.pill{display:inline-block;padding:.2rem .6rem;border-radius:20px;font-size:.78rem;font-weight:700;margin:.15rem .15rem .15rem 0}
+.pill{display:inline-block;padding:.22rem .65rem;border-radius:20px;font-size:.8rem;font-weight:600;margin:.15rem .15rem .15rem 0;letter-spacing:.01em}
 .pill-gold{background:rgba(232,184,75,.15);color:var(--gold)}
 .pill-green{background:rgba(74,222,128,.12);color:var(--green)}
 .pill-blue{background:rgba(94,173,242,.12);color:var(--blue)}
@@ -55,27 +62,29 @@ header p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
 .related-item .preview-text{color:var(--muted);font-size:.78rem}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 @media(max-width:640px){
+body{font-size:14.5px}
 .grid-2{grid-template-columns:1fr}
 .shell{padding:1rem .6rem 3rem}
 header{padding:1.2rem .5rem 1rem}
-header h1{font-size:1.3rem}
-.tabs{gap:.15rem;padding-bottom:2px}
-.tab{padding:.5rem .6rem;font-size:.75rem}
+header h1{font-size:1.4rem}
+header p{font-size:.85rem}
+.tabs{gap:.35rem;padding-bottom:.3rem}
+.tab{padding:.55rem .7rem;font-size:.85rem;flex:1 1 calc(33.333% - .35rem);text-align:center;min-width:0}
 .search-box{flex-direction:column}
 .search-box input{min-width:0;font-size:1rem}
 .search-box select{width:100%}
 .btn{width:100%;text-align:center}
-.card{padding:.8rem .8rem}
-.card-title{font-size:.88rem;flex-wrap:wrap;gap:.3rem}
-.card-preview{font-size:.78rem}
-.result-text{font-size:.78rem;max-height:160px}
-.pill{font-size:.72rem;padding:.15rem .4rem}
-.steps-list li{padding:.4rem 0 .4rem 2rem;font-size:.8rem}
-.related-item{font-size:.76rem}
-footer{font-size:.65rem}
+.card{padding:.85rem .85rem}
+.card-title{font-size:.95rem;flex-wrap:wrap;gap:.3rem}
+.card-preview{font-size:.83rem}
+.result-text{font-size:.83rem;max-height:160px}
+.pill{font-size:.75rem;padding:.18rem .45rem}
+.steps-list li{padding:.4rem 0 .4rem 2rem;font-size:.83rem}
+.related-item{font-size:.8rem}
+footer{font-size:.7rem}
 }
 .steps-list{counter-reset:step;padding:0;list-style:none;margin-top:.5rem}
-.steps-list li{position:relative;padding:.5rem 0 .5rem 2.5rem;font-size:.85rem;border-left:2px solid var(--border);margin-left:.8rem}
+.steps-list li{position:relative;padding:.55rem 0 .55rem 2.5rem;font-size:.92rem;border-left:2px solid var(--border);margin-left:.8rem}
 .steps-list li::before{content:counter(step);counter-increment:step;position:absolute;left:-.9rem;top:.4rem;width:1.6rem;height:1.6rem;background:var(--accent);color:#fff;font-size:.72rem;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .steps-list li:last-child{border-left-color:transparent}
 .step-title{font-weight:600;color:var(--gold)}
@@ -93,15 +102,18 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
   <p>Magyar orsz&#225;ggy&#369;l&#233;si elj&#225;r&#225;sjogi kiskat&#233;</p>
 </header>
 
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('search',this)">Keres&#233;s</button>
-  <button class="tab" onclick="switchTab('fogalom',this)">Fogalomt&#225;r</button>
-  <button class="tab" onclick="switchTab('idokeret',this)">Id&#337;keretek</button>
-  <button class="tab" onclick="switchTab('szavazas',this)">Szavaz&#225;s</button>
-  <button class="tab" onclick="switchTab('eljaras',this)">Elj&#225;r&#225;sok</button>
-  <button class="tab" onclick="switchTab('het',this)">A &#233;s B h&#233;t</button>
-  <button class="tab" onclick="switchTab('keret',this)">Keretek</button>
-  <button class="tab" onclick="switchTab('about',this)">R&#243;lunk</button>
+<div class="tabs-wrap">
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="search" onclick="switchTab('search',this)">Keres&#233;s</button>
+  <button class="tab" data-tab="fogalom" onclick="switchTab('fogalom',this)">Fogalomt&#225;r</button>
+  <button class="tab" data-tab="idokeret" onclick="switchTab('idokeret',this)">Id&#337;keretek</button>
+  <button class="tab" data-tab="szavazas" onclick="switchTab('szavazas',this)">Szavaz&#225;s</button>
+  <button class="tab" data-tab="eljaras" onclick="switchTab('eljaras',this)">Elj&#225;r&#225;sok</button>
+  <button class="tab" data-tab="het" onclick="switchTab('het',this)">A &#233;s B h&#233;t</button>
+  <button class="tab" data-tab="bizottsag" onclick="switchTab('bizottsag',this)">Bizotts&#225;gok</button>
+  <button class="tab" data-tab="keret" onclick="switchTab('keret',this)">Keretek</button>
+  <button class="tab" data-tab="about" onclick="switchTab('about',this)">R&#243;lunk</button>
+</div>
 </div>
 
 <!-- SEARCH -->
@@ -133,6 +145,9 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
 <!-- A/B HET -->
 <div id="panel-het" class="panel"><div id="het-list" class="loading"><span class="spinner"></span></div></div>
 
+<!-- BIZOTTSAGOK -->
+<div id="panel-bizottsag" class="panel"><div id="bizottsag-list" class="loading"><span class="spinner"></span></div></div>
+
 <!-- KERETEK -->
 <div id="panel-keret" class="panel"><div id="keret-list" class="loading"><span class="spinner"></span></div></div>
 
@@ -156,14 +171,32 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
 </div>
 
 <script>
+var VALID_TABS = ['search','fogalom','idokeret','szavazas','eljaras','het','bizottsag','keret','about'];
+
 function switchTab(name, btn) {
   var tabs = document.querySelectorAll('.tab');
   var panels = document.querySelectorAll('.panel');
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
   for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
-  btn.classList.add('active');
-  document.getElementById('panel-' + name).classList.add('active');
+  if (!btn) {
+    for (var i = 0; i < tabs.length; i++) if (tabs[i].getAttribute('data-tab') === name) { btn = tabs[i]; break; }
+  }
+  if (btn) btn.classList.add('active');
+  var panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  if (window.location.hash.replace('#','') !== name) {
+    history.replaceState(null, '', '#' + name);
+  }
 }
+
+function applyHash() {
+  var h = window.location.hash.replace('#','');
+  if (VALID_TABS.indexOf(h) >= 0) switchTab(h, null);
+}
+
+window.addEventListener('DOMContentLoaded', applyHash);
+window.addEventListener('hashchange', applyHash);
+
 
 function toggle(el) {
   el.classList.toggle('open');
@@ -286,6 +319,23 @@ fetch('/api/idokeretek').then(function(r){return r.json();}).then(function(data)
       var vv = v.viszonvalasz;
       h += '<p style="margin-top:.3rem"><span class="pill pill-muted">Viszonv&#225;lasz: ' + (vv.idokeret_perc||'?') + ' perc</span></p>';
     }
+    function _renderKormanySzabaly(title, kk) {
+      var out = '<div style="margin-top:.5rem;padding:.6rem .8rem;background:rgba(124,108,240,.08);border-left:3px solid var(--accent);border-radius:0 4px 4px 0">';
+      out += '<div style="color:var(--accent-light);font-weight:600;font-size:.88rem;margin-bottom:.25rem">' + title + '</div>';
+      if (kk.szabaly) out += '<div style="font-size:.85rem">' + esc(kk.szabaly) + '</div>';
+      if (kk.keplet) out += '<div style="margin-top:.3rem;font-size:.82rem"><strong>K&#233;plet:</strong> <code style="color:var(--accent-light)">' + esc(kk.keplet) + '</code></div>';
+      if (kk.pelda) out += '<div style="margin-top:.3rem;font-size:.82rem;font-style:italic;color:var(--muted)">&#128161; ' + esc(kk.pelda) + '</div>';
+      if (kk.kulonbseg) out += '<div style="margin-top:.3rem;font-size:.82rem;color:var(--gold)"><strong>K&#252;l&#246;nbs&#233;g:</strong> ' + esc(kk.kulonbseg) + '</div>';
+      if (kk.jogforras) out += '<div style="margin-top:.3rem">' + ref(kk.jogforras) + '</div>';
+      out += '</div>';
+      return out;
+    }
+    if (v.kormany_tullepes_kompenzacio) {
+      h += _renderKormanySzabaly('Korm&#225;ny v&#225;lasz&#225;nak t&#250;ll&#233;p&#233;se &#8594; frakci&#243;vezet&#337;i viszontv&#225;lasz', v.kormany_tullepes_kompenzacio);
+    }
+    if (v.kormany_tagja_kezdemenyez) {
+      h += _renderKormanySzabaly('Ha a Korm&#225;ny tagja MAGA kezdem&#233;nyez napirend el&#337;tt &#8594; teljes id&#337;vel egyenl&#337; v&#225;laszjog', v.kormany_tagja_kezdemenyez);
+    }
     if (v.kivetel) {
       h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(232,184,75,.06);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:.82rem">';
       h += '<strong style="color:var(--gold)">Kiv&#233;tel / fontos:</strong> ' + esc(v.kivetel);
@@ -375,6 +425,157 @@ fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
   document.getElementById('het-list').innerHTML = '<div class="empty">Hiba.</div>';
   document.getElementById('eljaras-list').innerHTML = '<div class="empty">Hiba.</div>';
 });
+
+/* BIZOTTSAGOK */
+var BIZ_GROUPS = {
+  alap: ['bizottsagi_munka_alapok','bizottsagtipusok','kotelezoen_letrehozando_bizottsagok'],
+  eljaras: ['targyalo_bizottsagok','tab_eljarasi_lepesek','reszletes_vita_bizottsagban'],
+  kiemelt: ['torvenyalkotasi_bizottsag_tab','tab_specialis_hataskorok'],
+  szintezis: ['bizottsagi_rendszer_logika']
+};
+var BIZ_GROUP_LABELS = {
+  alap: 'Alapok &#233;s bizotts&#225;gt&#237;pusok',
+  kiemelt: 'T&#246;rv&#233;nyalkot&#225;si Bizotts&#225;g (TAB)',
+  eljaras: 'Elj&#225;r&#225;si folyamatok',
+  szintezis: 'Rendszer-szint&#233;zis'
+};
+
+function renderBizCard(k, v) {
+  var name = v.nev || k.replace(/_/g,' ');
+  var h = '<div class="card" onclick="toggle(this)" data-search="' + esc(name) + '">';
+  h += '<div class="card-title">' + esc(name);
+  if (v.kategoria === 'kiemelt') h += ' <span class="pill pill-red">kiemelt</span>';
+  if (v.kategoria === 'szintezis') h += ' <span class="pill pill-blue">szint&#233;zis</span>';
+  h += ' <span class="arrow">&#9654;</span></div>';
+  if (v.leiras) h += '<div class="card-preview">' + esc((v.leiras+'').substring(0,130)) + '</div>';
+  h += '<div class="card-detail"><div class="card-body">';
+  if (v.leiras) h += '<p>' + esc(v.leiras) + '</p>';
+  if (v.funkcio) h += '<p style="margin-top:.3rem"><strong>Funkci&#243;:</strong> ' + esc(v.funkcio) + '</p>';
+  if (v.szemelyi_osszetetel) h += '<p style="margin-top:.3rem"><strong>Szem&#233;lyi &#246;sszet&#233;tel:</strong> ' + esc(v.szemelyi_osszetetel) + '</p>';
+  if (v.osszetetel) {
+    if (typeof v.osszetetel === 'string') {
+      h += '<p style="margin-top:.3rem"><strong>&#214;sszet&#233;tel:</strong> ' + esc(v.osszetetel) + '</p>';
+    } else if (v.osszetetel.length) {
+      h += '<div style="margin-top:.4rem"><strong>&#214;sszet&#233;tel:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.82rem">';
+      for (var i = 0; i < v.osszetetel.length; i++) h += '<li>' + esc(v.osszetetel[i]) + '</li>';
+      h += '</ul></div>';
+    }
+  }
+  if (v.elofeltetel) h += '<p style="margin-top:.3rem"><strong>El&#337;felt&#233;tel:</strong> ' + esc(v.elofeltetel) + '</p>';
+  if (v.idozites) h += '<p style="margin-top:.3rem"><strong>Id&#337;z&#237;t&#233;s:</strong> ' + esc(v.idozites) + '</p>';
+  if (v.modosito_hatarido) h += '<p style="margin-top:.3rem"><strong>M&#243;dos&#237;t&#243; benyújtási határid&#337;:</strong> ' + esc(v.modosito_hatarido) + '</p>';
+  if (v.feladata && v.feladata.length) {
+    h += '<div style="margin-top:.4rem"><strong>Feladata:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.82rem">';
+    for (var i = 0; i < v.feladata.length; i++) h += '<li>' + esc(v.feladata[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  if (v.lezarulas) h += '<p style="margin-top:.3rem"><strong>Lez&#225;rul&#225;s:</strong> ' + esc(v.lezarulas) + '</p>';
+  if (v.elorehozott_eljaras) h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(232,184,75,.06);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:.82rem"><strong style="color:var(--gold)">El&#337;rehozott elj&#225;r&#225;s:</strong> ' + esc(v.elorehozott_eljaras) + '</div>';
+  if (v.kritikai_megjegyzes) h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(240,112,112,.06);border-left:3px solid var(--red);border-radius:0 4px 4px 0;font-size:.82rem"><strong style="color:var(--red)">Kritikai megjegyz&#233;s:</strong> ' + esc(v.kritikai_megjegyzes) + '</div>';
+  if (v.deregulacios_albizottsag) h += '<p style="margin-top:.3rem"><strong>Deregul&#225;ci&#243;s albizotts&#225;g:</strong> ' + esc(v.deregulacios_albizottsag) + '</p>';
+  // működési ritmus
+  if (v.mukodesi_ritmus) {
+    var mr = v.mukodesi_ritmus;
+    h += '<div style="margin-top:.5rem"><strong>M&#369;k&#246;d&#233;si ritmus:</strong>';
+    h += '<div style="display:flex;gap:.5rem;margin-top:.3rem;flex-wrap:wrap">';
+    h += '<span class="pill pill-gold">A-h&#233;t: ' + esc(mr.a_het) + '</span>';
+    h += '<span class="pill pill-blue">B-h&#233;t: ' + esc(mr.b_het) + '</span>';
+    h += '</div>';
+    if (mr.megjegyzes) h += '<p style="font-size:.82rem;color:var(--muted);margin-top:.3rem">' + esc(mr.megjegyzes) + '</p>';
+    h += '</div>';
+  }
+  // határozatképesség
+  if (v.hatarozatkeptesse) {
+    var hk = v.hatarozatkeptesse;
+    h += '<div style="margin-top:.5rem"><strong>Határozatk&#233;pess&#233;g:</strong>';
+    h += '<div style="margin-top:.3rem;font-size:.82rem">';
+    if (hk.hatarozatkeptesse_kuszob) h += '<div><span class="pill pill-green">Határozatk&#233;pes:</span> ' + esc(hk.hatarozatkeptesse_kuszob) + '</div>';
+    if (hk.tanacskozokeptesse_kuszob) h += '<div style="margin-top:.2rem"><span class="pill pill-gold">Tanácskoz&#243;k&#233;pes:</span> ' + esc(hk.tanacskozokeptesse_kuszob) + '</div>';
+    if (hk.dontes_alapszabaly) h += '<div style="margin-top:.2rem"><span class="pill pill-blue">D&#246;nt&#233;s:</span> ' + esc(hk.dontes_alapszabaly) + '</div>';
+    if (hk.kepviseleti_megbizas) h += '<div style="margin-top:.2rem;color:var(--muted)">' + esc(hk.kepviseleti_megbizas) + '</div>';
+    if (hk.jogforras) h += '<div style="margin-top:.3rem">' + ref(hk.jogforras) + '</div>';
+    h += '</div></div>';
+  }
+  // bizottságtípusok — speciális nested render
+  if (v.tipusok) {
+    h += '<div style="margin-top:.5rem"><strong>T&#237;pusok:</strong>';
+    for (var tk in v.tipusok) {
+      var t = v.tipusok[tk];
+      h += '<div style="margin-top:.4rem;padding:.5rem .7rem;background:var(--surface2);border-radius:4px">';
+      h += '<div style="font-weight:600;color:var(--gold);font-size:.85rem">' + esc(t.nev) + '</div>';
+      if (t.leiras) h += '<div style="font-size:.8rem;color:var(--text);margin-top:.2rem">' + esc(t.leiras) + '</div>';
+      if (t.jogforras) h += '<div style="margin-top:.2rem">' + ref(t.jogforras) + '</div>';
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+  // kötelezően létrehozandó bizottságok lista
+  if (v.bizottsagok && v.bizottsagok.length) {
+    h += '<div style="margin-top:.4rem"><strong>A 8 k&#246;telez&#337; bizotts&#225;g:</strong><ol style="margin:.3rem 0 0 1.4rem;font-size:.85rem">';
+    for (var i = 0; i < v.bizottsagok.length; i++) h += '<li>' + esc(v.bizottsagok[i]) + '</li>';
+    h += '</ol></div>';
+  }
+  // eljárási lépések (TAB, részletes vita)
+  if (v.lepesek && v.lepesek.length) {
+    h += '<ol class="steps-list">';
+    for (var j = 0; j < v.lepesek.length; j++) {
+      var l = v.lepesek[j];
+      h += '<li><span class="step-title">' + esc(l.cim||'') + '</span>';
+      if (l.leiras) h += '<br><span style="color:var(--muted);font-size:.82rem">' + esc(l.leiras) + '</span>';
+      if (l.jogforras) h += '<br>' + ref(l.jogforras);
+      h += '</li>';
+    }
+    h += '</ol>';
+  }
+  // TAB speciális hatáskörök
+  if (v.esetek && v.esetek.length && typeof v.esetek[0] === 'string') {
+    h += '<div style="margin-top:.4rem"><ul style="margin:.2rem 0 0 1.2rem;font-size:.85rem">';
+    for (var i = 0; i < v.esetek.length; i++) h += '<li style="margin-bottom:.3rem">' + esc(v.esetek[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  // lépcsők (szintézis)
+  if (v.lepcsok && v.lepcsok.length) {
+    h += '<div style="margin-top:.5rem"><strong>L&#233;pcs&#337;k:</strong>';
+    for (var i = 0; i < v.lepcsok.length; i++) {
+      h += '<div style="margin-top:.3rem;padding:.5rem .7rem;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;font-size:.85rem">' + esc(v.lepcsok[i]) + '</div>';
+    }
+    h += '</div>';
+  }
+  if (v.plenaris_szerepe) h += '<p style="margin-top:.4rem"><strong>Plen&#225;ris szerepe:</strong> ' + esc(v.plenaris_szerepe) + '</p>';
+  if (v.kovetkezteteseek && v.kovetkezteteseek.length) {
+    h += '<div style="margin-top:.4rem"><strong>K&#246;vetkeztet&#233;sek:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.85rem">';
+    for (var i = 0; i < v.kovetkezteteseek.length; i++) h += '<li style="margin-bottom:.2rem">' + esc(v.kovetkezteteseek[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  if (v.jogforras) h += ref(v.jogforras);
+  h += '</div><div class="related"></div></div></div>';
+  return h;
+}
+
+fetch('/api/bizottsagok').then(function(r){return r.json();}).then(function(data){
+  var box = document.getElementById('bizottsag-list'); var h = '';
+  // Intro banner
+  h += '<div style="background:rgba(124,108,240,.08);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:.7rem 1rem;margin-bottom:1rem;font-size:.85rem">';
+  h += '<strong style="color:var(--accent-light)">A 2014-es reform: k&#233;tl&#233;pcs&#337;s biziotts&#225;gi sz&#369;r&#337;rendszer</strong><br>';
+  h += '<span style="color:var(--muted)">Els&#337; l&#233;pcs&#337;: t&#225;rgyal&#243; bizotts&#225;gok (szakpolitikai sz&#369;r&#233;s). M&#225;sodik l&#233;pcs&#337;: T&#246;rv&#233;nyalkot&#225;si Bizotts&#225;g (kodifik&#225;ci&#243;s szint&#233;zis). A plen&#225;ris k&#246;zegbe csak a TAB &#225;ltal el&#337;k&#233;sz&#237;tett egys&#233;ges javaslat ker&#252;l.</span>';
+  h += '</div>';
+
+  var groups = ['alap','kiemelt','eljaras','szintezis'];
+  for (var gi = 0; gi < groups.length; gi++) {
+    var g = groups[gi];
+    var keys = BIZ_GROUPS[g];
+    var any = false;
+    for (var i = 0; i < keys.length; i++) if (data[keys[i]]) { any = true; break; }
+    if (!any) continue;
+    h += '<h3 style="color:var(--accent-light);font-size:.95rem;margin:1.3rem 0 .6rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)">' + BIZ_GROUP_LABELS[g] + '</h3>';
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if (!data[k]) continue;
+      h += renderBizCard(k, data[k]);
+    }
+  }
+  box.innerHTML = h;
+}).catch(function(){ document.getElementById('bizottsag-list').innerHTML = '<div class="empty">Hiba.</div>'; });
 
 /* KERETEK */
 var KERET_GROUPS = {

@@ -6,15 +6,71 @@
 # ==============================================================================
 
 modosito_inditvany:
-  nev: "Módosító indítvány benyújtása"
-  hatarido: "Az általános vita lezárását követő harmadik munkanap 16 óráig"
+  nev: "Képviselői módosító javaslat benyújtása"
+  hatarido: "Az általános vita lezárását követő 3. munkanap 16:00"
   szamitasi_mod: "munkanap"
-  jogforras: "Házszabály — Sprint 2"
-  status: TODO_SPRINT2
+  jogforras: "Hsz. 40. §"
+  megjegyzes: "Tartalmi korlát: Hsz. 42. § szerinti túlterjeszkedési tilalom."
+
+elotejesztoi_nyilatkozat_tab_elott:
+  nev: "Előterjesztői nyilatkozat a bizottsági módosítókról"
+  hatarido: "A részletesvita-szakasz lezárulta utáni hét 3. napja"
+  szamitasi_mod: "nap"
+  jogforras: "Hsz. 46. § (1)"
+  megjegyzes: "Vagy az előterjesztő jelezheti, hogy ezt a TAB ülésén szóban teszi meg. Innentől kezd futni a TAB órája."
+
+kivetelees_eljaras_modosito:
+  nev: "Módosító javaslat benyújtása kivételes eljárásban"
+  hatarido: "Min. 3 óra az elrendelés után"
+  szamitasi_mod: "óra"
+  jogforras: "Hsz. 62. §"
+  megjegyzes: "A módosítók benyújtási határideje nem lehet kevesebb, mint 3 óra a kivételes eljárás elrendelése után."
+
+kivetelees_eljaras_osszegzo:
+  nev: "TAB összegző módosító benyújtása kivételes eljárásban"
+  hatarido: "Legkésőbb az összevont vita ülésnapjának megnyitása előtt 1 óra"
+  szamitasi_mod: "óra"
+  jogforras: "Hsz. 62. §"
+
+kivetelees_eljaras_kezdemenyezes:
+  nev: "Kivételes eljárási javaslat benyújtása"
+  hatarido: "Legkésőbb az ülésnap megnyitása előtt 1 óra"
+  szamitasi_mod: "óra"
+  jogforras: "Hsz. 61. §"
+  megjegyzes: "A Hsz. 34. § (1) szerinti 5/6 napos haladékot ilyenkor nem kell alkalmazni."
 
 kapcsolodo_modosito:
   nev: "Kapcsolódó módosító indítvány"
-  status: TODO_SPRINT2
+  hatarido: "A szabályszerűnek nyilvánított túlterjeszkedő módosító vitájának lezárásáig"
+  jogforras: "Hsz. 70. § (3)"
+  megjegyzes: "Csak szabályszerű túlterjeszkedő módosítóhoz kapcsolódhat."
+
+modosito_visszavonas:
+  nev: "Képviselői módosító visszavonása"
+  hatarido: "A tárgyaló bizottság részletes vitát lezáró döntéséig (ha az ülés elkezdődött, az ülésen)"
+  jogforras: "Hsz. 66. §"
+
+bizottsagi_modosito_visszavonas:
+  nev: "Bizottsági (részletes vitát lezáró) módosító visszavonása"
+  hatarido: "A TAB erről szóló ülésének megnyitásáig"
+  jogforras: "Hsz. 66. §"
+
+tab_elorehozott_limit:
+  nev: "Előrehozott TAB-eljárás félévi plafonja"
+  limit: "Félévente legfeljebb 8 önálló indítvány"
+  jogforras: "Hsz. 46. § (2a)"
+  megjegyzes: "A törvényhozási sürgetés fő technikai eszköze."
+
+kivetelees_eljaras_limit:
+  nev: "Kivételes eljárás félévi plafonja"
+  limit: "Félévente legfeljebb 4 alkalommal"
+  jogforras: "Hsz. 61. § (5)"
+
+plenaris_fenntartasi_keres_limit:
+  nev: "Fenntartási kérés plenárison"
+  limit: "Frakcióvezetőnként és előterjesztőnként max. 3 javaslatonként"
+  jogforras: "Hsz. 48. § (5)"
+  megjegyzes: "Kivételes eljárásban TELJESEN kizárt (Hsz. 48. § (2) és (4) nem alkalmazandó)."
 
 kerdes_valasz:
   nev: "Írásbeli kérdésre adott válasz"

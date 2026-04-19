@@ -16,12 +16,27 @@ sarkalatos_torveny:
   szukseges_tobbseg: "A jelenlévő képviselők kétharmada"
   minositett_e: true
   mod: "nyilt_elektronikus"
-  jogforras: "Alaptörvény T) cikk (4)"
+  jogforras: "Alaptörvény T) cikk (4); Hsz. 48. § (8)"
+  kulonleges: >
+    Ha egy törvényben VEGYESEN vannak sarkalatos és egyszerű többségű
+    rendelkezések (pl. „salátatörvény"), szegmentált szavazásra kell
+    felkészülni: a minősített többségű rész külön, 2/3-dal; a többi
+    egyszerű többséggel. A Hsz. 48. § (8) szerint ELŐSZÖR mindig a
+    minősített többséget igénylő döntést kell meghozni.
+  praktikus_kovetkezmeny: >
+    199 fős OGY esetén: ha valamennyi képviselő jelen van, 2/3 =
+    133 igen szavazat. A minősített többség biztosítása (vagy blokkolása)
+    a padsor-logisztika egyik legfontosabb kérdése.
+  kivetel_eljaras: "Kivételes eljárásnak NINCS HELYE sarkalatos rendelkezés elfogadására vagy módosítására (Hsz. 61. § (4) c))."
   pelda_tamak:
-    - "Választójogi törvény"
-    - "Nemzetiségi törvény"
-    - "Bíróságok szervezete"
-    - "Ügyészségi törvény"
+    - "Választójog (Alaptörvény XXIII. cikk (4))"
+    - "Állampolgárság (G) cikk)"
+    - "Nemzetiségek, egyházak"
+    - "Családjog egyes elemei"
+    - "Honvédelem"
+    - "Bíróságok és ügyészség szervezete"
+    - "Alkotmánybíróság, ÁSZ, MNB"
+    - "Nemzetbiztonság, helyi önkormányzatok"
 
 alaptorveny_modositas:
   nev: "Alaptörvény módosítása"

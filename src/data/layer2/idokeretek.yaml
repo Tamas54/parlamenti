@@ -26,6 +26,27 @@ napirend_elotti:
   viszonvalasz:
     lehet_e: true
     idokeret_perc: 1
+  kormany_tullepes_kompenzacio:
+    szabaly: >
+      Ha a miniszterelnök (vagy az általa megjelölt miniszter) VÁLASZA a napirend
+      előtti felszólalás 5 perces időkeretét MEGHALADJA, a frakcióvezetők
+      (vagy az általuk kijelölt képviselő) részére FRAKCIÓNKÉNT annyi plusz
+      felszólalási idő jár viszontválaszra, AMENNYIVEL a Kormány tagja
+      a keretet túllépte.
+    keplet: "plusz_idő_frakciónként = (Kormány tagja által használt idő) − 5 perc"
+    pelda: "Ha a miniszterelnök 10 percet válaszol (5 perc helyett), akkor minden frakcióvezető viszontválaszra 5 perc jár (10 − 5 = 5)."
+    jogforras: "Hsz. 18. §"
+  kormany_tagja_kezdemenyez:
+    szabaly: >
+      Ha a miniszterelnök (vagy a Kormány tagja) MAGA kezdeményez napirend
+      előtti felszólalást — tehát NEM válaszol, hanem ő szólal fel elsőként
+      az adott ügyben —, a frakcióvezetők (vagy az általuk kijelölt képviselő)
+      részére FRAKCIÓNKÉNT a Kormány tagja által igénybe vett idővel
+      MEGEGYEZŐ időtartamú válaszjog jár.
+    keplet: "frakciónkénti válaszidő = (Kormány tagja által igénybe vett teljes idő)"
+    pelda: "Ha a miniszterelnök 8 percet beszél napirend előtt, minden frakcióvezető 8 perces válaszjogot kap (NEM csak 5-öt, és NEM csak a túllépést)."
+    kulonbseg: "Ez eltér a válasz-túllépés esetétől: ott csak a TÚLLÉPÉS mértékével jár plusz idő. Itt a Kormány tagja MAGA kezdeményez, így a TELJES felszólalási idejével egyenlő válaszidő jár."
+    jogforras: "Hsz. 18. §"
   jogforras: "Házszabály 18. §"
 
 napirend_kivuli:

@@ -1,0 +1,221 @@
+# ==============================================================================
+# BIZOTTSÁGI RENDSZER — típusok, TAB, eljárás
+# ==============================================================================
+# Jogforrások: Ogytv. 15–21/A. §; 10/2014. (II. 24.) OGY hat. (Hsz.) 32. §,
+#              40–48. §, 62. §, 69–72. §, 82. §
+# A 2014-es reform kétlépcsős bizottsági szűrőrendszert vezetett be:
+# tárgyaló bizottságok (szakpolitikai szűrés) → TAB (kodifikációs szintézis)
+# ==============================================================================
+
+bizottsagi_munka_alapok:
+  nev: "Bizottsági munka — alapvetések"
+  kategoria: "alap"
+  jogforras: "Ogytv. 15. § (1)"
+  leiras: >
+    A bizottság az Országgyűlés munkaszerve: kezdeményez, javaslatot tesz,
+    véleményez, meghatározott esetekben ügydöntő, és részt vesz a kormányzati
+    munka ellenőrzésében. A plenáris ülést a bizottságok készítik elő; itt
+    zajlik a szakmai-részletes munka, a plenárisra ideálisan már „előszűrt”
+    anyag érkezik.
+  mukodesi_ritmus:
+    a_het: "plenáris ülési hét"
+    b_het: "bizottsági és választókerületi hét"
+    megjegyzes: "A bizottsági munka érdemi súlypontja a B-héten van, de az A-héten is tartanak üléseket — különösen a TAB."
+  hatarozatkeptesse:
+    hatarozatkeptesse_kuszob: "A tagok több mint fele jelen van"
+    tanacskozokeptesse_kuszob: "A tagok több mint egyharmada jelen van"
+    dontes_alapszabaly: "A jelenlévők több mint fele (ha házszabály eltérően nem rendelkezik)"
+    kepviseleti_megbizas: "Az ilyen tagot jelenlevőnek kell tekinteni"
+    jogforras: "Ogytv. 27/C. §"
+  osszetetel: >
+    A frakciók közötti létszámarány szerint, minden frakcióból annyi tag,
+    amennyi arányos (Ogytv. 17. § (1)). Minden képviselő — kivéve kormánytag,
+    miniszterelnöki politikai igazgató, államtitkár — legalább egy állandó
+    bizottságban részt vehet (17. § (2)).
+  deregulacios_albizottsag: "Minden állandó bizottságnak KÖTELEZŐ létrehoznia (Ogytv. 21. § (2))."
+
+bizottsagtipusok:
+  nev: "Bizottságtípusok áttekintése"
+  kategoria: "alap"
+  jogforras: "Ogytv. 16–21/A. §"
+  tipusok:
+    allando_bizottsag:
+      nev: "Állandó bizottság"
+      jogforras: "Ogytv. 16. § (1)"
+      leiras: "Feladatköre a kormányzati feladatokhoz igazodik. Az Országgyűlés megalakulásakor hozza létre."
+    torvenyalkotasi_bizottsag:
+      nev: "Törvényalkotási Bizottság (TAB)"
+      jogforras: "Ogytv. 21/A. §"
+      leiras: "Külön szabályozással működik. A kétlépcsős bizottsági rendszer második szűrője, kodifikációs szintetizátor."
+    vizsgalobizottsag:
+      nev: "Vizsgálóbizottság"
+      jogforras: "Ogytv."
+      leiras: "Ad hoc alapon létrehozott, meghatározott ügy kivizsgálására szolgáló eseti bizottság."
+    nemzetisegi_bizottsag:
+      nev: "Nemzetiségeket képviselő bizottság"
+      jogforras: "Ogytv.; Hsz. 45. § (4), (9)"
+      leiras: "Külön jogállással működő bizottság. Túlterjeszkedést nem fogalmazhat meg, de más tárgyaló bizottságnál vagy a TAB-nál kezdeményezheti."
+    paritasos_bizottsag:
+      nev: "Paritásos bizottság"
+      jogforras: "Ogytv. 17. § (4)"
+      leiras: "Kormánypárti és ellenzéki tagok EGYENLŐ számban. A Mentelmi Bizottság kötelezően ilyen."
+
+kotelezoen_letrehozando_bizottsagok:
+  nev: "Kötelezően létrehozandó állandó bizottságok"
+  kategoria: "alap"
+  jogforras: "Ogytv. 16. § (2)"
+  leiras: "Az Országgyűlésnek a megalakuláskor kötelező létrehoznia az alábbi 8 állandó bizottságot."
+  bizottsagok:
+    - "Mentelmi, Összeférhetetlenségi, Fegyelmi és Mandátumvizsgáló Bizottság (röviden: Mentelmi Bizottság) — paritásos"
+    - "Alkotmányügyi bizottság"
+    - "Költségvetési bizottság"
+    - "Külügyi bizottság"
+    - "Európai uniós ügyekkel foglalkozó bizottság"
+    - "Honvédelmi bizottság"
+    - "Nemzetbiztonsági bizottság"
+    - "Nemzetpolitikai bizottság"
+
+targyalo_bizottsagok:
+  nev: "Tárgyaló bizottságok"
+  kategoria: "eljaras"
+  jogforras: "Hsz. 32. §, 43–45. §"
+  leiras: >
+    A törvényjavaslat részletes vitáját lefolytató állandó bizottságok.
+    Két csoportból áll:
+  osszetetel:
+    - "KIJELÖLT BIZOTTSÁG: a házelnök egy állandó bizottságot jelöl ki a részletes vita lefolytatására (Hsz. 32. § (1))."
+    - "VITÁHOZ KAPCSOLÓDÓ BIZOTTSÁG: bármely másik állandó bizottság bejelentheti, hogy részletes vitát kíván folytatni a feladatkörébe tartozó részben (Hsz. 32. § (2))."
+  feladata:
+    - "Értékelik a módosító javaslatokat"
+    - "Állást foglalnak (támogat / fenntart változtatásokkal / új módosítási szándék)"
+    - "Részletes vitát lezáró bizottsági módosító javaslatot + részletes vitáról szóló jelentést nyújtanak be (Hsz. 45. §)"
+  lezarulas: "A részletesvita-szakasz akkor zárul le, ha az összes tárgyaló állandó bizottság beadta a jelentését (Hsz. 45. § (8))."
+
+torvenyalkotasi_bizottsag_tab:
+  nev: "Törvényalkotási Bizottság (TAB) — részletes működés"
+  kategoria: "kiemelt"
+  jogforras: "Ogytv. 21/A. §; Hsz. 46. §, 48. §, 62. §, 69. §, 70–72. §, 82. §"
+  leiras: >
+    Az Országgyűlés a megalakulását követően KÖTELES létrehozni
+    (Ogytv. 21/A. § (2)). Jogállása: „az Országgyűlés jogalkotási tevékenysége
+    során eljáró, javaslattevő, véleményező, törvényben és határozati
+    házszabályi rendelkezésekben meghatározott esetekben ügydöntő
+    bizottsága” (21/A. § (1)). A kétlépcsős rendszer MÁSODIK SZŰRŐJE és
+    szintetizátora.
+  szemelyi_osszetetel: >
+    Az ELNÖK személyéről az Országgyűlés KÜLÖN HATÁROZ — nem a többi
+    bizottsággal egyidejűleg, ami aláhúzza különleges státuszát. Az alelnök
+    és a tagok személyéről az állandó bizottságok létrehozásával egyidejűleg
+    dönt (21/A. § (2)). A TAB elnökének megbízatása megszűnik akkor is, ha a
+    törvényalkotásért felelős országgyűlési alelnöki megbízatás megszűnik.
+  funkcio: "Összeállítja a tárgyaló bizottságok munkájából az egységes, szavazható végszöveget."
+  elorehozott_eljaras: >
+    Az előterjesztő kérheti, hogy a TAB már a részletesvita-szakasz
+    lezárulta hetében lefolytassa eljárását — ez a gyorsított menet.
+    Félévente LEGFELJEBB NYOLC önálló indítvány esetében lehetséges
+    (Hsz. 46. § (2a)). A törvényhozási sürgetés fő technikai eszköze.
+  kritikai_megjegyzes: >
+    A plenáris kizárólag az összegző módosító javaslatról szavaz (egyetlen
+    szavazással, Hsz. 48. § (1)). Frakcióvezető és előterjesztő MAXIMUM
+    HÁROM fenntartási kérést nyújthat be javaslatonként (Hsz. 48. § (5)).
+    A TAB tehát egyszerre kodifikációs minőségbiztosító és — a többségi
+    mechanika miatt — kormányzati szűrő.
+
+tab_eljarasi_lepesek:
+  nev: "TAB eljárási lépései"
+  kategoria: "eljaras"
+  jogforras: "Hsz. 46. §"
+  leiras: "A TAB 5 fő lépésben szintetizál a részletesvita-szakasz lezárulta után."
+  lepesek:
+    - cim: "Előterjesztői nyilatkozat"
+      leiras: "Az előterjesztő a lezárás utáni hét 3. napjáig nyilatkozik, hogy a részletes vitát lezáró bizottsági módosító javaslatokba foglalt mely módosításokkal ért egyet."
+      jogforras: "Hsz. 46. § (1)"
+    - cim: "TAB értékelés és állásfoglalás"
+      leiras: "A TAB értékeli a részletes vitát lezáró bizottsági módosító javaslatokat. Vizsgálja a túlterjeszkedési tilalomnak való megfelelést (Hsz. 42. §)."
+      jogforras: "Hsz. 46. §"
+    - cim: "Döntés javaslatonként"
+      leiras: "Támogat / fenntart (változtatásokkal) / új módosítási szándékot fogalmaz meg."
+      jogforras: "Hsz. 46. §"
+    - cim: "Összegző módosító javaslat"
+      leiras: "Mindezt EGY indítványba foglalja: ez az összegző módosító javaslat. Ha a törvényjavaslat nem felel meg a Hsz. 44. § (1) kodifikációs követelményeknek (alaptörvény-konformitás, jogrendszeri koherencia, jogalkotási minőség), a TAB az összegző módosítóba foglalja a szükséges korrekciót is."
+      jogforras: "Hsz. 46. § (5)"
+    - cim: "Összegző jelentés és egységes javaslat"
+      leiras: "Az eljárás lezárásáról összegző jelentést ad be. Ha volt összegző módosító, az előterjesztő megküldi az elnöknek az egybeszerkesztett szöveget (egységes javaslattervezet), és a TAB elnöke EGYSÉGES JAVASLATKÉNT benyújtja."
+      jogforras: "Hsz. 46. § (10)–(12)"
+
+tab_specialis_hataskorok:
+  nev: "TAB speciális hatáskörök"
+  kategoria: "kiemelt"
+  jogforras: "Hsz. 46–82. §"
+  leiras: "Hat olyan eljárás, amelyben a TAB nemcsak szintetizál, hanem aktívan alakít."
+  esetek:
+    - "Túlterjeszkedő módosító javaslat kezelése (Hsz. 70–71. §): a TAB is kezdeményezhet túlterjeszkedést; a plenáris dönt a szabályszerűségéről."
+    - "Kivételes eljárás (Hsz. 62. §): itt a TAB FOLYTATJA LE a részletes vitát (nem csak szintetizál), és ülést tarthat az OGY-ülés ideje alatt is."
+    - "Politikai nyilatkozat részletes vitája (Hsz. 82. §): hasonlóan a TAB folytatja le."
+    - "Megismételt részletes vita kérése (Hsz. 69. §): ha ellentmondást észlel a bizottsági módosítókban, visszaküldheti a tárgyaló bizottságnak."
+    - "Fenntartott módosító javaslat utánkezelése (Hsz. 48. § (7)): plenáris fenntartás esetén MÁSODIK összegző módosító javaslatot készít."
+    - "Alaptörvény-ellenesség korrekciója (Hsz. 79. §): a köztársasági elnök visszaküldése esetén."
+
+reszletes_vita_bizottsagban:
+  nev: "Részletes vita lefolytatása bizottságban — 10 lépés"
+  kategoria: "eljaras"
+  jogforras: "Hsz. 43–45. §, 66. §, 69–70. §"
+  leiras: >
+    A részletes vita a törvényjavaslat szövegszintű megvitatása — az általános
+    vita lezárása után kezdődik, a tárgyaló bizottságok vezetésével.
+  elofeltetel: "Az általános vita lezárása; a házelnök által kijelölt állandó bizottság + esetlegesen vitához kapcsolódó bizottságok (Hsz. 32. §)."
+  idozites: "A részletesvita-szakasz az általános vita lezárását követő héten nyílik meg (Hsz. 43. §). Az adott hét első ülésnapjának megnyitása előtt a tárgyaló bizottság még nem tűzheti napirendjére a részletes vitát — van egy „puffer” a képviselői módosítók benyújtására."
+  modosito_hatarido: "A képviselő az általános vita lezárását követő 3. munkanap 16 óráig nyújthatja be módosítóját (Hsz. 40. §). Tartalmi korlát: Hsz. 42. § — túlterjeszkedési tilalom."
+  lepesek:
+    - cim: "Előkészítés"
+      leiras: "A bizottság előadót jelöl ki. Az ülésen az előterjesztő és a Kormány képviselője tanácskozási joggal vesz részt."
+      jogforras: "Hsz. 44. §"
+    - cim: "Értékelés és állásfoglalás"
+      leiras: "A bizottság módosító javaslatonként, a törvényjavaslat rendelkezéseinek sorrendjében tárgyal. Bármely tag kérheti összekapcsolt tárgyalást — ekkor a szavazás is összevont lehet."
+      jogforras: "Hsz. 45. § (2)"
+    - cim: "Döntés típusai javaslatonként"
+      leiras: "(a) támogatja a módosítót; (b) FENNTARTJA a nem támogatottat az általa szükségesnek tartott változtatásokkal; (c) TOVÁBBI módosítási szándékot fogalmaz meg (új módosítás)."
+      jogforras: "Hsz. 45. § (3)"
+    - cim: "Túlterjeszkedés kezdeményezése"
+      leiras: "Ha a bizottság túlterjeszkedő módosítási szándékot fogalmaz meg, azt a részletes vitát lezáró bizottsági módosítótól ELKÜLÖNÍTVE, ugyanabban az időpontban nyújtja be. A nemzetiségeket képviselő bizottság túlterjeszkedést nem fogalmazhat meg."
+      jogforras: "Hsz. 70. § (1); 45. § (4)"
+    - cim: "A részletes vita lezárása"
+      leiras: "A bizottság minden módosítóról állást foglalt; a vitát lezárhatja. EGY indítványba foglalja a támogatott/fenntartott/új módosításokat: ez a részletes vitát lezáró bizottsági módosító javaslat. Egyidejűleg részletes vitáról szóló bizottsági jelentés is kötelező."
+      jogforras: "Hsz. 45. § (5)–(6)"
+    - cim: "A részletesvita-szakasz záródása"
+      leiras: "Akkor zárul le, amikor VALAMENNYI tárgyaló állandó bizottság benyújtotta a részletes vitáról szóló jelentését. Több bizottság mindegyike KÜLÖN-KÜLÖN ad be módosítót és jelentést."
+      jogforras: "Hsz. 45. § (8)"
+    - cim: "Nemzetiségi bizottság különszabálya"
+      leiras: "A nemzetiségeket képviselő bizottság részletes vitát lezáró módosítóját a TAB csak akkor tárgyalja, ha azt a részletesvita-szakasz lezárulta előtt benyújtották."
+      jogforras: "Hsz. 45. § (9)"
+    - cim: "Előterjesztői / képviselői visszavonás"
+      leiras: "A képviselő módosítóját a tárgyaló bizottság részletes vitát lezáró döntéséig — ha már elkezdődött az ülés, az ülésen — vonhatja vissza. A bizottsági részletes vitát lezáró módosítót maga a bizottság vonhatja vissza a TAB erről szóló ülésének megnyitásáig."
+      jogforras: "Hsz. 66. §"
+    - cim: "Továbbadás a TAB-nak"
+      leiras: "A részletesvita-szakasz lezárulta után az előterjesztő a következő hét 3. napjáig nyilatkozik, mely bizottsági módosító-tartalmakkal ért egyet — vagy jelzi, hogy ezt a TAB ülésén szóban teszi meg. Innentől kezd futni a TAB órája."
+      jogforras: "Hsz. 46. § (1)"
+    - cim: "Ellentmondáskezelés (visszakérés)"
+      leiras: "Ha a TAB az eljárása során a részletes vitát lezáró bizottsági módosítók között olyan ellentmondást észlel, amit saját eljárásában nem tud feloldani, VISSZAKÉRI a tárgyaló bizottságtól: megismételt részletes vitát és megismételt részletes vitát lezáró bizottsági módosítót kér."
+      jogforras: "Hsz. 69. §"
+
+bizottsagi_rendszer_logika:
+  nev: "A kétlépcsős bizottsági szűrőrendszer — a 2014-es reform logikája"
+  kategoria: "szintezis"
+  jogforras: "Ogytv. 21/A. §; Hsz. 32. §, 43–48. §"
+  leiras: >
+    A magyar parlamenti eljárásrend 2014-ben jelentős szerkezeti átalakuláson
+    esett át. A korábbi hárompólusú rendszert (általános vita – részletes vita
+    a plenárison – zárószavazás) egy KÉTLÉPCSŐS BIZOTTSÁGI SZŰRŐRENDSZER
+    váltotta fel.
+  lepcsok:
+    - "ELSŐ LÉPCSŐ — a tárgyaló bizottságok (kijelölt + vitához kapcsolódó) szakpolitikai szempontból szelektálják és alakítják a képviselői módosító javaslatokat."
+    - "MÁSODIK LÉPCSŐ — a Törvényalkotási Bizottság (TAB) kodifikációs és rendszerszintű szempontból szintetizálja a bizottsági munkát EGYETLEN szavazható összegző módosító javaslatba és egységes javaslatba."
+  plenaris_szerepe: >
+    A plenáris ülés feladata ezután kizárólag az ÖSSZEVONT VITA és a szavazás.
+    A részletes vita valódi súlypontja lekerült a nyilvános plenárisról és
+    bizottsági közegbe vándorolt.
+  kovetkezteteseek:
+    - "Aki ma érdemi hatást akar gyakorolni egy törvény szövegére, annak BIZOTTSÁGI SZINTEN KELL JELEN LENNIE."
+    - "A plenárison már csak korlátozott eszközei vannak: frakcióvezetőnként és előterjesztőnként maximum 3 fenntartási kérés javaslatonként (Hsz. 48. § (5))."
+    - "A bizottságok kettős természetűek: szakmai műhely + politikai szűrő (arányos frakciós összetétel → jellemzően kormánypárti többség)."
+    - "A TAB specialitása: még a többségi szűrőn is túlmutató szerepe van — alkotmányos-kodifikációs korrekciós jogkört gyakorol."

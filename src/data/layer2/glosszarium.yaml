@@ -199,14 +199,20 @@ eseti_bizottsag:
 
 torvenyhozasi_bizottsag:
   rovid_magyarazat: >
-    Különleges állandó bizottság, amely a zárószavazás előtti módosító javaslatokkal
-    foglalkozik, és a törvényalkotási eljárás koherenciáját biztosítja.
+    Törvényalkotási Bizottság (TAB) — a 2014-es reform kétlépcsős bizottsági
+    szűrőrendszerének MÁSODIK lépcsője, kodifikációs szintetizátor.
   reszletes: >
-    A törvényalkotási bizottság a részletes vita után javaslatot tehet a törvényjavaslat
-    szövegének belső koherenciájának biztosítására, és zárószavazás előtti módosító
-    javaslatot nyújthat be.
-  aliasok: ["Törvényalkotási bizottság"]
-  jogforras: "Házszabály"
+    Az Országgyűlés megalakulása után KÖTELEZŐ létrehozni. Jogállása szerint
+    javaslattevő, véleményező, egyes esetekben ügydöntő bizottság. A tárgyaló
+    bizottságok munkájából szintetizálja az egyetlen, szavazható végszöveget
+    (összegző módosító + egységes javaslat). Elnökének személyéről az OGY
+    KÜLÖN határoz — nem a többi bizottsággal egyidejűleg. Speciális
+    hatáskörök: túlterjeszkedés, kivételes eljárás részletes vitája,
+    politikai nyilatkozat, megismételt részletes vita kérése, második
+    összegző módosító, alaptörvény-ellenesség korrekciója. Pontos neve:
+    „Törvényalkotási Bizottság" (röviden: TAB).
+  aliasok: ["Törvényalkotási Bizottság", "TAB", "törvényalkotási bizottság"]
+  jogforras: "Ogytv. 21/A. §; Hsz. 46, 48, 62, 69, 70–72, 82. §"
 
 # --- FRAKCIÓK ---
 
@@ -603,3 +609,165 @@ feloszlatas:
     vezetőinek véleményét.
   aliasok: ["feloszlatás", "Országgyűlés feloszlatása"]
   jogforras: "Alaptörvény 3. cikk"
+
+# --- BIZOTTSÁGI ÉS TÖRVÉNYHOZÁSI ELJÁRÁS (2014-es reform) ---
+
+targyalo_bizottsag:
+  rovid_magyarazat: >
+    A törvényjavaslat részletes vitáját lefolytató állandó bizottságok összefoglaló neve.
+    Két csoportból áll: a kijelölt bizottság és a vitához kapcsolódó bizottság(ok).
+  reszletes: >
+    A házelnök a törvényjavaslat benyújtása után egy állandó bizottságot kijelöl
+    a részletes vita lefolytatására. Bármely másik állandó bizottság bejelentheti,
+    hogy részletes vitát kíván folytatni a feladatkörébe tartozó részben — ezek
+    a vitához kapcsolódó bizottságok. A két csoport együtt a „tárgyaló bizottságok".
+    Ők folytatják le a részletes vitát, értékelik a módosító javaslatokat, és
+    részletes vitát lezáró bizottsági módosítót + jelentést nyújtanak be.
+  aliasok: ["tárgyaló bizottság", "tárgyaló bizottságok"]
+  jogforras: "Hsz. 32. §, 43–45. §"
+
+kijelolt_bizottsag:
+  rovid_magyarazat: >
+    A házelnök által a törvényjavaslat részletes vitájának lefolytatására kijelölt
+    egyetlen állandó bizottság.
+  reszletes: >
+    A kijelölés a törvényjavaslat benyújtása után történik. Ez a bizottság a
+    fő felelőse a részletes vita lefolytatásának; mellé más állandó bizottság
+    csatlakozhat vitához kapcsolódó bizottságként.
+  aliasok: ["kijelölt bizottság"]
+  jogforras: "Hsz. 32. § (1)"
+
+paritasos_bizottsag:
+  rovid_magyarazat: >
+    Olyan bizottság, amelyben a kormánypárti és ellenzéki tagok száma EGYENLŐ.
+    A Mentelmi Bizottság kötelezően ilyen.
+  reszletes: >
+    A paritás a politikai semlegesség garanciája: a döntéshez mindkét oldal
+    támogatása szükséges, így a bizottság nem válhat pusztán többségi eszközzé.
+    A Mentelmi, Összeférhetetlenségi, Fegyelmi és Mandátumvizsgáló Bizottság
+    (röviden: Mentelmi Bizottság) kötelezően paritásos.
+  aliasok: ["paritásos bizottság"]
+  jogforras: "Ogytv. 17. § (4)"
+
+osszegzo_modosito:
+  rovid_magyarazat: >
+    A Törvényalkotási Bizottság (TAB) által összeállított egyetlen, szavazható
+    módosító javaslat, amely a részletes vitát lezáró bizottsági módosítók
+    szintézise.
+  reszletes: >
+    A 2014-es reform lényegi eleme: a plenáris a képviselői módosítókról NEM
+    szavaz külön — csak a TAB összegzőjéről, egyetlen szavazással. A TAB a
+    tárgyaló bizottságok munkájából kiszedi a támogatott/fenntartott/új
+    módosításokat, és egyetlen indítványba foglalja. Ha a törvényjavaslat
+    nem felel meg a kodifikációs követelményeknek, a TAB az összegzőbe
+    foglalja a korrekciót is.
+  aliasok: ["összegző módosító", "összegző módosító javaslat"]
+  jogforras: "Hsz. 46. § (5)"
+
+egyseges_javaslat:
+  rovid_magyarazat: >
+    A TAB által az összegző módosítóval együtt benyújtott egybeszerkesztett
+    szöveg — ez a plenáris szavazás tárgya.
+  reszletes: >
+    Az előterjesztő az összegző módosítóval összhangban megküldi az elnöknek
+    az egybeszerkesztett szöveget, és a TAB elnöke egységes javaslatként
+    benyújtja. Erről szavaz a plenáris.
+  aliasok: ["egységes javaslat"]
+  jogforras: "Hsz. 46. § (10)–(12)"
+
+reszletes_vitat_lezaro_modosito:
+  rovid_magyarazat: >
+    A tárgyaló bizottság ÁLTAL benyújtott egyetlen módosító indítvány, amelybe
+    a bizottság belefoglalja az általa támogatott, fenntartott és új módosításokat.
+  reszletes: >
+    A tárgyaló bizottság a részletes vita végén minden módosítóról állást foglal
+    (támogat / fenntart változtatásokkal / új módosítási szándék), majd ezeket
+    egyetlen indítványba foglalja. A részletes vita akkor zárul le a teljes
+    Országgyűlésben, amikor VALAMENNYI tárgyaló bizottság benyújtotta a magáét.
+  aliasok: ["részletes vitát lezáró módosító", "bizottsági módosító"]
+  jogforras: "Hsz. 45. § (5)–(6)"
+
+tulterjeszkedo_modosito:
+  rovid_magyarazat: >
+    Olyan módosító javaslat, amely túlmegy a törvényjavaslat által érintett
+    kereten: más törvényt érint vagy az alaptörvény-/törvénymódosítási javaslat
+    érintetlen részeit.
+  reszletes: >
+    Főszabály: túlterjeszkedni TILOS (Hsz. 42. §). Kivétel: ha valamely
+    szabályszerű módosító tartalmával való összefüggés vagy a kodifikációs
+    követelmények érvényesítése miatt nyilvánvalóan szükséges. Ilyenkor
+    a TAB kezdeményezésére az Országgyűlés vita nélkül dönt a szabályszerűségről.
+  aliasok: ["túlterjeszkedő módosító", "túlterjeszkedés"]
+  jogforras: "Hsz. 42. §, 70–71. §"
+
+kapcsolodo_modosito:
+  rovid_magyarazat: >
+    Egy szabályszerű túlterjeszkedő módosítóhoz benyújtható újabb módosító —
+    a túlterjeszkedés kinyitott új területén.
+  reszletes: >
+    Ha a plenáris egy túlterjeszkedő módosítót szabályszerűnek nyilvánít, a
+    vita lezárásáig lehet hozzá kapcsolódó módosítót benyújtani. Ez biztosítja,
+    hogy a túlterjeszkedés ne maradjon „egyoldalú" alakító eszköz.
+  aliasok: ["kapcsolódó módosító"]
+  jogforras: "Hsz. 70. § (3)"
+
+fenntartasi_keres:
+  rovid_magyarazat: >
+    Ha a TAB egy módosítót NEM foglalt be az összegzőbe, a frakcióvezető vagy
+    az előterjesztő írásban kérheti a fenntartását — maximum 3 javaslatonként.
+  reszletes: >
+    Ez az ellenzéki eszköztár fő maradéka a 2014-es reform után. A fenntartás
+    kérésének korlátja: kérelmezőnként MAXIMUM HÁROM kérés javaslatonként.
+    Nem kérhető túlterjeszkedő módosító fenntartása. Kivételes eljárásban
+    a fenntartás TELJESEN kizárt (Hsz. 48. § (2) és (4) nem alkalmazandó).
+  aliasok: ["fenntartási kérés", "módosító fenntartása"]
+  jogforras: "Hsz. 48. § (4)–(5)"
+
+targysorozatba_vetel:
+  rovid_magyarazat: >
+    Döntés arról, hogy egy önálló indítvány bekerüljön-e az Országgyűlés
+    tárgysorozatába — azaz tárgyalható legyen.
+  reszletes: >
+    Egyes típusoknál (kormány- vagy bizottsági előterjesztés) automatikus.
+    Képviselői törvény- vagy határozati javaslatnál külön tárgysorozatba
+    vételi döntés kell — ez gyakran az ellenzéki kezdeményezések blokkolásának
+    eszköze is, hiszen többségi döntéssel megakadályozható, hogy egy indítvány
+    akár napirendre kerüljön.
+  aliasok: ["tárgysorozatba vétel"]
+  jogforras: "Hsz. (képviselői indítványoknál külön döntés)"
+
+nem_onallo_inditvany:
+  rovid_magyarazat: >
+    Az önálló indítványhoz csatlakozó írásos indítvány: módosító javaslat,
+    tárgyalási módra vonatkozó javaslat, vagy a tárgyalást/döntést érdemben
+    befolyásoló egyéb írásos javaslat.
+  reszletes: >
+    A nem önálló indítvány ÖNMAGÁBAN nem napirend — csak az önálló indítvány
+    tárgyalásának részeként létezik. Tipikus nem önálló indítványok: módosító
+    javaslat, kapcsolódó módosító, bizottsági módosító, összegző módosító,
+    fenntartási kérés.
+  aliasok: ["nem önálló indítvány"]
+  jogforras: "Hsz. 28. §"
+
+kodifikacios_kovetelmeny:
+  rovid_magyarazat: >
+    A törvényjavaslatnak meg kell felelnie az alaptörvény-konformitás, a
+    jogrendszeri koherencia és a jogalkotási minőség követelményeinek.
+  reszletes: >
+    A TAB az összegző módosító előkészítése során vizsgálja, hogy a javaslat
+    megfelel-e ezeknek a követelményeknek. Ha nem, a TAB az összegző módosítóba
+    foglalja a szükséges korrekciót. Ez a TAB „kodifikációs minőségbiztosító"
+    szerepe.
+  aliasok: ["kodifikációs követelmény"]
+  jogforras: "Hsz. 44. § (1)"
+
+elorehozott_tab_eljaras:
+  rovid_magyarazat: >
+    Gyorsított TAB-eljárás: a TAB már a részletesvita-szakasz lezárulta
+    hetében lefolytathatja eljárását. Félévente legfeljebb 8 indítványra.
+  reszletes: >
+    Az előterjesztő kérheti. A törvényhozási sürgetés fő technikai eszköze.
+    Nem keverendő össze a kivételes eljárással — az az egész tárgyalást
+    gyorsítja, az előrehozott TAB csak a TAB-szakaszt.
+  aliasok: ["előrehozott TAB eljárás"]
+  jogforras: "Hsz. 46. § (2a)"

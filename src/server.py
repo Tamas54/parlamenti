@@ -164,6 +164,10 @@ async def api_eljarasok(request: Request) -> JSONResponse:
 async def api_keretek(request: Request) -> JSONResponse:
     return JSONResponse(_load_yaml("kepviseloi_keretek.yaml"))
 
+@mcp.custom_route("/api/bizottsagok", methods=["GET"])
+async def api_bizottsagok(request: Request) -> JSONResponse:
+    return JSONResponse(_load_yaml("bizottsagok.yaml"))
+
 
 # ---------------------------------------------------------------------------
 # STATS DASHBOARD (private)
