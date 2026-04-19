@@ -1,0 +1,362 @@
+# ==============================================================================
+# KÉPVISELŐI KERETEK — 2026. március 1. – 2027. február 28.
+# ==============================================================================
+# Forrás: 2012. évi XXXVI. törvény az Országgyűlésről
+#         §§ 87, 104, 107, 109–118/A, 119
+# Számítási alap: KSH STADAT mun0143 — 2025. évi nemzetgazdasági havi bruttó
+#         átlagkereset (teljes munkaidőben alkalmazásban állók, teljes kör)
+# ==============================================================================
+
+alap_szamok:
+  nev: "A rendszer központi fogaskereke (T) és érvényesség"
+  ervenyesseg_kezdete: "2026-03-01"
+  ervenyesseg_vege: "2027-02-28"
+  ksh_bruttó_atlagkereset_2025_ft: 727496
+  ksh_forras: >
+    KSH nemzetgazdasági bruttó átlagkereset — az OGYH számítási alapjaként
+    használt specifikus mutató (teljes munkaidős alkalmazottak, teljes kör;
+    a közfoglalkoztatottakat nem vagy csak szűkített körben tartalmazó
+    változat). NEM azonos a nyers 12-havi számtani átlaggal.
+  ksh_kozelito_jelleg: >
+    AZ ADATOK JELENLEG KÖZELÍTŐEK. A 727 496 Ft/hó értéket a 2026. március
+    1-jétől érvényes T = 2 182 488 Ft-ból számoltuk vissza (T / 3) a
+    2026-04-i audit forrásai alapján. Ez lényegesen magasabb, mint a
+    KSH-gyorstájékoztatókból számolt nyers 12-havi átlag (~705 000 Ft),
+    mert az Ogytv. 104. § a KSH egy specifikus, magasabb mutatójához
+    igazodik (a közfoglalkoztatottak nélküli vagy szűkített kör).
+    A pontos hivatalos OGYH-táblázat megjelenéséig (vagy a 2025-ös
+    véglegesített KSH-adat közzétételéig) minden ebből számolt érték
+    — T, iroda, munkatárs, lakhatás, bérkeret, fejkvóta stb. —
+    a legjobb tudomásunk szerinti becslés, nem végleges hivatalos adat.
+  tiszteletdij_alap_T_ft: 2182488
+  keplet: "T = KSH bruttó havi átlagkereset × 3 = 727 496 × 3 = 2 182 488 Ft/hó"
+  jogforras: "Ogytv. 104. § (1)"
+  audit_2026_04:
+    korabbi_T_ft: 2114811
+    korabbi_ksh_ft: 704937
+    korrekcio_forras: "Parlament.hu jogallas_es_javadalmazas + OGYH 2026-03-01 táblázat (2026-04 audit)"
+    megjegyzes: >
+      Az eredeti YAML-ben szereplő 704 937 Ft / 2 114 811 Ft a KSH
+      gyorstájékoztatók havi adataiból számolt számtani átlag volt.
+      A 2026-04 audit kimutatta, hogy az OGYH egy ennél magasabb KSH-mutatót
+      használ, ezért a T hivatalos értéke 2 182 488 Ft. Minden származtatott
+      keret ennek megfelelően módosítva. A különbség ~3,2%.
+  megjegyzes: >
+    T a tiszteletdíj alapja. Minden további egyéni és frakciós keret
+    ebből származik szorzókkal. Évente március 1-jén frissül az előző
+    évi KSH-adat alapján.
+
+# ------------------------------------------------------------------------------
+# 1. TISZTELETDÍJ (Ogytv. 104. §)
+# ------------------------------------------------------------------------------
+
+tiszteletdij:
+  nev: "Havi tiszteletdíj tisztség szerint"
+  jogforras: "Ogytv. 104. §"
+  alap_ft: 2182488
+  tisztsegek:
+    sima_kepviselo:
+      nev: "Sima képviselő"
+      szorzo: 1.0
+      havi_ft: 2182488
+    bizottsagi_tag:
+      nev: "Állandó bizottság vagy nemzetiségi bizottság tagja"
+      szorzo: 1.2
+      havi_ft: 2618986
+    tab_tag_vagy_kettos:
+      nev: "Törvényalkotási biz. tagja / 2+ állandó biz. tag"
+      szorzo: 1.4
+      havi_ft: 3055483
+    bizottsagi_alelnok:
+      nev: "Bizottsági alelnök"
+      szorzo: 1.5
+      havi_ft: 3273732
+    frakciovezeto_helyettes:
+      nev: "Frakcióvezető-helyettes / jegyző / bizottsági elnök"
+      szorzo: 1.7
+      havi_ft: 3710230
+    frakciovezeto:
+      nev: "Frakcióvezető / OGY alelnöke / háznagy"
+      szorzo: 2.0
+      havi_ft: 4364976
+    ogy_elnoke:
+      nev: "Országgyűlés elnöke (házelnök)"
+      szorzo: 2.7
+      havi_ft: 5892718
+
+# ------------------------------------------------------------------------------
+# 2. EGYÉNI KÉPVISELŐI KERETEK
+# ------------------------------------------------------------------------------
+
+iroda_keret:
+  nev: "Irodai keret (T × 100%)"
+  kategoria: "egyeni"
+  havi_ft: 2182488
+  szorzo_T: 1.0
+  jogforras: "Ogytv. 111. § + 112. § (2)"
+  leiras: >
+    Választókerületi irodára jár (egy vagy több ingatlanban). Fedezhető:
+    bérleti díj, közüzemi díjak (gáz, áram, víz, távhő, csatorna, hulladék),
+    telefon, internet, műsorterjesztés, fax.
+  tilalom: >
+    Nem üzemeltethető olyan ingatlanban, amely a képviselő / közeli
+    hozzátartozója / munkatársa tulajdonában, 5%-nál nagyobb nyrt. vagy
+    bármilyen kft./zrt. tulajdonában, vagy olyan gazdasági társaság
+    tulajdonában van, ahol e személyek vezetői tisztséget viselnek.
+    (Ogytv. 111. § (1a)–(1b))
+  mire_lehet:
+    - "Bérleti díj"
+    - "Közüzemi díjak (gáz, áram, víz, távhő, csatorna, hulladék)"
+    - "Telefon, internet, fax, műsorterjesztés"
+  mire_nem_lehet:
+    - "Saját tulajdonú ingatlan"
+    - "Érdekeltségi körbe tartozó ingatlan"
+
+munkatarsi_keret:
+  nev: "Munkatársi keret (T × 3,3)"
+  kategoria: "egyeni"
+  havi_ft: 7202210
+  szorzo_T: 3.3
+  jogforras: "Ogytv. 111. § (3) + 112. § (3)"
+  leiras: >
+    A képviselő munkáját segítő alkalmazottak foglalkoztatására.
+    Határozott idejű munkaviszony vagy polgári jogi megbízás; az
+    Országgyűlés Hivatala ellenjegyzi a szerződést.
+  fontos: "A közterheket (munkáltatói járulékokat) NEM tartalmazza — azok ezen felül jönnek."
+  korlat: >
+    Közeli hozzátartozó nem alkalmazható (112. § (5)).
+    A keret egészét vagy részét a képviselő átruházhatja a frakcióvezetőre
+    → ilyenkor a frakciókeretbe kerül.
+
+uzemanyag_keret:
+  nev: "Üzemanyagkártya (km-alapú)"
+  kategoria: "egyeni"
+  jogforras: "Ogytv. 109. §"
+  leiras: >
+    Egy rendszámra szóló, át nem ruházható, készpénzre nem váltható kártya.
+    NAV üzemanyagárai + max. 2000 cm³ benzinüzemű személygépkocsi
+    fogyasztási normája alapján.
+  km_keret_lakohelytol:
+    budapesten_belul: 2500
+    "1_100_km": 4000
+    "101_200_km": 5000
+    "201_300_km": 6000
+    "300_km_folott": 6500
+  tobbletkeret_vk_terulet:
+    "850_km2_alatt": 10
+    "850_1150_km2": 20
+    "1151_1400_km2": 30
+    "1401_1650_km2": 40
+    "1651_1900_km2": 50
+    "1901_km2_folott": 60
+  tobbletkeret_megjegyzes: "Egyéni választókerületi képviselőnek + % emelés (területnagyság szerint)."
+  mire_lehet:
+    - "Üzemanyag"
+    - "Úthasználati díj"
+    - "Autókarbantartás"
+    - "Elektromos töltés"
+    - "Belföldi közösségi közlekedés bérlete/jegye (109. § (7))"
+  mire_nem_lehet:
+    - "Más rendszámra átvezetés"
+    - "Készpénzre váltás"
+  kulfoldi_kikuldetes: "Köztisztviselői napidíj és költségtérítés (109. § (9))."
+
+lakhatas_keret:
+  nev: "Lakhatási költségtérítés (T × 35%)"
+  kategoria: "egyeni"
+  havi_ft: 763871
+  szorzo_T: 0.35
+  jogforras: "Ogytv. 110. §"
+  leiras: >
+    Két alternatív út:
+    a) OGY Hivatala által biztosított budapesti szolgálati lakás;
+    b) bérleti / szállodai költségtérítés T × 35% plafonig (közüzemi díjakkal).
+  feltetel_szolgalati_lakas: >
+    Sem a képviselő, sem közös háztartásban élő közeli hozzátartozója ne
+    tulajdonoljon budapesti lakóingatlant (kivétel: örökléssel/ajándékozással
+    szerzett, más haszonélvezőjével terhelt ingatlan).
+  frakcio_kiegeszites: "Frakcióvezető engedélyével a frakció 113. § szerinti keretéből kiegészíthető."
+  tilalom: "Ugyanaz az önkifizetés-tilalom, mint az irodánál (110. § (2a)–(2b))."
+  alelnok_frakciovezeto: "Budapesti hivatali lakás használatára jogosult (110. § (4)–(5))."
+
+mobil_keret:
+  nev: "Mobiltelefon-keret (T × 5%)"
+  kategoria: "egyeni"
+  havi_ft: 109124
+  szorzo_T: 0.05
+  jogforras: "Ogytv. 111. § (4)"
+  leiras: "A készüléket is az OGY Hivatala biztosítja."
+  kulonleges: >
+    A mobilfizetéses parkolási szolgáltatást a törvény kifejezetten
+    KIZÁRJA a fedezetből. Ha a képviselő mégis lehívta, az összeg a
+    tiszteletdíjából kerül levonásra.
+  mire_nem_lehet:
+    - "Mobilparkolás (kifejezett kizárás)"
+
+ingyenes_szolgaltatasok:
+  nev: "Egyéb térítésmentes szolgáltatások"
+  kategoria: "egyeni"
+  jogforras: "Ogytv. 111. § (5)–(6)"
+  elemek:
+    - "Postai és elektronikus hírközlési szolgáltatások"
+    - "OGY Hivatala elemző, információs, dokumentációs szolgáltatásai"
+    - "OGY kiadványok, hivatalos dokumentumok"
+    - "Minősített elektronikus aláírás (111. § (4) utolsó mondat)"
+
+# ------------------------------------------------------------------------------
+# 3. FRAKCIÓS KERETEK (Ogytv. 113–115. §)
+# ------------------------------------------------------------------------------
+
+frakcio_alapkeret:
+  nev: "Frakció alapkerete (T × 10)"
+  kategoria: "frakcio"
+  havi_ft: 21824880
+  szorzo_T: 10
+  jogforras: "Ogytv. 113. §"
+  leiras: "Havi jogosultság az OGY Hivatala költségvetéséből, frakciónként."
+
+frakcio_fejkvota:
+  nev: "Tagonkénti fejkvóta (T × 0,5)"
+  kategoria: "frakcio"
+  havi_ft_per_tag: 1091244
+  szorzo_T: 0.5
+  jogforras: "Ogytv. 113. §"
+  leiras: "Képviselőnként havonta a frakció működési keretéhez."
+
+kozos_listas_alapkeret:
+  nev: "Közös országos listás frakciók alapkerete (T × 17)"
+  kategoria: "frakcio"
+  havi_ft: 37102296
+  szorzo_T: 17
+  jogforras: "Ogytv. 113. §"
+  leiras: "Listánként, mandátumarányosan osztva a résztvevő frakciók között."
+
+fuggetlen_kepviselo_keret:
+  nev: "Független képviselő saját kerete (T × 0,5)"
+  kategoria: "frakcio"
+  havi_ft: 1091244
+  szorzo_T: 0.5
+  jogforras: "Ogytv. 113. §"
+
+frakcio_berkeret:
+  nev: "Frakciós segítőszemélyzet bérkerete"
+  kategoria: "frakcio"
+  jogforras: "Ogytv. 115. § (4)"
+  keplet: "segítőlétszám × KSH bruttó átlagkereset × 4 = létszám × 727 496 × 4"
+  havi_ft_per_fo: 2909984
+  leiras: >
+    A megelőző év KSH-átlagkeresetén alapul, minden tárgyév március 1-jétől.
+  letszamsavok:
+    nev: "Alapsávos segítőlétszám (115. § (2) a)"
+    "10_fo_vagy_kevesebb": 10
+    "11_20_fo": 14
+    "21_34_fo": 20
+    "35_50_fo": 24
+    "51_70_fo": 30
+    "71_90_fo": 40
+    "91_110_fo": 50
+    "111_120_fo": 60
+    "120_fo_felett": 80
+  plusz_letszam: "A frakció létszámával megegyező számú közép- vagy felsőfokú végzettségű munkatárs (115. § (2) b)."
+  cafeteria: "Külön biztosítva a központi költségvetésből (115. § (6))."
+  jutalom: "A bérkeret 10%-a jutalmazásra/egyéb juttatásra, de ebből új foglalkoztatás nem finanszírozható."
+
+frakcios_iroda:
+  nev: "Frakciós iroda és segítőszemélyzet"
+  kategoria: "frakcio"
+  jogforras: "Ogytv. 114–115. §"
+  leiras: >
+    A frakció önálló irodával rendelkezik (114. § (1)), és OGY Hivatalánál
+    foglalkoztatott segítőszemélyzetet kap.
+
+# ------------------------------------------------------------------------------
+# 4. GAZDÁLKODÁS, ELSZÁMOLÁS
+# ------------------------------------------------------------------------------
+
+gazdalkodas:
+  nev: "Gazdálkodás és elszámolás"
+  kategoria: "eljaras"
+  jogforras: "Ogytv. 116–118/A. §"
+  targyi_eszkozok: >
+    A 113. és 114. § (3) keretből vásárolt eszközök az OGY Hivatala
+    tulajdonát képezik; a frakció / független képviselő csak birtokolhatja
+    a mandátum alatt (116. §).
+  tamogatas_forrasa: "A 113–115. § keretét az OGY Hivatala biztosítja (117. §)."
+  atcsoportositas: >
+    A frakcióvezető a 112. § (4), 113. § (1) és (1a), 114. § (3), 115. §
+    (4) és (6) keretei között mozgathat pénzt; tárgyhó előtti hónap 20-ig
+    be kell jelenteni (118. § (1)).
+  keretmaradvany: >
+    Havi maradvány a jogosultsági hónap után is felhasználható.
+    Év végén / mandátum megszűnésekor egyes egyéni keretek maradványa
+    a frakció 113. § szerinti keretére csoportosul át (112. § (8), 118. § (5a)).
+    Frakció megszűnése esetén a maradvány a következő OGY-ben is
+    mandátummal rendelkező ugyanazon párt frakciójára szállhat.
+  part_finanszirozas: >
+    A frakcióvezető egyedi döntéssel, támogatói okirattal a keretmaradvány
+    terhére támogatást nyújthat az országos listán mandátumot szerzett
+    pártjának — átutalással, annak hitelintézeti számlájára (118/A. §).
+  tullepes_szankcio: >
+    A jogosulatlanul igénybe vett összeg és a parkolási szolgáltatás díja
+    a tiszteletdíjból levonásra kerül, vagy visszafizetendő (112. § (10)).
+
+# ------------------------------------------------------------------------------
+# 5. TILALMAK, SZANKCIÓK
+# ------------------------------------------------------------------------------
+
+ajandek_limit:
+  nev: "Ajándék-limit (T × 5%)"
+  kategoria: "szankcio"
+  havi_ft: 109124
+  szorzo_T: 0.05
+  jogforras: "Ogytv. 87. §"
+  leiras: >
+    A képviselői megbízatással összefüggésben legfeljebb T × 5% = 109 124 Ft
+    értékű udvariassági ajándék fogadható el. Hivatalos képviseletben kapott
+    ajándékot át kell adni a házelnöknek.
+  kivetel: >
+    Nem esik a tilalom alá (87. § (4)) az OGY-tól, saját párttól/frakciótól
+    vagy pártalapítványtól kapott, képviselői munkához szükséges juttatás
+    és ingyenes használatba kapott dolog — de a megbízatás megszűnését
+    követően ezek nem kerülhetnek ingyenesen a képviselő tulajdonába.
+
+tiszteletdij_csokkentes:
+  nev: "Tiszteletdíj-csökkentés igazolatlan távollétért"
+  kategoria: "szankcio"
+  jogforras: "Ogytv. 107. §"
+  esetek:
+    hatarozatkeptelen_oules:
+      ok: "Határozatképtelen OGY-ülésről bejelentés nélküli távollét"
+      csokkentes_max: "T × 1/3"
+    igazolatlan_szavazas:
+      ok: "Igazolatlan távollét szavazásokon (1/4-nél több hiányzás)"
+      csokkentes_max: "A hiányzási arány szerint"
+    hatarozatkeptelen_biz:
+      ok: "Határozatképtelen bizottsági ülésről távollét"
+      csokkentes_max: "max. 20% (TAB: 40%)"
+    igazolatlan_biz:
+      ok: "Bizottsági ülés több mint felén igazolatlan hiányzás (min. 3 ülés)"
+      csokkentes_max: "20% (TAB-tag: 40%)"
+  jogorvoslat: "Mentelmi Bizottság, majd OGY (107/A. §)."
+  garancia: "A képviselő havi tiszteletdíja a csökkentések után sem lehet alacsonyabb a mindenkori minimálbérnél (107/B. § (2))."
+
+nemzetisegi_bizottsagi_keret:
+  nev: "Nemzetiségi bizottsági különkeret"
+  kategoria: "egyeni"
+  jogforras: "Ogytv. 22. § (4a)"
+  leiras: >
+    A nemzetiségi képviselő, nemzetiségi szószóló és nemzetiséghez tartozó
+    OGY-képviselő anyanyelvhasználatával összefüggő kiadásai a nemzetiségi
+    bizottság erre elkülönített keretét terhelik.
+
+mandatumvegi_ellatas:
+  nev: "Mandátumvégi ellátás"
+  kategoria: "szankcio"
+  jogforras: "Ogytv. 119. §"
+  leiras: >
+    Ha a képviselői megbízatás az OGY megbízatásának megszűnésével szűnik
+    meg, a volt képviselő további 3 hónapon át a megelőző 3 havi átlag
+    tiszteletdíjának megfelelő összegű ellátást kap (egy összegben is kérhető).
+  kizaro_okok:
+    - "Ha az általános választáson újra mandátumot szerzett"
+    - "Ha nem tesz eleget a mandátum utáni vagyonnyilatkozat-tételi kötelezettségének"

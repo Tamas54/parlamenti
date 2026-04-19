@@ -26,6 +26,7 @@ from tools.eljaras_tool import register_eljaras_tools
 from tools.search_tool import register_search_tools
 from tools.fogalom_tool import register_fogalom_tools
 from tools.meta_tool import register_meta_tools
+from tools.keret_tool import register_keret_tools
 
 logging.basicConfig(
     level=logging.INFO,
@@ -62,6 +63,7 @@ register_eljaras_tools(mcp)
 register_search_tools(mcp)
 register_fogalom_tools(mcp)
 register_meta_tools(mcp)
+register_keret_tools(mcp)
 
 # ---------------------------------------------------------------------------
 # YAML LOADERS (shared by API routes)
@@ -128,7 +130,7 @@ async def web_ui(request: Request) -> HTMLResponse:
 
 @mcp.custom_route("/health", methods=["GET"])
 async def health(request: Request) -> JSONResponse:
-    return JSONResponse({"status": "ok", "server": "Parlamentaris Kompendium", "tools": 14})
+    return JSONResponse({"status": "ok", "server": "Parlamentaris Kompendium", "tools": 19})
 
 @mcp.custom_route("/api/search", methods=["GET"])
 async def api_search(request: Request) -> JSONResponse:
@@ -157,6 +159,10 @@ async def api_szavazas(request: Request) -> JSONResponse:
 @mcp.custom_route("/api/eljarasok", methods=["GET"])
 async def api_eljarasok(request: Request) -> JSONResponse:
     return JSONResponse(_load_yaml("eljarasi_folyamatok.yaml"))
+
+@mcp.custom_route("/api/keretek", methods=["GET"])
+async def api_keretek(request: Request) -> JSONResponse:
+    return JSONResponse(_load_yaml("kepviseloi_keretek.yaml"))
 
 
 # ---------------------------------------------------------------------------

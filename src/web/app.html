@@ -100,6 +100,7 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
   <button class="tab" onclick="switchTab('szavazas',this)">Szavaz&#225;s</button>
   <button class="tab" onclick="switchTab('eljaras',this)">Elj&#225;r&#225;sok</button>
   <button class="tab" onclick="switchTab('het',this)">A &#233;s B h&#233;t</button>
+  <button class="tab" onclick="switchTab('keret',this)">Keretek</button>
   <button class="tab" onclick="switchTab('about',this)">R&#243;lunk</button>
 </div>
 
@@ -131,6 +132,9 @@ footer{text-align:center;padding:1.5rem 0;margin-top:2rem;border-top:1px solid v
 
 <!-- A/B HET -->
 <div id="panel-het" class="panel"><div id="het-list" class="loading"><span class="spinner"></span></div></div>
+
+<!-- KERETEK -->
+<div id="panel-keret" class="panel"><div id="keret-list" class="loading"><span class="spinner"></span></div></div>
 
 <!-- ABOUT -->
 <div id="panel-about" class="panel">
@@ -371,6 +375,191 @@ fetch('/api/eljarasok').then(function(r){return r.json();}).then(function(data){
   document.getElementById('het-list').innerHTML = '<div class="empty">Hiba.</div>';
   document.getElementById('eljaras-list').innerHTML = '<div class="empty">Hiba.</div>';
 });
+
+/* KERETEK */
+var KERET_GROUPS = {
+  egyeni: ['iroda_keret','munkatarsi_keret','uzemanyag_keret','lakhatas_keret','mobil_keret','ingyenes_szolgaltatasok','nemzetisegi_bizottsagi_keret'],
+  frakcio: ['frakcio_alapkeret','frakcio_fejkvota','kozos_listas_alapkeret','fuggetlen_kepviselo_keret','frakcio_berkeret','frakcios_iroda'],
+  szankcio: ['ajandek_limit','tiszteletdij_csokkentes','mandatumvegi_ellatas','gazdalkodas']
+};
+var KERET_GROUP_LABELS = {
+  egyeni: 'Egy&#233;ni k&#233;pvisel&#337;i keretek',
+  frakcio: 'Frakci&#243;s keretek',
+  szankcio: 'Tilalmak, szankci&#243;k, elj&#225;r&#225;s'
+};
+
+function formatFt(n) {
+  if (typeof n !== 'number') return n;
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
+}
+
+function renderKeretCard(k, v) {
+  var name = v.nev || k.replace(/_/g,' ');
+  var amount = v.havi_ft || v.havi_ft_per_tag || v.havi_ft_per_fo;
+  var amountLabel = v.havi_ft ? '/h&#243;' : (v.havi_ft_per_tag ? '/tag/h&#243;' : (v.havi_ft_per_fo ? '/f&#337;/h&#243;' : ''));
+  var h = '<div class="card" onclick="toggle(this)" data-search="' + esc(name) + '">';
+  h += '<div class="card-title">' + esc(name);
+  if (amount) h += ' <span class="pill pill-gold" style="margin-left:.5rem">' + formatFt(amount) + amountLabel + '</span>';
+  if (v.szorzo_T) h += ' <span class="pill pill-blue">T &#215; ' + v.szorzo_T + '</span>';
+  h += ' <span class="arrow">&#9654;</span></div>';
+  if (v.leiras) h += '<div class="card-preview">' + esc((v.leiras+'').substring(0,110)) + '</div>';
+  h += '<div class="card-detail"><div class="card-body">';
+  if (v.leiras) h += '<p>' + esc(v.leiras) + '</p>';
+  if (v.keplet) h += '<p style="margin-top:.3rem"><strong>K&#233;plet:</strong> <code style="color:var(--accent-light)">' + esc(v.keplet) + '</code></p>';
+  if (v.fontos) h += '<p style="margin-top:.3rem;color:var(--gold)"><strong>Fontos:</strong> ' + esc(v.fontos) + '</p>';
+  if (v.korlat) h += '<p style="margin-top:.3rem"><strong>Korl&#225;t:</strong> ' + esc(v.korlat) + '</p>';
+  if (v.tilalom) h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(240,112,112,.06);border-left:3px solid var(--red);border-radius:0 4px 4px 0;font-size:.82rem"><strong style="color:var(--red)">Tilalom:</strong> ' + esc(v.tilalom) + '</div>';
+  if (v.feltetel_szolgalati_lakas) h += '<p style="margin-top:.3rem"><strong>Szolg&#225;lati lak&#225;s felt&#233;tele:</strong> ' + esc(v.feltetel_szolgalati_lakas) + '</p>';
+  if (v.frakcio_kiegeszites) h += '<p style="margin-top:.3rem">' + esc(v.frakcio_kiegeszites) + '</p>';
+  if (v.alelnok_frakciovezeto) h += '<p style="margin-top:.3rem"><strong>Aleln&#246;k / frakci&#243;vezet&#337;:</strong> ' + esc(v.alelnok_frakciovezeto) + '</p>';
+  if (v.kulonleges) h += '<div style="margin-top:.5rem;padding:.5rem .7rem;background:rgba(232,184,75,.06);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:.82rem"><strong style="color:var(--gold)">Kiv&#233;tel / fontos:</strong> ' + esc(v.kulonleges) + '</div>';
+  if (v.mire_lehet && v.mire_lehet.length) {
+    h += '<div style="margin-top:.5rem"><strong style="color:var(--green)">Mire lehet:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.82rem">';
+    for (var i = 0; i < v.mire_lehet.length; i++) h += '<li>' + esc(v.mire_lehet[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  if (v.mire_nem_lehet && v.mire_nem_lehet.length) {
+    h += '<div style="margin-top:.5rem"><strong style="color:var(--red)">Mire NEM lehet:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.82rem">';
+    for (var i = 0; i < v.mire_nem_lehet.length; i++) h += '<li>' + esc(v.mire_nem_lehet[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  if (v.elemek && v.elemek.length) {
+    h += '<ul style="margin:.4rem 0 0 1.2rem;font-size:.85rem">';
+    for (var i = 0; i < v.elemek.length; i++) h += '<li>' + esc(v.elemek[i]) + '</li>';
+    h += '</ul>';
+  }
+  // Üzemanyag km-tábla
+  if (v.km_keret_lakohelytol) {
+    h += '<div style="margin-top:.5rem"><strong>Havi km-keret lak&#243;hely szerint:</strong><div style="margin-top:.3rem">';
+    var kt = v.km_keret_lakohelytol;
+    var labels = {'budapesten_belul':'Budapesten bel&#252;l','1_100_km':'1&#8211;100 km','101_200_km':'101&#8211;200 km','201_300_km':'201&#8211;300 km','300_km_folott':'300 km f&#246;l&#246;tt'};
+    for (var kk in kt) h += '<div style="font-size:.82rem;padding:.15rem 0"><span class="pill pill-blue">' + (labels[kk]||kk) + ': ' + kt[kk] + ' km</span></div>';
+    h += '</div></div>';
+  }
+  if (v.tobbletkeret_vk_terulet) {
+    h += '<div style="margin-top:.5rem"><strong>Egy&#233;ni VK t&#246;bbletkeret (ter&#252;let szerint):</strong><div style="margin-top:.3rem">';
+    var tt = v.tobbletkeret_vk_terulet;
+    var tlabels = {'850_km2_alatt':'850 km&#178; alatt','850_1150_km2':'850&#8211;1150 km&#178;','1151_1400_km2':'1151&#8211;1400 km&#178;','1401_1650_km2':'1401&#8211;1650 km&#178;','1651_1900_km2':'1651&#8211;1900 km&#178;','1901_km2_folott':'1901 km&#178; f&#246;l&#246;tt'};
+    for (var kk in tt) h += '<div style="font-size:.82rem;padding:.15rem 0"><span class="pill pill-green">' + (tlabels[kk]||kk) + ': +' + tt[kk] + '%</span></div>';
+    h += '</div></div>';
+  }
+  if (v.kulfoldi_kikuldetes) h += '<p style="margin-top:.3rem"><strong>K&#252;lf&#246;ldi kik&#252;ldet&#233;s:</strong> ' + esc(v.kulfoldi_kikuldetes) + '</p>';
+  // Bérkeret
+  if (v.letszamsavok) {
+    h += '<div style="margin-top:.5rem"><strong>Alaps&#225;vos seg&#237;t&#337;l&#233;tsz&#225;m (frakci&#243;m&#233;ret szerint):</strong><div style="margin-top:.3rem">';
+    var ls = v.letszamsavok;
+    for (var kk in ls) {
+      if (kk === 'nev') continue;
+      h += '<div style="font-size:.82rem;padding:.15rem 0"><span class="pill pill-blue">' + esc(kk.replace(/_/g,' ')) + ': ' + ls[kk] + ' f&#337;</span></div>';
+    }
+    h += '</div></div>';
+  }
+  if (v.plusz_letszam) h += '<p style="margin-top:.3rem"><strong>Plusz:</strong> ' + esc(v.plusz_letszam) + '</p>';
+  if (v.cafeteria) h += '<p style="margin-top:.3rem"><strong>Cafet&#233;ria:</strong> ' + esc(v.cafeteria) + '</p>';
+  if (v.jutalom) h += '<p style="margin-top:.3rem"><strong>Jutalom:</strong> ' + esc(v.jutalom) + '</p>';
+  // Tiszteletdíj-csökkentés esetei
+  if (v.esetek) {
+    h += '<div style="margin-top:.5rem"><strong>Esetek:</strong>';
+    for (var kk in v.esetek) {
+      var e = v.esetek[kk];
+      h += '<div style="margin-top:.3rem;padding:.4rem .6rem;background:var(--surface2);border-radius:4px;font-size:.82rem">';
+      h += '<div>' + esc(e.ok) + '</div>';
+      h += '<div><span class="pill pill-red">' + esc(e.csokkentes_max) + '</span></div></div>';
+    }
+    h += '</div>';
+  }
+  if (v.jogorvoslat) h += '<p style="margin-top:.3rem"><strong>Jogorvoslat:</strong> ' + esc(v.jogorvoslat) + '</p>';
+  if (v.garancia) h += '<p style="margin-top:.3rem"><strong>Garancia:</strong> ' + esc(v.garancia) + '</p>';
+  if (v.kivetel) h += '<p style="margin-top:.3rem"><strong>Kiv&#233;tel:</strong> ' + esc(v.kivetel) + '</p>';
+  // Mandátumvégi ellátás
+  if (v.kizaro_okok && v.kizaro_okok.length) {
+    h += '<div style="margin-top:.4rem"><strong>Kiz&#225;r&#243; okok:</strong><ul style="margin:.2rem 0 0 1.2rem;font-size:.82rem">';
+    for (var i = 0; i < v.kizaro_okok.length; i++) h += '<li>' + esc(v.kizaro_okok[i]) + '</li>';
+    h += '</ul></div>';
+  }
+  // Gazdálkodás
+  ['targyi_eszkozok','tamogatas_forrasa','atcsoportositas','keretmaradvany','part_finanszirozas','tullepes_szankcio'].forEach(function(f){
+    if (v[f]) h += '<p style="margin-top:.3rem"><strong>' + f.replace(/_/g,' ') + ':</strong> ' + esc(v[f]) + '</p>';
+  });
+  if (v.megjegyzes) h += '<p style="margin-top:.4rem;color:var(--muted);font-size:.82rem"><em>' + esc(v.megjegyzes) + '</em></p>';
+  if (v.jogforras) h += ref(v.jogforras);
+  h += '</div><div class="related"></div></div></div>';
+  return h;
+}
+
+fetch('/api/keretek').then(function(r){return r.json();}).then(function(data){
+  var box = document.getElementById('keret-list'); var h = '';
+  // Közelítő figyelmeztetés banner
+  var alap = data.alap_szamok || {};
+  if (alap.ksh_kozelito_jelleg) {
+    h += '<div style="background:rgba(240,112,112,.08);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:.7rem 1rem;margin-bottom:1rem;font-size:.85rem">';
+    h += '<strong style="color:var(--red)">&#9888; AZ ADATOK JELENLEG K&#214;ZEL&#205;T&#336;EK</strong><br>';
+    h += '<span style="color:var(--muted)">' + esc(alap.ksh_kozelito_jelleg) + '</span>';
+    h += '</div>';
+  }
+  // Alap számok (T, KSH) kártya
+  if (alap && Object.keys(alap).length) {
+    h += '<div class="card" onclick="toggle(this)" data-search="tiszteletdij alap">';
+    h += '<div class="card-title">T &#8212; a rendszer k&#246;zponti sz&#225;m&#237;t&#225;si alapja';
+    h += ' <span class="pill pill-gold" style="margin-left:.5rem">T = ' + formatFt(alap.tiszteletdij_alap_T_ft) + '/h&#243;</span>';
+    h += ' <span class="arrow">&#9654;</span></div>';
+    h += '<div class="card-preview" style="color:var(--text);font-size:.88rem;line-height:1.5">Ez az &#246;sszeg egyszerre <strong>egy sima k&#233;pvisel&#337; havi brutt&#243; tiszteletd&#237;ja</strong> &#233;s <strong>minden tov&#225;bbi keret sz&#225;m&#237;t&#225;si alapja</strong>. A t&#246;bbi &#246;sszeg (iroda, munkat&#225;rs, lakhat&#225;s, frakci&#243;-keret stb.) mind T szorz&#243;jak&#233;nt sz&#225;rmazik. Az &#233;rt&#233;k j&#243; k&#246;zel&#237;t&#233;ssel pontos.</div>';
+    h += '<div class="card-detail"><div class="card-body">';
+    h += '<p><strong>Hogyan j&#246;n ki?</strong> Az Ogytv. 104. &#167;-a szerint T = (el&#337;z&#337; &#233;vi KSH brutt&#243; havi &#225;tlagkereset) &#215; 3. A 2025-&#246;s KSH-b&#225;zis (727 496 Ft) h&#225;romszorosa 2 182 488 Ft &#8212; ez T.</p>';
+    h += '<p style="margin-top:.4rem"><strong>P&#233;ld&#225;k arra, mit jelent T:</strong></p>';
+    h += '<ul style="margin:.2rem 0 0 1.2rem;font-size:.85rem">';
+    h += '<li>Sima k&#233;pvisel&#337; tiszteletd&#237;ja = T &#215; 1,0 = ' + formatFt(alap.tiszteletdij_alap_T_ft) + '</li>';
+    h += '<li>Frakci&#243;vezet&#337; tiszteletd&#237;ja = T &#215; 2,0 = ' + formatFt(alap.tiszteletdij_alap_T_ft * 2) + '</li>';
+    h += '<li>Iroda-keret = T &#215; 1,0 = ' + formatFt(alap.tiszteletdij_alap_T_ft) + '</li>';
+    h += '<li>Munkat&#225;rsi keret = T &#215; 3,3 = ' + formatFt(Math.round(alap.tiszteletdij_alap_T_ft * 3.3)) + '</li>';
+    h += '<li>Aj&#225;nd&#233;k-limit = T &#215; 0,05 = ' + formatFt(Math.round(alap.tiszteletdij_alap_T_ft * 0.05)) + '</li>';
+    h += '<li>Frakci&#243; alapkerete = T &#215; 10 = ' + formatFt(alap.tiszteletdij_alap_T_ft * 10) + '</li>';
+    h += '</ul>';
+    h += '<p style="margin-top:.4rem"><strong>K&#233;plet:</strong> <code style="color:var(--accent-light)">' + esc(alap.keplet||'') + '</code></p>';
+    h += '<p style="margin-top:.3rem"><strong>KSH forr&#225;s:</strong> ' + esc(alap.ksh_forras||'') + '</p>';
+    h += '<p style="margin-top:.3rem"><strong>&#201;rv&#233;nyess&#233;g:</strong> ' + esc(alap.ervenyesseg_kezdete) + ' &#8211; ' + esc(alap.ervenyesseg_vege) + ' (minden &#233;v m&#225;rcius 1-j&#233;n friss&#252;l)</p>';
+    if (alap.megjegyzes) h += '<p style="margin-top:.3rem;color:var(--muted)"><em>' + esc(alap.megjegyzes) + '</em></p>';
+    if (alap.jogforras) h += ref(alap.jogforras);
+    h += '</div><div class="related"></div></div></div>';
+  }
+  // Tiszteletdíj-táblázat
+  var td = data.tiszteletdij;
+  if (td && td.tisztsegek) {
+    h += '<div class="card" onclick="toggle(this)" data-search="tiszteletd&#237;j">';
+    h += '<div class="card-title">' + esc(td.nev) + ' <span class="arrow">&#9654;</span></div>';
+    h += '<div class="card-preview">Tiszts&#233;g szerinti szorz&#243;k: 1,0&#215; &#8211; 2,0&#215; (sima k&#233;pvisel&#337;t&#337;l frakci&#243;vezet&#337;ig)</div>';
+    h += '<div class="card-detail"><div class="card-body">';
+    var ts = td.tisztsegek;
+    h += '<div style="margin-top:.3rem">';
+    for (var tk in ts) {
+      var tv = ts[tk];
+      h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem .6rem;background:var(--surface2);border-radius:4px;margin-bottom:.3rem;font-size:.85rem">';
+      h += '<span>' + esc(tv.nev) + ' <span style="color:var(--muted)">(&#215;' + tv.szorzo + ')</span></span>';
+      h += '<span class="pill pill-gold">' + formatFt(tv.havi_ft) + '/h&#243;</span>';
+      h += '</div>';
+    }
+    h += '</div>';
+    h += '<p style="margin-top:.4rem;color:var(--muted);font-size:.82rem"><em>A tiszteletd&#237;j &#233;vente &#250;jra ker&#252;l meg&#225;llap&#237;t&#225;sra a t&#225;rgy&#233;vet megel&#337;z&#337; &#233;v KSH-adata alapj&#225;n, t&#225;rgy&#233;v m&#225;rcius 1-j&#233;t&#337;l.</em></p>';
+    if (td.jogforras) h += ref(td.jogforras);
+    h += '</div><div class="related"></div></div></div>';
+  }
+  // Csoportok
+  var groups = ['egyeni','frakcio','szankcio'];
+  for (var gi = 0; gi < groups.length; gi++) {
+    var g = groups[gi];
+    var keys = KERET_GROUPS[g];
+    var anyFound = false;
+    for (var i = 0; i < keys.length; i++) if (data[keys[i]]) { anyFound = true; break; }
+    if (!anyFound) continue;
+    h += '<h3 style="color:var(--accent-light);font-size:.95rem;margin:1.3rem 0 .6rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)">' + KERET_GROUP_LABELS[g] + '</h3>';
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if (!data[k]) continue;
+      h += renderKeretCard(k, data[k]);
+    }
+  }
+  box.innerHTML = h;
+}).catch(function(){ document.getElementById('keret-list').innerHTML = '<div class="empty">Hiba.</div>'; });
 
 function esc(s) {
   if (!s) return '';
