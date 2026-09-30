@@ -158,6 +158,9 @@ def fetch_all() -> dict:
         alb = ex.map(lambda b: _select(BIZ_Q + "albizottsagok-query", {"pId": b}), fo_ids)
     fobiz = {a["alBizottsagId"]: a["fobizottsagId"] for rows in alb for a in rows}
 
+    # Ülésrend: a székek SVG-alakja (bármely képviselő azonosítójával ugyanazt a patkót adja)
+    ulesrend = _select(KEPV_Q + "kepviselo-helye-apatkoban", {"pId": lista[0]["id"]})
+
     frakcio_ids = sorted({m["frakcioId"] for m in lista})
     szinek = {}
     for fid in frakcio_ids:
@@ -167,7 +170,7 @@ def fetch_all() -> dict:
         except Exception:
             szinek[fid] = None
 
-    data = build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus)
+    data = build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus, ulesrend)
     log.info("kepviselok: %d képviselő, %d bizottság, %d szószóló — %.1f s",
              len(data["kepviselok"]), len(data["bizottsagok"]), len(data["szoszolok"]), time.time() - t0)
     return data
@@ -180,7 +183,7 @@ def fetch_all() -> dict:
 SZEREP_REND = {"elnök": 0, "alelnök": 1, "tag": 2}
 
 
-def build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus) -> dict:
+def build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus, ulesrend=()) -> dict:
     nevek = {m["id"]: m["nev"] for m in lista}
     for pid, r in egyeb_raw.items():
         if r["adat"]:
@@ -256,6 +259,7 @@ def build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus) -
                 "id": pid,
                 "nev": nevek.get(pid, pid),
                 "nemzetiseg": folyo_mandatum["nemzetiseg"],
+                "ulohely": a.get("ulohely"),
                 "email": a.get("emailCim"),
                 "url": _mp_url(pid),
                 "bizottsagok": tagsagok(pid, r),
@@ -288,6 +292,12 @@ def build(lista, mp_raw, egyeb_raw, mini, fobiz, szinek, kormanyparti, ciklus) -
         "kepviselok": kepviselok,
         "szoszolok": sorted(szoszolok, key=lambda s: s["nemzetiseg"] or ""),
         "bizottsagok": list(bizottsagok.values()),
+        # hely = „szektor/sor/szék” (ugyanaz, mint a képviselők ulohely mezője); kiosztott=False: a patkón
+        # szereplő, de képviselőnek ki nem osztható szék (a parlament.hu ottUl=null jelzése)
+        "ulesrend": [
+            {"hely": f'{u["szektor"]}/{u["sor"]}/{u["szek"]}', "d": re.sub(r"\s+", " ", u["svgpath"]).strip(), "kiosztott": u["ottUl"] is not None}
+            for u in sorted(ulesrend, key=lambda u: (u["szektor"], u["sor"], u["szek"])) if u.get("svgpath")
+        ],
     }
 
 
@@ -299,6 +309,12 @@ def check(data: dict) -> None:
     ures = [m["nev"] for m in data["kepviselok"] if not m["valasztokerulet"]]
     if len(ures) > n_mp // 10:
         raise ValueError(f"{len(ures)} képviselőnél hiányzik a választókerület")
+    helyek = {u["hely"] for u in data["ulesrend"]}
+    if len(helyek) < n_mp:
+        raise ValueError(f"hiányos ülésrend: {len(helyek)} szék")
+    kimarad = [m["nev"] for m in data["kepviselok"] if m["ulohely"] not in helyek]
+    if kimarad:
+        log.warning("kepviselok: %d képviselő ülőhelye nincs az ülésrendben: %s", len(kimarad), ", ".join(kimarad[:10]))
 
 
 # ---------------------------------------------------------------------------

@@ -120,6 +120,44 @@ table.t .c-muted{color:var(--muted)}
 h2.sec{font-size:1.15rem;color:var(--gold);margin:1.5rem 0 .6rem}
 .empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
 .loading{text-align:center;padding:3rem;color:var(--muted)}
+/* ülésrend */
+.patko-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1rem;align-items:start}
+.patko-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem}
+svg.patko{display:block;width:100%;height:auto}
+.seat{stroke:rgba(255,255,255,.28);stroke-width:1.5;cursor:pointer;transition:opacity .15s}
+.seat:hover{stroke:#fff;stroke-width:3}
+.seat.empty{fill:none;stroke:var(--border);stroke-width:1.5;cursor:default}
+.seat.empty.nk{stroke-dasharray:4 4}
+.seat.dim{opacity:.12}
+.seat.sel{stroke:var(--gold);stroke-width:7;opacity:1}
+.seclabel{fill:var(--muted);font:700 30px 'Inter','Segoe UI',system-ui,sans-serif;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+.seclabel.small{font-size:22px;font-weight:600}
+svg.patko.mini .seat{stroke:none;cursor:default}
+svg.patko.mini .seat.sel{stroke:var(--gold);stroke-width:10}
+.patko-legend{display:flex;flex-wrap:wrap;gap:.3rem .9rem;font-size:.78rem;color:var(--muted);margin-top:.6rem}
+.patko-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.patko-legend .sw{width:.8rem;height:.8rem;border-radius:2px;display:inline-block}
+.seat-info{position:sticky;top:1rem}
+.seat-info .hint{font-size:.85rem;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);padding:1rem}
+.seat-info .where{font-size:.8rem;color:var(--gold);font-weight:600;margin-bottom:.35rem}
+.seat-info .mp{flex-direction:column}
+.caption{font-size:.8rem;color:var(--muted);margin-top:.5rem}
+.sec-list{columns:2 300px;column-gap:1.5rem;margin-top:1.4rem}
+.sec-list section{margin-bottom:.9rem}
+.sec-list h3{break-after:avoid}
+.sec-list h3{font-size:.9rem;color:var(--gold);margin-bottom:.25rem}
+.sec-list p{font-size:.8rem;line-height:1.5}
+.sec-list p.sor{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-top:.35rem}
+.sec-list p.st{display:flex;align-items:center;gap:.35rem;break-inside:avoid}
+.sec-list a{text-decoration:none}
+.sec-list a:hover{color:var(--gold)}
+.sec-list .n{color:var(--muted);font-size:.72rem;min-width:1.4rem;text-align:right}
+.egy{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:1rem;align-items:start}
+.mini-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.7rem .8rem}
+.mini-wrap p{font-size:.8rem;color:var(--muted);margin-top:.4rem}
+.mini-wrap a{color:var(--blue);text-decoration:none}
+.foot a.hely{color:inherit}
+.foot a.hely:hover{color:var(--gold)}
 .print-head{display:none}
 footer{margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--muted);line-height:1.6}
 footer a{color:var(--blue)}
@@ -138,6 +176,9 @@ header h1{font-size:1.4rem}
 .rows{grid-template-columns:1fr;gap:.1rem}
 .rows dt{margin-top:.35rem}
 table.t .hide-m{display:none}
+.patko-layout,.egy{grid-template-columns:1fr}
+.seat-info{position:static}
+.patko-wrap{padding:.4rem}
 }
 
 /* ---------- NYOMTATÁS ---------- */
@@ -177,6 +218,22 @@ h2.sec{color:#000;break-after:avoid}
 .dot{box-shadow:0 0 0 .5pt #000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .mp,.fr-h,.seatbar span{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
+.patko-layout,.egy{display:block}
+.patko-wrap,.mini-wrap{border:none;padding:0;background:none}
+svg.patko{max-height:150mm;width:auto;max-width:100%;margin:0 auto}
+svg.patko.mini{max-height:45mm}
+.seat{stroke:#fff;stroke-width:1.2;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.seat.empty{stroke:#999}
+.seat.dim{opacity:.15}
+.seclabel{fill:#000}
+.seat-info .hint{display:none}
+.seat-info{margin-top:3mm}
+.patko-legend{color:#000;font-size:8pt}
+.patko-legend .sw{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sec-list{columns:3;column-gap:5mm;margin-top:4mm}
+.sec-list h3{color:#000;font-size:9pt}
+.sec-list p{font-size:7.8pt;line-height:1.3}
+.sec-list p.sor{font-size:7pt;color:#000;margin-top:1mm}
 }
 </style>
 </head>
@@ -196,6 +253,7 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
 <nav class="views" id="views">
   <button class="view" data-v="kepviselok">Képviselők</button>
   <button class="view" data-v="bizottsagok">Bizottságok</button>
+  <button class="view" data-v="ulesrend">Ülésrend</button>
   <button class="view" data-v="partok">Pártok szerint</button>
   <button class="view" data-v="tisztsegek">Tisztségviselők</button>
 </nav>
@@ -225,7 +283,8 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
   "use strict";
   var D = null;                 // adatok
   var MP = {}, BIZ = {}, SZO = {}, FR = {};
-  var S = { nezet: "kepviselok", q: "", part: "", biz: "", foto: true, id: "" };
+  var S = { nezet: "kepviselok", q: "", part: "", biz: "", foto: true, id: "", sel: "" };
+  var SEAT = {};                // "szektor/sor/szék" -> képviselő vagy szószóló
   var coll = new Intl.Collator("hu", { sensitivity: "base" });
   var $ = function (id) { return document.getElementById(id); };
 
@@ -247,6 +306,7 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     S.biz = p.get("biz") || "";
     S.id = p.get("id") || "";
     S.foto = p.get("foto") !== "0";
+    S.sel = p.get("sel") || "";
   }
   function url() {
     var p = new URLSearchParams();
@@ -256,6 +316,7 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     if (S.biz) p.set("biz", S.biz);
     if (S.id) p.set("id", S.id);
     if (!S.foto) p.set("foto", "0");
+    if (S.sel && S.nezet === "ulesrend") p.set("sel", S.sel);
     var qs = p.toString();
     return location.pathname + (qs ? "?" + qs : "");
   }
@@ -335,7 +396,7 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     }).join("");
     $("biz").innerHTML = opts;
     $("biz").style.display = (S.nezet === "tisztsegek" && !S.id) ? "none" : "";
-    $("foto").parentNode.style.display = (S.nezet === "kepviselok" || S.id) ? "" : "none";
+    $("foto").parentNode.style.display = (S.nezet === "kepviselok" || S.nezet === "ulesrend" || S.id) ? "" : "none";
     var chipEls = $("seats").querySelectorAll(".pchip");
     for (var j = 0; j < chipEls.length; j++) chipEls[j].classList.toggle("on", chipEls[j].getAttribute("data-part") === S.part);
   }
@@ -347,15 +408,19 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     if (S.q) parts.push("„" + S.q + "”");
     return parts;
   }
-  var VIEW_CIM = { kepviselok: "Képviselők", bizottsagok: "Bizottságok", partok: "Pártok szerint", tisztsegek: "Tisztségviselők" };
+  var VIEW_CIM = { kepviselok: "Képviselők", bizottsagok: "Bizottságok", ulesrend: "Ülésrend", partok: "Pártok szerint", tisztsegek: "Tisztségviselők" };
 
   function renderStatus(count, unit) {
     var fd = filterDesc();
     $("status").innerHTML = "<span><b>" + count + "</b> " + unit + "</span>" +
       (fd.length ? "<span>Szűrés: " + fd.map(esc).join(" · ") + "</span> <button class=\"reset\" id=\"reset\">Szűrés törlése</button>" : "");
-    if ($("reset")) $("reset").onclick = function () { S.q = ""; S.part = ""; S.biz = ""; S.id = ""; commit(); };
-    $("print-head").innerHTML = "<h1>Ki kicsoda az Országgyűlésben? — " + esc(S.id && MP[S.id] ? MP[S.id].nev : VIEW_CIM[S.nezet]) + "</h1><p>Adatok: parlament.hu, frissítve " + esc(fmtTime(D.frissitve)) + " · " + esc(location.origin + url()) + "</p>";
+    if ($("reset")) $("reset").onclick = function () { S.q = ""; S.part = ""; S.biz = ""; S.id = ""; S.sel = ""; commit(); };
+    $("print-head").innerHTML = printHead();
     $("foot-link").innerHTML = "Ennek a nézetnek a linkje: <a href=\"" + esc(url()) + "\">" + esc(location.origin + url()) + "</a>";
+  }
+
+  function printHead() {
+    return "<h1>Ki kicsoda az Országgyűlésben? — " + esc(S.id && MP[S.id] ? MP[S.id].nev : VIEW_CIM[S.nezet]) + "</h1><p>Adatok: parlament.hu, frissítve " + esc(fmtTime(D.frissitve)) + " · " + esc(location.origin + url()) + "</p>";
   }
 
   // ---------- KÉPVISELŐK ----------
@@ -375,12 +440,16 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
       if (x.b.fobizottsag_nev) nm = '<span class="sub-c">↳</span> ' + nm + ' <span class="sub-c">(' + esc(x.b.fobizottsag_nev) + ")</span>";
       return "<li>" + nm + '<span class="sz' + (isLead(x.t.szerep) ? " lead" : "") + '">' + esc(x.t.szerep) + "</span></li>";
     }).join("") + "</ul>" : '<p class="none">Jelenleg nincs bizottsági tagsága.</p>';
-    return '<article class="mp" style="--pc:' + esc(color(m)) + '">' +
+    var kepv = !!MP[m.id];
+    var line = kepv ? partyHtml(m) + "<span>· " + esc(vkShort(m.valasztokerulet)) + "</span>"
+      : '<span class="party"><i class="dot" style="background:' + SZO_SZIN + '"></i>' + esc(m.nemzetiseg) + " nemzetiségi szószóló</span><span>· nem képviselő</span>";
+    var hely = m.ulohely && SEAT[m.ulohely] ? '<a class="hely" href="?nezet=ulesrend&sel=' + encodeURIComponent(m.id) + '">Ülőhely: ' + esc(m.ulohely) + " (patkón)</a>" : "<span>Ülőhely: " + esc(m.ulohely || "—") + "</span>";
+    return '<article class="mp" style="--pc:' + esc(kepv ? color(m) : SZO_SZIN) + '">' +
       (S.foto ? '<img class="foto" loading="lazy" alt="" src="' + esc(D.kep_url.replace("{id}", m.id)) + '">' : "") +
-      '<div class="mp-body"><h3><a href="' + mpLink(m.id) + '">' + esc(m.nev) + "</a></h3>" +
-      '<div class="line">' + partyHtml(m) + "<span>· " + esc(vkShort(m.valasztokerulet)) + "</span></div>" +
+      '<div class="mp-body"><h3><a href="' + (kepv ? mpLink(m.id) : esc(m.url)) + '"' + (kepv ? "" : ' target="_blank" rel="noopener"') + ">" + esc(m.nev) + "</a></h3>" +
+      '<div class="line">' + line + "</div>" +
       (roles.length ? '<div class="roles">' + roles.join("") + "</div>" : "") + bl +
-      '<div class="foot"><span>Ülőhely: ' + esc(m.ulohely || "—") + "</span>" +
+      '<div class="foot">' + hely +
       (m.email ? '<a class="scr" href="mailto:' + esc(m.email) + '">' + esc(m.email) + "</a>" : "") +
       '<a class="scr" href="' + esc(m.url) + '" target="_blank" rel="noopener">parlament.hu adatlap ↗</a></div></div></article>';
   }
@@ -395,7 +464,143 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     var m = MP[S.id];
     if (!m) { renderStatus(0, "képviselő"); return '<div class="empty">Nincs ilyen képviselő.</div>'; }
     renderStatus(1, "képviselő");
-    return '<div class="grid">' + mpCard(m) + '</div><p class="tip" style="margin-top:1rem"><a href="?" style="color:var(--blue)">← Összes képviselő</a></p>';
+    var mini = m.ulohely && SEAT[m.ulohely] ? '<div class="mini-wrap">' + seatSvg({ mini: true, sel: m.id }) +
+      "<p>" + esc(helyText(m.ulohely)) + ' · <a href="?nezet=ulesrend&sel=' + encodeURIComponent(m.id) + '">nagy ülésrend →</a></p></div>' : "";
+    return '<div class="egy"><div>' + mpCard(m) + "</div>" + mini + '</div><p class="tip" style="margin-top:1rem"><a href="?" style="color:var(--blue)">← Összes képviselő</a></p>';
+  }
+
+  // ---------- ÜLÉSREND ----------
+  var SZO_SZIN = "#b7bac6";
+  function helyText(h) {
+    var p = String(h || "").split("/");
+    if (p.length !== 3) return "";
+    return p[0] + ". szektor, " + (p[1] === "0" ? "" : p[1] + ". sor, ") + p[2] + ". szék";
+  }
+  function seatSvg(o) {
+    var paths = D.ulesrend.map(function (u) {
+      var p = SEAT[u.hely];
+      if (!p) {
+        if (o.mini) return '<path class="seat empty" d="' + esc(u.d) + '"></path>';
+        return '<path class="seat empty' + (u.kiosztott ? "" : " nk") + '" d="' + esc(u.d) + '"><title>' + (u.kiosztott ? "üres szék" : "nem kiosztható szék") + " · " + esc(helyText(u.hely)) + "</title></path>";
+      }
+      var kepv = !!MP[p.id];
+      var fill = o.mini ? (p.id === o.sel ? "var(--gold)" : "var(--border)") : (kepv ? color(p) : SZO_SZIN);
+      var cls = "seat" + (o.hl && !o.hl(p) ? " dim" : "") + (p.id === o.sel ? " sel" : "");
+      return '<path class="' + cls + '" data-id="' + esc(p.id) + '" data-hely="' + esc(u.hely) + '" d="' + esc(u.d) + '" style="fill:' + esc(fill) + '">' +
+        (o.mini ? "" : "<title>" + esc(p.nev + " — " + (kepv ? p.frakcio : p.nemzetiseg + " szószóló") + " · " + helyText(u.hely)) + "</title>") + "</path>";
+    }).join("");
+    return '<svg class="patko' + (o.mini ? " mini" : "") + '" viewBox="-60 -60 1400 1060" role="img" aria-label="Az Országgyűlés ülésrendje"><g class="seats-g">' + paths + '</g><g class="labels-g"></g></svg>';
+  }
+  function seatHl() {
+    if (!S.q && !S.part && !S.biz) return null;
+    return function (p) {
+      if (MP[p.id]) return partMatch(p) && bizMatch(p) && qMatch(p._t);
+      return !S.part && bizMatch(p) && qMatch(p._t);
+    };
+  }
+  // A patkó köré szektorszámok, majd a viewBox a tényleges rajzra igazítva (a böngésző méri, nem mi találgatjuk)
+  function finishSvgs() {
+    var svgs = document.querySelectorAll("svg.patko");
+    for (var i = 0; i < svgs.length; i++) {
+      var svg = svgs[i], big = !svg.classList.contains("mini");
+      var sel = svg.querySelector(".seat.sel");
+      if (sel) sel.parentNode.appendChild(sel);
+      if (big) sectorLabels(svg);
+      var bb = svg.getBBox(), pad = big ? 12 : 8;
+      svg.setAttribute("viewBox", (bb.x - pad) + " " + (bb.y - pad) + " " + (bb.width + 2 * pad) + " " + (bb.height + 2 * pad));
+    }
+  }
+  function sectorLabels(svg) {
+    var g = svg.querySelector(".labels-g"), all = svg.querySelectorAll(".seats-g path");
+    var sec = {}, first = [];
+    for (var i = 0; i < all.length; i++) {
+      var h = D.ulesrend[i].hely.split("/");   // a path-ok sorrendje = D.ulesrend sorrendje
+      var b = all[i].getBBox(), c = { x: b.x + b.width / 2, y: b.y + b.height / 2, sor: +h[1] };
+      (sec[h[0]] = sec[h[0]] || []).push(c);
+      if (c.sor === 1) first.push(c);
+    }
+    if (!first.length) return;
+    var O = { x: avg(first, "x"), y: avg(first, "y") }, R = 0;
+    Object.keys(sec).forEach(function (k) { sec[k].forEach(function (c) { R = Math.max(R, Math.hypot(c.x - O.x, c.y - O.y)); }); });
+    var out = "";
+    Object.keys(sec).forEach(function (k) {
+      var cs = sec[k], m = { x: avg(cs, "x"), y: avg(cs, "y") };
+      var sorok = cs.map(function (c) { return c.sor; });
+      if (Math.max.apply(null, sorok) === 0) {   // sorok nélküli szektor (középen): a felirat a szektor közepére
+        out += '<text class="seclabel small" x="' + m.x + '" y="' + m.y + '">' + esc(k) + ". szektor" + (KORMANYPAD[k] ? '</text><text class="seclabel small" x="' + m.x + '" y="' + (m.y + 30) + '">kormánypad' : "") + "</text>";
+        return;
+      }
+      var a = Math.atan2(m.y - O.y, m.x - O.x), r = R + 42;
+      out += '<text class="seclabel" x="' + (O.x + r * Math.cos(a)) + '" y="' + (O.y + r * Math.sin(a)) + '">' + esc(k) + "</text>";
+    });
+    g.innerHTML = out;
+  }
+  function avg(a, k) { var s = 0; for (var i = 0; i < a.length; i++) s += a[i][k]; return s / a.length; }
+  // Kormánypad = az a szektor, ahol az ülők többsége miniszter (az adatból, nem beégetve)
+  var KORMANYPAD = {};
+  function computeKormanypad() {
+    var cnt = {};
+    Object.keys(SEAT).forEach(function (h) {
+      var k = h.split("/")[0], p = SEAT[h], t = (p.allami_tisztseg || "").toLowerCase();
+      cnt[k] = cnt[k] || { n: 0, min: 0 }; cnt[k].n++;
+      if (t.indexOf("miniszter") >= 0 && t.indexOf("államtitkár") < 0 && t.indexOf("minisztérium") < 0) cnt[k].min++;
+    });
+    Object.keys(cnt).forEach(function (k) { if (cnt[k].min * 2 > cnt[k].n) KORMANYPAD[k] = cnt[k].min; });
+  }
+  function seatInfo(id) {
+    var p = MP[id] || SZO[id];
+    if (!p) return '<div class="hint">Kattints egy székre: itt látod, ki ül ott, melyik párt képviselője és mely bizottságok tagja.<br><br>A név- és bizottságszűrő, illetve a párt gombjai a patkón emelik ki a találatokat.</div>';
+    return '<div class="where">' + esc(helyText(p.ulohely)) + "</div>" + mpCard(p);
+  }
+  function selectSeat(id) {
+    S.sel = id;
+    history.replaceState(null, "", url());
+    var old = document.querySelectorAll("svg.patko:not(.mini) .seat.sel");
+    for (var i = 0; i < old.length; i++) old[i].classList.remove("sel");
+    var el = document.querySelector('svg.patko:not(.mini) .seat[data-id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+    if (el) { el.classList.add("sel"); el.parentNode.appendChild(el); }
+    $("seat-info").innerHTML = seatInfo(id);
+    $("print-head").innerHTML = printHead();
+  }
+  function viewUlesrend() {
+    var hl = seatHl(), ids = Object.keys(SEAT).map(function (h) { return SEAT[h]; });
+    var match = hl ? ids.filter(hl) : ids;
+    var nMp = match.filter(function (p) { return MP[p.id]; }).length, nSzo = match.length - nMp;
+    var sel = S.sel && (MP[S.sel] || SZO[S.sel]) ? S.sel : (hl && match.length === 1 ? match[0].id : "");
+    renderStatus(nMp, "képviselő" + (nSzo ? " és " + nSzo + " szószóló" : "") + (hl ? " kiemelve" : ""));
+    var nincs = D.kepviselok.filter(function (m) { return !SEAT[m.ulohely]; });
+    var legend = '<div class="patko-legend">' + D.frakciok.map(function (f) { return '<span><i class="sw" style="background:' + esc(f.szin || "#888") + '"></i>' + esc(f.nev) + "</span>"; }).join("") +
+      '<span><i class="sw" style="background:' + SZO_SZIN + '"></i>nemzetiségi szószóló</span><span><i class="sw" style="border:1.5px solid var(--border)"></i>üres szék</span></div>';
+    var kp = Object.keys(KORMANYPAD).map(function (k) { return "A " + k + ". szektor a kormánypad (itt ül " + KORMANYPAD[k] + " képviselő miniszter)"; });
+    var caption = '<p class="caption">Szektor/sor/szék: a szektorok számozása a patkó körül látható, az 1. sor van legbelül. ' + (kp.length ? kp.join("; ") + ". " : "") +
+      (nincs.length ? nincs.length + " képviselő ülőhelye nem szerepel a parlament.hu ülésrendjében: " + nincs.map(function (m) { return esc(m.nev); }).join(", ") + "." : "") + "</p>";
+    // ki hol ül — szektoronként, soronként (a szűrés itt is érvényes)
+    var bySec = {};
+    D.ulesrend.forEach(function (u) {
+      var p = SEAT[u.hely]; if (!p || (hl && !hl(p))) return;
+      var h = u.hely.split("/");
+      ((bySec[h[0]] = bySec[h[0]] || {})[h[1]] = bySec[h[0]][h[1]] || []).push({ szek: +h[2], p: p });
+    });
+    var list = Object.keys(bySec).sort(function (a, b) { return a - b; }).map(function (k) {
+      var rows = Object.keys(bySec[k]).sort(function (a, b) { return a - b; }).map(function (r) {
+        return (r === "0" ? "" : '<p class="sor">' + r + ". sor</p>") + bySec[k][r].sort(function (a, b) { return a.szek - b.szek; }).map(function (x) {
+          var kepv = !!MP[x.p.id];
+          return '<p class="st"><span class="n">' + x.szek + '.</span><i class="dot" style="background:' + esc(kepv ? color(x.p) : SZO_SZIN) + '"></i><a href="?nezet=ulesrend&sel=' + encodeURIComponent(x.p.id) + '">' + esc(x.p.nev) + "</a></p>";
+        }).join("");
+      }).join("");
+      return "<section><h3>" + esc(k) + ". szektor" + (KORMANYPAD[k] ? " — kormánypad" : "") + "</h3>" + rows + "</section>";
+    }).join("");
+    return '<div class="patko-layout"><div class="patko-wrap">' + seatSvg({ hl: hl, sel: sel }) + legend + caption + "</div>" +
+      '<div class="seat-info" id="seat-info">' + seatInfo(sel) + "</div></div>" +
+      '<h2 class="sec">Ki hol ül' + (hl ? " — a kiemeltek" : "") + '</h2><div class="sec-list">' + (list || '<p class="empty">Nincs a szűrésnek megfelelő ülőhely.</p>') + "</div>";
+  }
+  function bindSeats() {
+    var svg = document.querySelector("svg.patko:not(.mini)");
+    if (!svg) return;
+    svg.addEventListener("click", function (e) {
+      var t = e.target.closest ? e.target.closest(".seat[data-id]") : null;
+      if (t) selectSeat(t.getAttribute("data-id"));
+    });
   }
 
   // ---------- BIZOTTSÁGOK ----------
@@ -564,8 +769,10 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
   function render() {
     if (!D) return;
     renderControls();
-    var html = S.id ? viewEgy() : S.nezet === "bizottsagok" ? viewBizottsagok() : S.nezet === "partok" ? viewPartok() : S.nezet === "tisztsegek" ? viewTisztsegek() : viewKepviselok();
+    var html = S.id ? viewEgy() : S.nezet === "bizottsagok" ? viewBizottsagok() : S.nezet === "ulesrend" ? viewUlesrend() : S.nezet === "partok" ? viewPartok() : S.nezet === "tisztsegek" ? viewTisztsegek() : viewKepviselok();
     $("out").innerHTML = html;
+    finishSvgs();
+    bindSeats();
   }
 
   // ---------- nyomtatás / link ----------
@@ -629,6 +836,14 @@ footer{border-top:.5pt solid #999;margin-top:5mm;font-size:7.5pt;color:#333}
     d.szoszolok.forEach(function (s) { SZO[s.id] = s; s.rendezo_nev = s.nev; });
     d.kepviselok.forEach(function (m) { MP[m.id] = m; });
     d.kepviselok.forEach(function (m) { m._t = mpText(m); });
+    var helyek = {};
+    (d.ulesrend || []).forEach(function (u) { helyek[u.hely] = true; });
+    d.kepviselok.concat(d.szoszolok).forEach(function (p) { if (p.ulohely && helyek[p.ulohely]) SEAT[p.ulohely] = p; });
+    d.szoszolok.forEach(function (sz) {
+      sz._t = norm([sz.nev, sz.nemzetiseg, "nemzetiségi szószóló"].concat(sz.bizottsagok.map(function (t) { return (BIZ[t.id] || {}).nev; })).join(" | "));
+    });
+    if (!d.ulesrend) d.ulesrend = [];
+    computeKormanypad();
     renderHeader();
     render();
   }).catch(function (e) {

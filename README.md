@@ -14,8 +14,9 @@ https://parlamenti-production.up.railway.app/mcp
 
 Dashboard: https://parlamenti-production.up.railway.app
 
-Ki kicsoda (kepviselok, partok, jelenlegi bizottsagi tagsagok — nyomtathato, linkelheto):
+Ki kicsoda (kepviselok, partok, jelenlegi bizottsagi tagsagok, ulesrend/patko — nyomtathato, linkelheto):
 https://parlamenti-production.up.railway.app/kepviselok
+(ulesrend: `/kepviselok?nezet=ulesrend`, egy kepviselo helye: `?nezet=ulesrend&sel=<id>`)
 
 ---
 
