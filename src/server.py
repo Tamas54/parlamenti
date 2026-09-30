@@ -27,6 +27,7 @@ from tools.search_tool import register_search_tools
 from tools.fogalom_tool import register_fogalom_tools
 from tools.meta_tool import register_meta_tools
 from tools.keret_tool import register_keret_tools
+import kepviselok
 
 logging.basicConfig(
     level=logging.INFO,
@@ -168,6 +169,19 @@ async def api_keretek(request: Request) -> JSONResponse:
 async def api_bizottsagok(request: Request) -> JSONResponse:
     return JSONResponse(_load_yaml("bizottsagok.yaml"))
 
+@mcp.custom_route("/kepviselok", methods=["GET"])
+async def kepviselok_page(request: Request) -> HTMLResponse:
+    _track(request, "/kepviselok")
+    with open(WEB_DIR / "kepviselok.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(f.read())
+
+@mcp.custom_route("/api/kepviselok", methods=["GET"])
+async def api_kepviselok(request: Request) -> JSONResponse:
+    data = kepviselok.get_data()
+    if data is None:
+        return JSONResponse({"error": "A képviselői adatok még nem érhetők el."}, status_code=503)
+    return JSONResponse(data, headers={"Cache-Control": "public, max-age=300"})
+
 
 # ---------------------------------------------------------------------------
 # STATS DASHBOARD (private)
@@ -306,6 +320,7 @@ if __name__ == "__main__":
     log.info("Parlamentaris Kompendium MCP indul…")
     log.info("  → host=%s  port=%s", host, port)
     log.info("  → transport=streamable-http")
+    kepviselok.start_background_loop()
 
     mcp.run(
         transport="http",

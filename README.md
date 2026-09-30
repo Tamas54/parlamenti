@@ -14,6 +14,9 @@ https://parlamenti-production.up.railway.app/mcp
 
 Dashboard: https://parlamenti-production.up.railway.app
 
+Ki kicsoda (kepviselok, partok, jelenlegi bizottsagi tagsagok — nyomtathato, linkelheto):
+https://parlamenti-production.up.railway.app/kepviselok
+
 ---
 
 ## Integralas ChatGPT-be
@@ -133,6 +136,10 @@ A claude.ai Integrations felulet alatt add hozza mint remote MCP server:
 - Hazszabaly: parlament.hu (365 oldalas bov. kiadas, 2026.01.31. lezaras)
 - Alaptorveny: jogtar.hu (hatalyos szoveg)
 - OGY tv: jogtar.hu (2012. evi XXXVI. tv., hatalyos szoveg)
+- Kepviselok / bizottsagok: parlament.hu felicitas API (`src/kepviselok.py`), 6 orankent
+  hatterben frissul; a `src/data/kepviselok.json` snapshot a tartalek. A bizottsagi tagsagot
+  szemelyenkent, a tagsag vege-datumabol rakja ossze (a parlament.hu bizottsagi nevsora a
+  ciklus megszunt tagsagait is listazza). Kezi frissites: `PYTHONPATH=src python src/kepviselok.py`
 
 ---
 
