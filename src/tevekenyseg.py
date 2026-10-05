@@ -340,6 +340,14 @@ def _refresh():
         log.warning("tevekenyseg snapshot írás hiba: %s", e)
 
 
+def fogad(uj: dict) -> None:
+    """Kívülről (a helyi frissítőtől) érkezett adat — ellenőrző kapu, aztán élesbe."""
+    global _data
+    check(uj, _data or _load_snapshot())
+    with _lock:
+        _data = uj
+
+
 def get_data() -> dict | None:
     global _data
     if _data is None:

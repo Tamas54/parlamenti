@@ -227,6 +227,53 @@ async def api_tevekenyseg_kereses(request: Request) -> JSONResponse:
                          "kepviselok": tevekenyseg.ki_foglalkozott(q, data, limit=40)})
 
 
+# Közös eszköz-végpont (a StatData `parlament` eszköze ezt hívja) — ugyanaz, mint az MCP
+@mcp.custom_route("/api/eszkoz/{nev}", methods=["GET"])
+async def api_eszkoz(request: Request) -> JSONResponse:
+    import asyncio
+    import inspect
+    from tools.tevekenyseg_tool import ESZKOZOK
+    f = ESZKOZOK.get(request.path_params.get("nev", ""))
+    if f is None:
+        return JSONResponse({"error": "ismeretlen eszköz", "eszkozok": sorted(ESZKOZOK)}, status_code=404)
+    sig = inspect.signature(f)
+    kw = {}
+    for k, v in request.query_params.items():
+        if k in sig.parameters:
+            kw[k] = int(v) if sig.parameters[k].annotation is int else v
+    try:
+        return JSONResponse(await asyncio.to_thread(f, **kw))
+    except TypeError as e:
+        return JSONResponse({"error": f"hibás paraméterek: {e}"}, status_code=400)
+
+
+# Helyi frissítő feltöltése (2026-10-05): a parlament.hu a szerver IP-jére CAPTCHA-t ad,
+# ezért a friss adatot egy helyi gép húzza le és küldi ide (gzip JSON, kulccsal).
+@mcp.custom_route("/api/feltoltes", methods=["POST"])
+async def api_feltoltes(request: Request) -> JSONResponse:
+    import gzip
+    import hmac
+    import json as _json
+    kulcs = os.getenv("PARL_FELTOLTO_KULCS", "")
+    if not kulcs or not hmac.compare_digest(request.headers.get("x-feltolto-kulcs", ""), kulcs):
+        return JSONResponse({"error": "tiltott"}, status_code=403)
+    try:
+        body = await request.body()
+        adat = _json.loads(gzip.decompress(body) if body[:2] == b"\x1f\x8b" else body)
+    except Exception as e:  # noqa: BLE001
+        return JSONResponse({"error": f"olvashatatlan törzs: {e}"}, status_code=400)
+    eredmeny = {}
+    for nev, modul in (("kepviselok", kepviselok), ("tevekenyseg", tevekenyseg)):
+        if nev in adat:
+            try:
+                modul.fogad(adat[nev])
+                eredmeny[nev] = "ok"
+            except Exception as e:  # noqa: BLE001 — a hibás csomag nem írja felül a jót
+                eredmeny[nev] = f"elutasítva: {e}"
+    log.info("feltöltés: %s", eredmeny)
+    return JSONResponse(eredmeny, status_code=200 if all(v == "ok" for v in eredmeny.values()) else 422)
+
+
 # ---------------------------------------------------------------------------
 # STATS DASHBOARD (private)
 # ---------------------------------------------------------------------------

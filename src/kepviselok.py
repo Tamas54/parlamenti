@@ -372,6 +372,14 @@ def ensure_fresh():
             threading.Thread(target=_refresh, daemon=True, name="kepviselok-refresh").start()
 
 
+def fogad(data: dict) -> None:
+    """Kívülről (a helyi frissítőtől) érkezett, friss adat — ugyanaz az ellenőrző kapu.
+    A parlament.hu a szerver IP-jére CAPTCHA-t ad (2026-10-05), ezért ez a fő út."""
+    check(data)
+    with _lock:
+        _state["data"], _state["loaded_at"], _state["last_error"] = data, time.time(), None
+
+
 def get_data() -> dict | None:
     ensure_fresh()
     d = _state["data"]
