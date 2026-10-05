@@ -20,6 +20,20 @@ header h1{font-size:1.75rem;font-weight:700;color:var(--gold);letter-spacing:-.0
 header .sub{color:var(--text);font-size:.95rem;margin-top:.2rem}
 header .meta{color:var(--muted);font-size:.8rem;margin-top:.35rem}
 header .meta a{color:var(--blue)}
+/* Ki mivel foglalkozott (2026-10-05) */
+.tev-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.8rem}
+.tev-k{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem}
+.tev-k h3{margin:0 0 .25rem;font-size:1rem}.tev-k h3 a{color:var(--text);text-decoration:none}
+.tev-stat{color:var(--muted);font-size:.82rem;margin:.2rem 0 .4rem}
+.temak{margin:.3rem 0 0;padding-left:1.1rem;font-size:.86rem}.temak li{margin:.15rem 0}
+.temak .tm{color:var(--muted);font-size:.75rem}
+.tev-tetel{font-size:.86rem;margin:.25rem 0}.tev-tetel a{color:var(--blue);text-decoration:none}
+.tev-tetel .d{color:var(--muted);font-size:.78rem;margin-right:.35rem}
+.tev-blokk{margin-top:1.2rem}.tev-blokk h2{font-size:1.05rem;margin:.2rem 0 .5rem}
+.tev-blokk details{margin:.5rem 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.5rem .8rem}
+.tev-blokk summary{cursor:pointer;font-weight:600}
+.tev-szoveg{margin:.6rem 0 1rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.tev-kik{font-size:.84rem;color:var(--muted)}
 
 /* ülés-összetétel */
 .seats{margin:1rem 0 .4rem}
@@ -256,6 +270,7 @@ svg.patko.mini{max-height:45mm}
   <button class="view" data-v="ulesrend">Ülésrend</button>
   <button class="view" data-v="partok">Pártok szerint</button>
   <button class="view" data-v="tisztsegek">Tisztségviselők</button>
+  <button class="view" data-v="tevekenyseg">Ki mivel foglalkozott</button>
 </nav>
 
 <div class="toolbar">
@@ -387,6 +402,7 @@ svg.patko.mini{max-height:45mm}
     var vs = $("views").querySelectorAll(".view");
     for (var i = 0; i < vs.length; i++) vs[i].classList.toggle("on", vs[i].getAttribute("data-v") === S.nezet && !S.id);
     if ($("q").value !== S.q) $("q").value = S.q;
+    $("q").placeholder = (S.nezet === "tevekenyseg" && !S.id) ? "Téma, törvényjavaslat, kulcsszó… (pl. szakképzés, költségvetés, T/51)" : "Név, bizottság, választókerület, tisztség…";
     $("foto").checked = S.foto;
     document.body.classList.toggle("no-foto", !S.foto);
     var opts = '<option value="">Minden bizottság</option>' + mainBizList().map(function (b) {
@@ -396,7 +412,7 @@ svg.patko.mini{max-height:45mm}
     }).join("");
     $("biz").innerHTML = opts;
     $("biz").style.display = (S.nezet === "tisztsegek" && !S.id) ? "none" : "";
-    $("foto").parentNode.style.display = (S.nezet === "kepviselok" || S.nezet === "ulesrend" || S.id) ? "" : "none";
+    $("foto").parentNode.style.display = ((S.nezet === "kepviselok" || S.nezet === "ulesrend" || S.id) && !(S.nezet === "tevekenyseg" && !S.id)) ? "" : "none";
     var chipEls = $("seats").querySelectorAll(".pchip");
     for (var j = 0; j < chipEls.length; j++) chipEls[j].classList.toggle("on", chipEls[j].getAttribute("data-part") === S.part);
   }
@@ -408,7 +424,7 @@ svg.patko.mini{max-height:45mm}
     if (S.q) parts.push("„" + S.q + "”");
     return parts;
   }
-  var VIEW_CIM = { kepviselok: "Képviselők", bizottsagok: "Bizottságok", ulesrend: "Ülésrend", partok: "Pártok szerint", tisztsegek: "Tisztségviselők" };
+  var VIEW_CIM = { kepviselok: "Képviselők", bizottsagok: "Bizottságok", ulesrend: "Ülésrend", partok: "Pártok szerint", tisztsegek: "Tisztségviselők", tevekenyseg: "Ki mivel foglalkozott" };
 
   function renderStatus(count, unit) {
     var fd = filterDesc();
@@ -466,7 +482,7 @@ svg.patko.mini{max-height:45mm}
     renderStatus(1, "képviselő");
     var mini = m.ulohely && SEAT[m.ulohely] ? '<div class="mini-wrap">' + seatSvg({ mini: true, sel: m.id }) +
       "<p>" + esc(helyText(m.ulohely)) + ' · <a href="?nezet=ulesrend&sel=' + encodeURIComponent(m.id) + '">nagy ülésrend →</a></p></div>' : "";
-    return '<div class="egy"><div>' + mpCard(m) + "</div>" + mini + '</div><p class="tip" style="margin-top:1rem"><a href="?" style="color:var(--blue)">← Összes képviselő</a></p>';
+    return '<div class="egy"><div>' + mpCard(m) + "</div>" + mini + '</div><div class="tev-blokk" id="tev-egy"><div class="loading">Tevékenység betöltése…</div></div><p class="tip" style="margin-top:1rem"><a href="?" style="color:var(--blue)">← Összes képviselő</a></p>';
   }
 
   // ---------- ÜLÉSREND ----------
@@ -765,14 +781,130 @@ svg.patko.mini{max-height:45mm}
     return html || '<div class="empty">Nincs a szűrésnek megfelelő tisztségviselő.</div>';
   }
 
+  // ---------- KI MIVEL FOGLALKOZOTT (2026-10-05) ----------
+  // Adat: /api/tevekenyseg (összesítő), ?id= (egy személy), /api/tevekenyseg/kereses?q= (téma),
+  // &szoveg=1 (élő keresés a felszólalások SZÖVEGÉBEN, parlament.hu). Az MCP ugyanezt adja.
+  var TEV = null, TEV_META = null, TEVQ = {}, TEVSZ = {}, TEVEGY = {};
+  function tevBetolt() {
+    if (TEV || TEV === "fut") return;
+    TEV = "fut";
+    fetch("/api/tevekenyseg").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+      TEV = {}; TEV_META = d; d.szemelyek.forEach(function (x) { TEV[x.id] = x; }); render();
+    }).catch(function (e) { TEV = null; $("out").innerHTML = '<div class="empty">A tevékenységi adatok most nem tölthetők be (' + esc(e.message) + ').</div>'; });
+  }
+  function perc(sec) { return Math.round((sec || 0) / 60); }
+  function statSor(st) {
+    if (!st) return "nincs rögzített tevékenység";
+    return st.felszolalas + " felszólalás (" + st.felszolalas_perc + " perc) · " + st.onallo_inditvany + " önálló indítvány · " + st.modosito + " módosító";
+  }
+  function temaHtml(t) {
+    var r = [];
+    if (t.inditvany) r.push(t.inditvany + " indítvány");
+    if (t.modosito) r.push(t.modosito + " módosító");
+    if (t.felszolalas) r.push(t.felszolalas + " felszólalás" + (t.ido_s ? ", " + perc(t.ido_s) + " perc" : ""));
+    return "<li>" + esc(t.cim) + ' <span class="tm">' + esc(r.join(" · ")) + "</span></li>";
+  }
+  function aktivitas(id) { var st = (TEV[id] || {}).stat; return st ? st.felszolalas + 3 * st.onallo_inditvany + 2 * st.modosito : -1; }
+  function tevKartya(m) {
+    var x = TEV[m.id] || {};
+    return '<div class="tev-k"><h3><a href="' + mpLink(m.id) + '">' + esc(m.nev) + "</a></h3>" + partyHtml(m) +
+      '<div class="tev-stat">' + esc(statSor(x.stat)) + "</div>" +
+      (x.temak && x.temak.length ? '<ul class="temak">' + x.temak.slice(0, 4).map(temaHtml).join("") + "</ul>" : "") + "</div>";
+  }
+  function viewTevekenyseg() {
+    if (!TEV || TEV === "fut") { tevBetolt(); renderStatus(0, "képviselő"); return '<div class="loading">Tevékenységi adatok betöltése…</div>'; }
+    if (S.q) return viewTevKereses();
+    var list = D.kepviselok.filter(function (m) { return partMatch(m) && bizMatch(m); })
+      .sort(function (a, b) { return aktivitas(b.id) - aktivitas(a.id) || coll.compare(a.rendezo_nev, b.rendezo_nev); });
+    renderStatus(list.length, "képviselő");
+    return '<p class="tip">Ki mivel foglalkozott a ciklusban (parlament.hu, frissítve ' + esc(fmtTime(TEV_META.frissitve)) +
+      '). A témák súlya: saját indítvány 3, módosító 2, felszólalás 1. Keress fent egy témára, és kiderül, kik foglalkoztak vele.</p>' +
+      '<div class="tev-lista">' + list.map(tevKartya).join("") + "</div>";
+  }
+  function tetelHtml(datum, szoveg, link) {
+    return '<div class="tev-tetel"><span class="d">' + esc(fmtDate(datum)) + "</span>" +
+      (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(szoveg) + "</a>" : esc(szoveg)) + "</div>";
+  }
+  function felszSzoveg(f) {
+    var t = (f.inditvany && f.inditvany.length) ? f.inditvany.map(function (i) { return i.cim || i; }).join("; ") : (f.napirend || []).join("; ");
+    var sz = (f.szerep || []).slice(0, 2).join(", ") + ((f.szerep || []).length > 2 ? " …" : "");
+    return t + (sz ? " — " + sz : "") + (f.ido_s ? " (" + perc(f.ido_s) + " perc)" : "");
+  }
+  function viewTevKereses() {
+    var q = S.q, c = TEVQ[q];
+    var gomb = '<div class="tev-szoveg"><button class="btn" id="tev-szoveg-btn">Keresés a felszólalások SZÖVEGÉBEN: „' + esc(q) + '”</button><span class="tev-kik">élőben a parlament.hu-n</span></div><div id="tev-szoveg-out">' + (TEVSZ[q] && TEVSZ[q] !== "fut" ? szovegHtml(TEVSZ[q]) : "") + "</div>";
+    if (!c) {
+      TEVQ[q] = "fut";
+      fetch("/api/tevekenyseg/kereses?q=" + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (d) {
+        TEVQ[q] = d; if (S.q === q && S.nezet === "tevekenyseg" && !S.id) render();
+      }).catch(function () { TEVQ[q] = { kepviselok: [] }; });
+    }
+    if (!c || c === "fut") { renderStatus(0, "képviselő"); return gomb + '<div class="loading">Keresés…</div>'; }
+    var kk = (c.kepviselok || []).filter(function (k) { var m = MP[k.id]; return !m || (partMatch(m) && bizMatch(m)); });
+    renderStatus(kk.length, "képviselő foglalkozott vele");
+    if (!kk.length) return gomb + '<div class="empty">Indítványban, módosítóban és napirendi pontban nincs ilyen téma — próbáld a szövegkeresést.</div>';
+    return gomb + '<div class="tev-lista">' + kk.map(function (k) {
+      var m = MP[k.id], db = k.db, r = [];
+      if (db.inditvany) r.push(db.inditvany + " indítvány"); if (db.modosito) r.push(db.modosito + " módosító"); if (db.felszolalas) r.push(db.felszolalas + " felszólalás");
+      var tetelek = k.inditvanyok.map(function (i) { return tetelHtml(i.datum, i.szam + " " + i.cim, i.url); })
+        .concat(k.modositok.map(function (x) { return tetelHtml(x.datum, "módosító (" + x.szam + "): " + x.alap.szam + " " + x.alap.cim, x.url); }))
+        .concat(k.felszolalasok.map(function (f) { return tetelHtml(f.datum, felszSzoveg(f), f.url); }));
+      return '<div class="tev-k"><h3><a href="' + mpLink(k.id) + '">' + esc(k.nev) + "</a></h3>" + (m ? partyHtml(m) : "") +
+        '<div class="tev-stat">' + esc(r.join(" · ")) + "</div>" + tetelek.slice(0, 6).join("") + "</div>";
+    }).join("") + "</div>";
+  }
+  function szovegHtml(d) {
+    if (d.hiba) return '<div class="empty">' + esc(d.hiba) + "</div>";
+    return '<p class="tev-kik"><b>' + d.osszes + "</b> felszólalás · " + d.kik.slice(0, 25).map(function (k) { return esc(k[0]) + " (" + k[1] + ")"; }).join(", ") + "</p>" +
+      d.talalatok.map(function (f) { return '<div class="tev-tetel"><span class="d">' + esc(fmtDate(f.datum)) + "</span><b>" + esc(f.nev) + "</b> — " +
+        (f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(felszSzoveg(f)) + "</a>" : esc(felszSzoveg(f))) + "</div>"; }).join("");
+  }
+  function bindTev() {
+    var b = $("tev-szoveg-btn");
+    if (!b) return;
+    b.onclick = function () {
+      var q = S.q;
+      if (TEVSZ[q] === "fut") return;
+      TEVSZ[q] = "fut"; $("tev-szoveg-out").innerHTML = '<div class="loading">Keresés a felszólalások szövegében…</div>';
+      fetch("/api/tevekenyseg/kereses?szoveg=1&q=" + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (d) {
+        TEVSZ[q] = d.error ? { hiba: d.error } : d; if (S.q === q && $("tev-szoveg-out")) $("tev-szoveg-out").innerHTML = szovegHtml(TEVSZ[q]);
+      }).catch(function (e) { TEVSZ[q] = { hiba: "A keresés most nem sikerült (" + e.message + ")." }; if ($("tev-szoveg-out")) $("tev-szoveg-out").innerHTML = szovegHtml(TEVSZ[q]); });
+    };
+  }
+  function tevEgyTolt(id) {
+    var hova = $("tev-egy");
+    if (!hova) return;
+    var kesz = function (s) {
+      if (S.id !== id || !$("tev-egy")) return;
+      if (!s) { $("tev-egy").innerHTML = '<p class="tip">Ebben a ciklusban nincs rögzített parlamenti tevékenysége (felszólalás, indítvány, módosító).</p>'; return; }
+      var st = s.stat, muf = Object.keys(st.mufaj || {}).map(function (k) { return esc(k) + " " + st.mufaj[k]; }).join(" · ");
+      $("tev-egy").innerHTML = "<h2>Mivel foglalkozott</h2>" + '<div class="tev-stat">' + esc(statSor(st)) + "</div>" +
+        (muf ? '<div class="tev-stat">Műfajok: ' + muf + "</div>" : "") +
+        (s.temak.length ? '<ul class="temak">' + s.temak.map(temaHtml).join("") + "</ul>" : "") +
+        (s.inditvanyok.length ? "<details open><summary>Önálló indítványai (" + s.inditvanyok.length + ")</summary>" +
+          s.inditvanyok.map(function (i) { return tetelHtml(i.datum, i.szam + " " + i.cim + (i.allapot ? " — " + i.allapot : "") + (i.benyujtok > 1 ? " (" + i.benyujtok + " benyújtó)" : ""), i.url); }).join("") + "</details>" : "") +
+        (s.modositok.length ? "<details><summary>Módosító javaslatai (" + s.modositok.length + ")</summary>" +
+          s.modositok.map(function (x) { return tetelHtml(x.datum, x.szam + ": " + x.alap.szam + " " + x.alap.cim, x.url); }).join("") + "</details>" : "") +
+        (s.felszolalasok.length ? "<details><summary>Felszólalásai (" + s.felszolalasok.length + ")</summary>" +
+          s.felszolalasok.map(function (f) { return tetelHtml(f.datum, felszSzoveg(f), f.url); }).join("") + "</details>" : "") +
+        '<p class="tip">Forrás: parlament.hu, frissítve ' + esc(fmtTime(TEVEGY._frissitve)) + ".</p>";
+    };
+    if (TEVEGY[id] !== undefined) return kesz(TEVEGY[id]);
+    fetch("/api/tevekenyseg?id=" + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (d) {
+      TEVEGY._frissitve = d.frissitve; TEVEGY[id] = d.szemely || null; kesz(TEVEGY[id]);
+    }).catch(function () { if ($("tev-egy")) $("tev-egy").innerHTML = '<p class="tip">A tevékenységi adatok most nem tölthetők be.</p>'; });
+  }
+
   // ---------- fő render ----------
   function render() {
     if (!D) return;
     renderControls();
-    var html = S.id ? viewEgy() : S.nezet === "bizottsagok" ? viewBizottsagok() : S.nezet === "ulesrend" ? viewUlesrend() : S.nezet === "partok" ? viewPartok() : S.nezet === "tisztsegek" ? viewTisztsegek() : viewKepviselok();
+    var html = S.id ? viewEgy() : S.nezet === "bizottsagok" ? viewBizottsagok() : S.nezet === "ulesrend" ? viewUlesrend() : S.nezet === "partok" ? viewPartok() : S.nezet === "tisztsegek" ? viewTisztsegek() : S.nezet === "tevekenyseg" ? viewTevekenyseg() : viewKepviselok();
     $("out").innerHTML = html;
     finishSvgs();
     bindSeats();
+    if (S.id) tevEgyTolt(S.id);
+    bindTev();
   }
 
   // ---------- nyomtatás / link ----------

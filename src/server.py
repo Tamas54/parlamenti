@@ -27,7 +27,9 @@ from tools.search_tool import register_search_tools
 from tools.fogalom_tool import register_fogalom_tools
 from tools.meta_tool import register_meta_tools
 from tools.keret_tool import register_keret_tools
+from tools.tevekenyseg_tool import register_tevekenyseg_tools
 import kepviselok
+import tevekenyseg
 
 logging.basicConfig(
     level=logging.INFO,
@@ -51,7 +53,11 @@ mcp = FastMCP(
         "rendelkezéseivel, vagy általános parlamenti jogi kérdésekkel kapcsolatos. "
         "Konkrét számadatokat (időkeretek, határidők, létszámok) mindig a "
         "strukturált tool-okból kérj le — ne becsüld meg. "
-        "Minden válaszban add meg a jogszabályi hivatkozást."
+        "Minden válaszban add meg a jogszabályi hivatkozást. "
+        "A KÉPVISELŐKRŐL (ki kicsoda, melyik bizottság tagja, ki mivel foglalkozott, "
+        "ki mit mondott) a kepviselo_adatok, bizottsag_tagjai, kepviselo_tevekenyseg, "
+        "ki_foglalkozott és felszolalas_kereses eszközök a parlament.hu adataiból "
+        "válaszolnak — ezekből idézz, linkkel és a frissítés idejével."
     ),
 )
 
@@ -65,6 +71,7 @@ register_search_tools(mcp)
 register_fogalom_tools(mcp)
 register_meta_tools(mcp)
 register_keret_tools(mcp)
+register_tevekenyseg_tools(mcp)
 
 # ---------------------------------------------------------------------------
 # YAML LOADERS (shared by API routes)
@@ -181,6 +188,43 @@ async def api_kepviselok(request: Request) -> JSONResponse:
     if data is None:
         return JSONResponse({"error": "A képviselői adatok még nem érhetők el."}, status_code=503)
     return JSONResponse(data, headers={"Cache-Control": "public, max-age=300"})
+
+
+# Ki mivel foglalkozott (2026-10-05) — a weboldal ugyanazt a keresést használja, mint az MCP
+@mcp.custom_route("/api/tevekenyseg", methods=["GET"])
+async def api_tevekenyseg(request: Request) -> JSONResponse:
+    """?id=<képviselő-id> → egy személy teljes tevékenysége; id nélkül → összesítő (számok + fő témák)."""
+    data = tevekenyseg.get_data()
+    if data is None:
+        return JSONResponse({"error": "A tevékenységi adatok még nem érhetők el."}, status_code=503)
+    pid = request.query_params.get("id")
+    meta = {"frissitve": data.get("frissitve"), "forras": data.get("forras")}
+    if pid:
+        s = (data.get("szemelyek") or {}).get(pid)
+        if not s:
+            return JSONResponse({**meta, "szemely": None})
+        return JSONResponse({**meta, "szemely": s}, headers={"Cache-Control": "public, max-age=300"})
+    return JSONResponse({**meta, "osszesen": data.get("osszesen"), "szemelyek": tevekenyseg.osszesito(data)},
+                        headers={"Cache-Control": "public, max-age=300"})
+
+
+@mcp.custom_route("/api/tevekenyseg/kereses", methods=["GET"])
+async def api_tevekenyseg_kereses(request: Request) -> JSONResponse:
+    """?q=<téma> → ki foglalkozott vele; &szoveg=1 → élő keresés a felszólalások szövegében."""
+    import asyncio
+    q = (request.query_params.get("q") or "").strip()
+    if not q:
+        return JSONResponse({"error": "hiányzó q"}, status_code=400)
+    if request.query_params.get("szoveg"):
+        try:
+            r = await asyncio.to_thread(tevekenyseg.felszolalas_szoveg_kereses, q,
+                                        request.query_params.get("id") or None, 100)
+        except Exception as e:  # noqa: BLE001
+            return JSONResponse({"error": f"a parlament.hu keresés nem válaszolt: {e}"}, status_code=502)
+        return JSONResponse(r)
+    data = tevekenyseg.get_data() or {}
+    return JSONResponse({"tema": q, "frissitve": data.get("frissitve"),
+                         "kepviselok": tevekenyseg.ki_foglalkozott(q, data, limit=40)})
 
 
 # ---------------------------------------------------------------------------
@@ -321,6 +365,7 @@ if __name__ == "__main__":
     log.info("  → host=%s  port=%s", host, port)
     log.info("  → transport=streamable-http")
     kepviselok.start_background_loop()
+    tevekenyseg.start_background_loop()
 
     mcp.run(
         transport="http",

@@ -80,7 +80,7 @@ A claude.ai Integrations felulet alatt add hozza mint remote MCP server:
 
 ---
 
-## Tool-ok (14 db)
+## Tool-ok
 
 ### Idokeretek es hataridok (strukturalt YAML)
 | Tool | Mit csinal |
@@ -115,6 +115,17 @@ A claude.ai Integrations felulet alatt add hozza mint remote MCP server:
 | Tool | Mit csinal |
 |------|------------|
 | `szerver_info()` | Szerver-info, adatforrasok, verzio |
+
+### Kepviselok: ki kicsoda, ki mivel foglalkozott (parlament.hu, 6 orankent frissitve)
+| Tool | Mit csinal |
+|------|------------|
+| `kepviselo_adatok(nev)` | Frakcio, valasztokerulet, tisztsegek, jelenlegi bizottsagi tagsagok, rovid tevekenyseg-osszesito |
+| `bizottsag_tagjai(bizottsag)` | Egy bizottsag jelenlegi tagjai tisztseggel es frakcioval |
+| `kepviselo_tevekenyseg(nev, reszletek, limit)` | Mivel foglalkozott: sulyozott temak, onallo inditvanyok, modositok, felszolalasok (linkkel) |
+| `ki_foglalkozott(tema, limit)` | Egy temaval kik foglalkoztak (inditvany, modosito, felszolalas), rangsorolva |
+| `felszolalas_kereses(szoveg, kepviselo, limit)` | Elo kereses a felszolalasok SZOVEGEBEN, ki hanyszor mondta |
+
+Web: `/kepviselok?nezet=tevekenyseg` (Ki mivel foglalkozott), kepviselo-lapon „Mivel foglalkozott” blokk.
 
 ---
 
