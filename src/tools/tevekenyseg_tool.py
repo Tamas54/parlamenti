@@ -73,8 +73,14 @@ def register_tevekenyseg_tools(mcp: FastMCP) -> None:
                                  "kezdet": t.get("kezdet")} for t in m.get("bizottsagok") or []],
                 "tevekenyseg": {"stat": s.get("stat"), "fo_temak": [e["cim"] for e in (s.get("temak") or [])[:5]]} if s else None,
             })
+        if not out:
+            # nem képviselő, de felszólalt / benyújtott (pl. kormánytag, államtitkár)
+            for s in T.szemely_keres(nev, tev, limit=5):
+                out.append({"nev": s["nev"], "id": s["id"], "kepviselo": False,
+                            "megjegyzes": "nem országgyűlési képviselő (pl. kormánytag), de részt vett a parlamenti munkában",
+                            "tevekenyseg": {"stat": s.get("stat"), "fo_temak": [e["cim"] for e in (s.get("temak") or [])[:5]]}})
         return {"talalatok": out, **_forras(kv),
-                "megjegyzes": None if out else "nincs ilyen nevű képviselő a jelenlegi ciklusban"}
+                "megjegyzes": None if out else "nincs ilyen nevű képviselő vagy felszólaló a jelenlegi ciklusban"}
 
     @mcp.tool
     def bizottsag_tagjai(bizottsag: str) -> dict:
