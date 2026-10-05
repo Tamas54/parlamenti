@@ -45,13 +45,25 @@ MIN_BIZOTTSAG = 10
 # HTTP
 # ---------------------------------------------------------------------------
 
+class CaptchaHiba(RuntimeError):
+    """A parlament.hu adat helyett CAPTCHA-lapot adott (2026-10-05 óta a Railway-IP-re).
+    NEM kerüljük meg — a hívó kimondja, és a tárolt adattal / tartalékkal dolgozik."""
+
+
 def _post(url: str, body: dict, retries: int = 3) -> dict:
     data = json.dumps(body).encode()
     for attempt in range(retries):
         try:
             req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", "User-Agent": UA})
             with urllib.request.urlopen(req, timeout=40) as r:
-                return json.load(r)
+                raw = r.read()
+            if raw.lstrip()[:1] == b"<":
+                if b"CAPTCHA" in raw[:4000]:
+                    raise CaptchaHiba("a parlament.hu CAPTCHA-ellenőrzést kér erről a szerverről")
+                raise ValueError("a parlament.hu nem JSON-t adott (HTML-lap)")
+            return json.loads(raw)
+        except CaptchaHiba:
+            raise                           # újrapróba értelmetlen
         except Exception:
             if attempt == retries - 1:
                 raise

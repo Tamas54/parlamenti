@@ -262,7 +262,19 @@ def felszolalas_szoveg_kereses(szoveg: str, pid: str | None = None, limit: int =
         body["pMultiCiklus"] = [data["ciklus_id"]]
     if pid:
         body["pKepviselo"] = pid
-    r = _post(FELSZ_Q + "?page=0", body)
+    try:
+        r = _post(FELSZ_Q + "?page=0", body)
+    except kepviselok.CaptchaHiba:
+        # A szerverről a parlament.hu CAPTCHA-t kér — nem kerüljük meg. Tartalék: a tárolt
+        # adatokban (napirendi pont, indítvány-cím) keresünk, és ezt KIMONDJUK.
+        tart = ki_foglalkozott(szoveg, data, limit=limit)
+        if pid:
+            tart = [k for k in tart if k["id"] == pid]
+        return {"szoveg": szoveg, "osszes": None, "kik": [], "talalatok": [],
+                "figyelmeztetes": ("A felszólalások SZÖVEGÉBEN most nem tudunk keresni: a parlament.hu "
+                                   "CAPTCHA-ellenőrzést kér a szerverünktől. Helyette a tárolt adatokban "
+                                   "(napirendi pont, tárgyalt indítvány címe) kerestünk."),
+                "tema_talalatok": tart}
     rows = _rows(r)
     talalat = [{"nev": f.get("kepviseloNev"), "id": f.get("kepviseloId"),
                 "datum": _datum(f.get("ulesnapKezdete")),

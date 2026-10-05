@@ -855,6 +855,7 @@ svg.patko.mini{max-height:45mm}
   }
   function szovegHtml(d) {
     if (d.hiba) return '<div class="empty">' + esc(d.hiba) + "</div>";
+    if (d.figyelmeztetes) return '<p class="tev-kik">⚠ ' + esc(d.figyelmeztetes) + "</p>";
     return '<p class="tev-kik"><b>' + d.osszes + "</b> felszólalás · " + d.kik.slice(0, 25).map(function (k) { return esc(k[0]) + " (" + k[1] + ")"; }).join(", ") + "</p>" +
       d.talalatok.map(function (f) { return '<div class="tev-tetel"><span class="d">' + esc(fmtDate(f.datum)) + "</span><b>" + esc(f.nev) + "</b> — " +
         (f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(felszSzoveg(f)) + "</a>" : esc(felszSzoveg(f))) + "</div>"; }).join("");
