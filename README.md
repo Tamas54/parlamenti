@@ -178,3 +178,29 @@ hivatkozason.
 ## Licenc
 
 MIT
+
+## Parlament.hu proxyrotáció
+
+A `src/parlament_proxy.py` az Echolot `echolot_proxy.py` készletének mintáját
+adaptálja a parlament.hu Felicitas API-jára (forrás: Hirmagnetmcp, d2b649b).
+A közös `_post` és `_get_text` használja, ezért a képviselő- és tevékenységfrissítés,
+az élő felszólaláskeresés és az SVG-letöltés is ugyanazt a kijáratkészletet kapja.
+
+- Először direkt kapcsolat; CAPTCHA, tiltás, átmeneti HTTP-/hálózati hiba vagy
+  hibás JSON után ellenőrzött proxy. Legfeljebb 3 adatlekérési próbálkozás.
+- Ingyenes iplocate-lista, 30 perces cache. Felderítésenként legfeljebb 40 jelölt,
+  12 szál, 4 másodperces socket-timeout, 12 másodperces eredménygyűjtés.
+  A listaletöltés (legfeljebb 8 s) és a már futó próbák befejezése ezt növelheti;
+  ez nem a teljes HTTP-kérésre érvényes határidő.
+- A próba valódi, olvasási Felicitas POST; legfeljebb 4 működő kijáratot gyűjt.
+  A sikeres kijáratok rotálnak, 20 perces memóval; hibánál 15 perc hűtés.
+  Egyszerre egy felderítés futhat; sikertelen felderítés után 60 s szünet.
+- Csak HTTPS parlament.hu cél, ellenőrzött TLS-sel, HTTP CONNECT proxyn.
+  A helyi frissítő kulcsos feltöltése nem használja ezt a proxyréteget.
+- `PARL_PROXY_POOL=0` kikapcsolja. A listaforrás `PARL_PROXY_POOL_URL`-lel
+  állítható; az Echolot változónevei is támogatottak (lásd `.env.example`).
+  A környezeti változókat induláskor olvassa; a `.env` fájlt nem tölti be magától.
+- A `/health` `proxy` mezője címek és hitelesítő adatok nélkül mutatja a készlet
+  állapotát. Működő proxy nem garantált; a snapshot és a helyi feltöltő megmarad.
+
+Teszt: `python -m unittest discover -s tests -v` (hálózat nélkül).

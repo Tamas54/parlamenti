@@ -17,11 +17,12 @@ import logging
 import re
 import threading
 import time
-import urllib.request
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
+
+from parlament_proxy import CaptchaHiba, fetch
 
 log = logging.getLogger("parlamentaris-mcp.kepviselok")
 
@@ -34,7 +35,6 @@ LISTA_URL = "https://www.parlament.hu/aktiv-kepviselok-listaja"
 SNAPSHOT = Path(__file__).resolve().parent / "data" / "kepviselok.json"
 REFRESH_SEC = 6 * 3600
 WORKERS = 6
-UA = "Mozilla/5.0 (compatible; ParlamentarisKompendium/0.3; +https://parlamenti-production.up.railway.app)"
 
 # Ellenőrző kapu: ennél kevesebb képviselő / bizottság = hiányos lekérés, nem írjuk felül a régit
 MIN_KEPVISELO = 150
@@ -45,29 +45,8 @@ MIN_BIZOTTSAG = 10
 # HTTP
 # ---------------------------------------------------------------------------
 
-class CaptchaHiba(RuntimeError):
-    """A parlament.hu adat helyett CAPTCHA-lapot adott (2026-10-05 óta a Railway-IP-re).
-    NEM kerüljük meg — a hívó kimondja, és a tárolt adattal / tartalékkal dolgozik."""
-
-
 def _post(url: str, body: dict, retries: int = 3) -> dict:
-    data = json.dumps(body).encode()
-    for attempt in range(retries):
-        try:
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", "User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=40) as r:
-                raw = r.read()
-            if raw.lstrip()[:1] == b"<":
-                if b"CAPTCHA" in raw[:4000]:
-                    raise CaptchaHiba("a parlament.hu CAPTCHA-ellenőrzést kér erről a szerverről")
-                raise ValueError("a parlament.hu nem JSON-t adott (HTML-lap)")
-            return json.loads(raw)
-        except CaptchaHiba:
-            raise                           # újrapróba értelmetlen
-        except Exception:
-            if attempt == retries - 1:
-                raise
-            time.sleep(1.5 * (attempt + 1))
+    return fetch(url, json.dumps(body).encode(), timeout=40, retries=retries, json_response=True)
 
 
 def _rows(resp: dict) -> list[dict]:
@@ -87,9 +66,7 @@ def _select(url: str, body: dict) -> list[dict]:
 
 
 def _get_text(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", "replace")
+    return fetch(url, timeout=30)
 
 
 def _page_link(page: str, obj_id: str) -> str:
@@ -374,7 +351,7 @@ def ensure_fresh():
 
 def fogad(data: dict) -> None:
     """Kívülről (a helyi frissítőtől) érkezett, friss adat — ugyanaz az ellenőrző kapu.
-    A parlament.hu a szerver IP-jére CAPTCHA-t ad (2026-10-05), ezért ez a fő út."""
+    A proxykészlet mellett is használható, független frissítési út."""
     check(data)
     with _lock:
         _state["data"], _state["loaded_at"], _state["last_error"] = data, time.time(), None

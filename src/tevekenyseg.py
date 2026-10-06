@@ -27,6 +27,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import kepviselok
+from parlament_proxy import UpstreamHiba
 from kepviselok import API, KEPV_Q, _page_link, _post, _rows, _select
 
 log = logging.getLogger("tevekenyseg")
@@ -264,15 +265,17 @@ def felszolalas_szoveg_kereses(szoveg: str, pid: str | None = None, limit: int =
         body["pKepviselo"] = pid
     try:
         r = _post(FELSZ_Q + "?page=0", body)
-    except kepviselok.CaptchaHiba:
-        # A szerverről a parlament.hu CAPTCHA-t kér — nem kerüljük meg. Tartalék: a tárolt
+    except UpstreamHiba as exc:
+        # A direkt/proxy kijáratok nem adtak adatot. Tartalék: a tárolt
         # adatokban (napirendi pont, indítvány-cím) keresünk, és ezt KIMONDJUK.
         tart = ki_foglalkozott(szoveg, data, limit=limit)
         if pid:
             tart = [k for k in tart if k["id"] == pid]
+        ok = ("CAPTCHA-ellenőrzést kér a kipróbált kijáratokon"
+              if isinstance(exc, kepviselok.CaptchaHiba) else "nem érhető el a kipróbált kijáratokon")
         return {"szoveg": szoveg, "osszes": None, "kik": [], "talalatok": [],
                 "figyelmeztetes": ("A felszólalások SZÖVEGÉBEN most nem tudunk keresni: a parlament.hu "
-                                   "CAPTCHA-ellenőrzést kér a szerverünktől. Helyette a tárolt adatokban "
+                                   f"{ok}. Helyette a tárolt adatokban "
                                    "(napirendi pont, tárgyalt indítvány címe) kerestünk."),
                 "tema_talalatok": tart}
     rows = _rows(r)

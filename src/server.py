@@ -30,6 +30,7 @@ from tools.keret_tool import register_keret_tools
 from tools.tevekenyseg_tool import register_tevekenyseg_tools
 import kepviselok
 import tevekenyseg
+from parlament_proxy import POOL
 
 logging.basicConfig(
     level=logging.INFO,
@@ -138,7 +139,7 @@ async def web_ui(request: Request) -> HTMLResponse:
 
 @mcp.custom_route("/health", methods=["GET"])
 async def health(request: Request) -> JSONResponse:
-    return JSONResponse({"status": "ok", "server": "Parlamentaris Kompendium", "tools": 19})
+    return JSONResponse({"status": "ok", "server": "Parlamentaris Kompendium", "tools": 19, "proxy": POOL.status()})
 
 @mcp.custom_route("/api/search", methods=["GET"])
 async def api_search(request: Request) -> JSONResponse:
